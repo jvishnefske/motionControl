@@ -1,8 +1,8 @@
-project('flight-simulator', 'c',
+project('flight-simulator', 'cpp',
   version : '0.1',
   default_options : ['warning_level=3'])
 
-exe = executable('flight_simulator', 'flight_simulator.cpp',
+exe = executable('motion_simulator', 'main.cpp',
   install : true)
 
 test('basic', exe)

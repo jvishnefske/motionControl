@@ -43,21 +43,4 @@ private:
   PacketHandler packet_handler_;
 };
 
-int main() {
-  boost::asio::io_service io_service;
 
-  UdpClient client(io_service, "127.0.0.1", 1288);
-
-  // Set a handler for incoming packets
-  client.set_packet_handler([](const std::string& packet) {
-    std::cout << "Received packet: " << packet << std::endl;
-  });
-
-  // Send the #id message to the server
-  client.send_id("myGame1");
-
-  // Run the I/O service to start receiving packets
-  io_service.run();
-
-  return 0;
-}
