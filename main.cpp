@@ -3,11 +3,11 @@
 #include <future>
 #include <chrono>
 #include <cmath>
+#include <thread>
 
 int unused_test() {
-    boost::asio::io_service io_service;
 
-    UdpClient client(io_service, "127.0.0.1", 1288);
+    UdpClient client("127.0.0.1", 1288);
 
     // Set a handler for incoming packets
     client.set_packet_handler([](const std::string& packet) {
@@ -18,24 +18,31 @@ int unused_test() {
     client.send_id("myGame1");
 
     // Run the I/O service to start receiving packets
-    io_service.run();
 
     return 0;
 }
-main(){
-    UdpClient u;
-    u.send_id("this is my name");
-    u.set_packet_handler([](std::string content){
-        std::cout << "packed recieved" << content << std::endl;
-    });
+int main(){
+
 
     auto task = std::async([](){
+        UdpClient u;
+        u.send_id("this is my name");
+        u.set_packet_handler([](std::string content){
+            std::cout << "packed recieved" << content << std::endl;
+        });
         const auto fps=100;
         const auto delta=2*3.14159/fps;
-        int frame=0;
+        auto i = 0;
+        std::vector<double> numbers{0,0};
         for(;;){
             auto my_cos = std::cos(i*delta);
             auto my_sin = std::sin(i*delta);
+            numbers.at(0) = my_cos;
+            numbers.at(1) = my_sin;
+            u.send_vector(numbers);
+            i++;
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
         }
 
     });
