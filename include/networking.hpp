@@ -1,5 +1,9 @@
 #include <iostream>
 #include <boost/asio.hpp>
+#include <boost/asio/io_context.hpp>
+#include <boost/type_erasure/any.hpp>
+#include <boost/type_erasure/member.hpp>
+#include <boost/type_erasure/operators.hpp>
 #include <chrono>
 #include <sstream>
 #include <iterator>
@@ -13,6 +17,13 @@ std::ostream& operator<<(std::vector<double> nums, std::ostream& os){
                      std::ostream_iterator<int>(os, " "));
     return os;
 }
+
+
+
+class AsyncContext: public boost::asio::io_context
+
+
+
 class UdpClient {
 public:
   using PacketHandler = std::function<void(const std::string&)>;

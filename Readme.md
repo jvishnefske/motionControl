@@ -1,4 +1,4 @@
-Motion control library
+High level network library
 ===
 
 skeleton project to send udp packets 
