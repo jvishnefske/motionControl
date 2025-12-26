@@ -1,16 +1,49 @@
-High level network library
-===
+# Motion Control
 
-skeleton project to send udp packets 
+A cross-platform C++ UDP networking library for motion control applications. Built on Boost.Asio, it provides asynchronous packet transmission for real-time motion data streaming to simulators and control systems.
 
-future consideration: implement protocol
+## Quick Start
 
-build instructions
----
+```bash
+make build      # Configure and build with CMake
+make test       # Run unit tests
+make coverage   # Generate coverage report
+```
 
-The header may be included in another program, and uses boost asio header only library to communicate with the network on multiple platforms. [Boost header project](https://github.com/jvishnefske/boost-headers) may be added in a subdirectory for easier dependency resolution.
+## Features
 
-    python3 -m pip install meson ninja
-    meson setup build
-    cd build
-    ninja
+- Asynchronous UDP client with configurable server endpoint
+- Packet handler callbacks for incoming data
+- Vector data transmission for motion coordinates
+- Cross-platform support (Linux, Windows via MinGW)
+
+## Dependencies
+
+- C++17 compiler
+- CMake 3.25+
+- Boost (asio headers)
+- GoogleTest (fetched automatically)
+- Google Benchmark (fetched automatically)
+
+## Build Options
+
+### CMake (Recommended)
+
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build .
+```
+
+### Meson (Alternative)
+
+```bash
+python3 -m pip install meson ninja
+meson setup build
+cd build
+ninja
+```
+
+## License
+
+See LICENSE file for details.
