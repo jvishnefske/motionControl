@@ -20,8 +20,9 @@ std::ostream& operator<<(std::vector<double> nums, std::ostream& os){
 
 
 
-class AsyncContext: public boost::asio::io_context
-
+class AsyncContext: public boost::asio::io_context {
+    // Inherits all functionality from io_context
+};
 
 
 class UdpClient {
