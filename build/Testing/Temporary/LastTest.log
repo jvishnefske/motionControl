@@ -1,0 +1,813 @@
+Start testing: Dec 26 22:49 CST
+----------------------------------------------------------
+1/30 Testing: MotionDataTest.DeltaCalculationAt100FPS
+1/30 Test: MotionDataTest.DeltaCalculationAt100FPS
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=MotionDataTest.DeltaCalculationAt100FPS" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"MotionDataTest.DeltaCalculationAt100FPS" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = MotionDataTest.DeltaCalculationAt100FPS
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MotionDataTest
+[ RUN      ] MotionDataTest.DeltaCalculationAt100FPS
+[       OK ] MotionDataTest.DeltaCalculationAt100FPS (0 ms)
+[----------] 1 test from MotionDataTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"MotionDataTest.DeltaCalculationAt100FPS" end time: Dec 26 22:49 CST
+"MotionDataTest.DeltaCalculationAt100FPS" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/30 Testing: MotionDataTest.DeltaCalculationAt60FPS
+2/30 Test: MotionDataTest.DeltaCalculationAt60FPS
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=MotionDataTest.DeltaCalculationAt60FPS" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"MotionDataTest.DeltaCalculationAt60FPS" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = MotionDataTest.DeltaCalculationAt60FPS
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MotionDataTest
+[ RUN      ] MotionDataTest.DeltaCalculationAt60FPS
+[       OK ] MotionDataTest.DeltaCalculationAt60FPS (0 ms)
+[----------] 1 test from MotionDataTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"MotionDataTest.DeltaCalculationAt60FPS" end time: Dec 26 22:49 CST
+"MotionDataTest.DeltaCalculationAt60FPS" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/30 Testing: MotionDataTest.DeltaCalculationAt30FPS
+3/30 Test: MotionDataTest.DeltaCalculationAt30FPS
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=MotionDataTest.DeltaCalculationAt30FPS" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"MotionDataTest.DeltaCalculationAt30FPS" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = MotionDataTest.DeltaCalculationAt30FPS
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MotionDataTest
+[ RUN      ] MotionDataTest.DeltaCalculationAt30FPS
+[       OK ] MotionDataTest.DeltaCalculationAt30FPS (0 ms)
+[----------] 1 test from MotionDataTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"MotionDataTest.DeltaCalculationAt30FPS" end time: Dec 26 22:49 CST
+"MotionDataTest.DeltaCalculationAt30FPS" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/30 Testing: MotionDataTest.SinCosAtFrameZero
+4/30 Test: MotionDataTest.SinCosAtFrameZero
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=MotionDataTest.SinCosAtFrameZero" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"MotionDataTest.SinCosAtFrameZero" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = MotionDataTest.SinCosAtFrameZero
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MotionDataTest
+[ RUN      ] MotionDataTest.SinCosAtFrameZero
+[       OK ] MotionDataTest.SinCosAtFrameZero (0 ms)
+[----------] 1 test from MotionDataTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"MotionDataTest.SinCosAtFrameZero" end time: Dec 26 22:49 CST
+"MotionDataTest.SinCosAtFrameZero" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/30 Testing: MotionDataTest.SinCosAtQuarterPeriod
+5/30 Test: MotionDataTest.SinCosAtQuarterPeriod
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=MotionDataTest.SinCosAtQuarterPeriod" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"MotionDataTest.SinCosAtQuarterPeriod" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = MotionDataTest.SinCosAtQuarterPeriod
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MotionDataTest
+[ RUN      ] MotionDataTest.SinCosAtQuarterPeriod
+[       OK ] MotionDataTest.SinCosAtQuarterPeriod (0 ms)
+[----------] 1 test from MotionDataTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"MotionDataTest.SinCosAtQuarterPeriod" end time: Dec 26 22:49 CST
+"MotionDataTest.SinCosAtQuarterPeriod" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/30 Testing: MotionDataTest.SinCosAtHalfPeriod
+6/30 Test: MotionDataTest.SinCosAtHalfPeriod
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=MotionDataTest.SinCosAtHalfPeriod" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"MotionDataTest.SinCosAtHalfPeriod" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = MotionDataTest.SinCosAtHalfPeriod
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MotionDataTest
+[ RUN      ] MotionDataTest.SinCosAtHalfPeriod
+[       OK ] MotionDataTest.SinCosAtHalfPeriod (0 ms)
+[----------] 1 test from MotionDataTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"MotionDataTest.SinCosAtHalfPeriod" end time: Dec 26 22:49 CST
+"MotionDataTest.SinCosAtHalfPeriod" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/30 Testing: MotionDataTest.SinCosAtFullPeriod
+7/30 Test: MotionDataTest.SinCosAtFullPeriod
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=MotionDataTest.SinCosAtFullPeriod" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"MotionDataTest.SinCosAtFullPeriod" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = MotionDataTest.SinCosAtFullPeriod
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MotionDataTest
+[ RUN      ] MotionDataTest.SinCosAtFullPeriod
+[       OK ] MotionDataTest.SinCosAtFullPeriod (0 ms)
+[----------] 1 test from MotionDataTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"MotionDataTest.SinCosAtFullPeriod" end time: Dec 26 22:49 CST
+"MotionDataTest.SinCosAtFullPeriod" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/30 Testing: MotionDataTest.MotionValuesWithinBounds
+8/30 Test: MotionDataTest.MotionValuesWithinBounds
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=MotionDataTest.MotionValuesWithinBounds" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"MotionDataTest.MotionValuesWithinBounds" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = MotionDataTest.MotionValuesWithinBounds
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MotionDataTest
+[ RUN      ] MotionDataTest.MotionValuesWithinBounds
+[       OK ] MotionDataTest.MotionValuesWithinBounds (0 ms)
+[----------] 1 test from MotionDataTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"MotionDataTest.MotionValuesWithinBounds" end time: Dec 26 22:49 CST
+"MotionDataTest.MotionValuesWithinBounds" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/30 Testing: MotionDataTest.UnitCircleProperty
+9/30 Test: MotionDataTest.UnitCircleProperty
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=MotionDataTest.UnitCircleProperty" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"MotionDataTest.UnitCircleProperty" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = MotionDataTest.UnitCircleProperty
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MotionDataTest
+[ RUN      ] MotionDataTest.UnitCircleProperty
+[       OK ] MotionDataTest.UnitCircleProperty (0 ms)
+[----------] 1 test from MotionDataTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"MotionDataTest.UnitCircleProperty" end time: Dec 26 22:49 CST
+"MotionDataTest.UnitCircleProperty" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/30 Testing: VectorSerializationTest.EmptyVector
+10/30 Test: VectorSerializationTest.EmptyVector
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=VectorSerializationTest.EmptyVector" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"VectorSerializationTest.EmptyVector" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = VectorSerializationTest.EmptyVector
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from VectorSerializationTest
+[ RUN      ] VectorSerializationTest.EmptyVector
+[       OK ] VectorSerializationTest.EmptyVector (0 ms)
+[----------] 1 test from VectorSerializationTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"VectorSerializationTest.EmptyVector" end time: Dec 26 22:49 CST
+"VectorSerializationTest.EmptyVector" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/30 Testing: VectorSerializationTest.SingleElement
+11/30 Test: VectorSerializationTest.SingleElement
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=VectorSerializationTest.SingleElement" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"VectorSerializationTest.SingleElement" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = VectorSerializationTest.SingleElement
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from VectorSerializationTest
+[ RUN      ] VectorSerializationTest.SingleElement
+[       OK ] VectorSerializationTest.SingleElement (0 ms)
+[----------] 1 test from VectorSerializationTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"VectorSerializationTest.SingleElement" end time: Dec 26 22:49 CST
+"VectorSerializationTest.SingleElement" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/30 Testing: VectorSerializationTest.TwoElements
+12/30 Test: VectorSerializationTest.TwoElements
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=VectorSerializationTest.TwoElements" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"VectorSerializationTest.TwoElements" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = VectorSerializationTest.TwoElements
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from VectorSerializationTest
+[ RUN      ] VectorSerializationTest.TwoElements
+[       OK ] VectorSerializationTest.TwoElements (0 ms)
+[----------] 1 test from VectorSerializationTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"VectorSerializationTest.TwoElements" end time: Dec 26 22:49 CST
+"VectorSerializationTest.TwoElements" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/30 Testing: VectorSerializationTest.MultipleElements
+13/30 Test: VectorSerializationTest.MultipleElements
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=VectorSerializationTest.MultipleElements" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"VectorSerializationTest.MultipleElements" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = VectorSerializationTest.MultipleElements
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from VectorSerializationTest
+[ RUN      ] VectorSerializationTest.MultipleElements
+[       OK ] VectorSerializationTest.MultipleElements (0 ms)
+[----------] 1 test from VectorSerializationTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"VectorSerializationTest.MultipleElements" end time: Dec 26 22:49 CST
+"VectorSerializationTest.MultipleElements" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/30 Testing: VectorSerializationTest.NegativeValues
+14/30 Test: VectorSerializationTest.NegativeValues
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=VectorSerializationTest.NegativeValues" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"VectorSerializationTest.NegativeValues" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = VectorSerializationTest.NegativeValues
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from VectorSerializationTest
+[ RUN      ] VectorSerializationTest.NegativeValues
+[       OK ] VectorSerializationTest.NegativeValues (0 ms)
+[----------] 1 test from VectorSerializationTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"VectorSerializationTest.NegativeValues" end time: Dec 26 22:49 CST
+"VectorSerializationTest.NegativeValues" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/30 Testing: VectorSerializationTest.FloatingPointTruncation
+15/30 Test: VectorSerializationTest.FloatingPointTruncation
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=VectorSerializationTest.FloatingPointTruncation" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"VectorSerializationTest.FloatingPointTruncation" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = VectorSerializationTest.FloatingPointTruncation
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from VectorSerializationTest
+[ RUN      ] VectorSerializationTest.FloatingPointTruncation
+[       OK ] VectorSerializationTest.FloatingPointTruncation (0 ms)
+[----------] 1 test from VectorSerializationTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"VectorSerializationTest.FloatingPointTruncation" end time: Dec 26 22:49 CST
+"VectorSerializationTest.FloatingPointTruncation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/30 Testing: IdMessageTest.SimpleGameId
+16/30 Test: IdMessageTest.SimpleGameId
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=IdMessageTest.SimpleGameId" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"IdMessageTest.SimpleGameId" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = IdMessageTest.SimpleGameId
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from IdMessageTest
+[ RUN      ] IdMessageTest.SimpleGameId
+[       OK ] IdMessageTest.SimpleGameId (0 ms)
+[----------] 1 test from IdMessageTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"IdMessageTest.SimpleGameId" end time: Dec 26 22:49 CST
+"IdMessageTest.SimpleGameId" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/30 Testing: IdMessageTest.EmptyGameId
+17/30 Test: IdMessageTest.EmptyGameId
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=IdMessageTest.EmptyGameId" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"IdMessageTest.EmptyGameId" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = IdMessageTest.EmptyGameId
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from IdMessageTest
+[ RUN      ] IdMessageTest.EmptyGameId
+[       OK ] IdMessageTest.EmptyGameId (0 ms)
+[----------] 1 test from IdMessageTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"IdMessageTest.EmptyGameId" end time: Dec 26 22:49 CST
+"IdMessageTest.EmptyGameId" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/30 Testing: IdMessageTest.GameIdWithSpaces
+18/30 Test: IdMessageTest.GameIdWithSpaces
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=IdMessageTest.GameIdWithSpaces" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"IdMessageTest.GameIdWithSpaces" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = IdMessageTest.GameIdWithSpaces
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from IdMessageTest
+[ RUN      ] IdMessageTest.GameIdWithSpaces
+[       OK ] IdMessageTest.GameIdWithSpaces (0 ms)
+[----------] 1 test from IdMessageTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"IdMessageTest.GameIdWithSpaces" end time: Dec 26 22:49 CST
+"IdMessageTest.GameIdWithSpaces" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/30 Testing: IdMessageTest.LongGameId
+19/30 Test: IdMessageTest.LongGameId
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=IdMessageTest.LongGameId" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"IdMessageTest.LongGameId" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = IdMessageTest.LongGameId
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from IdMessageTest
+[ RUN      ] IdMessageTest.LongGameId
+[       OK ] IdMessageTest.LongGameId (0 ms)
+[----------] 1 test from IdMessageTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"IdMessageTest.LongGameId" end time: Dec 26 22:49 CST
+"IdMessageTest.LongGameId" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/30 Testing: EndpointConfigTest.DefaultPort
+20/30 Test: EndpointConfigTest.DefaultPort
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=EndpointConfigTest.DefaultPort" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"EndpointConfigTest.DefaultPort" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = EndpointConfigTest.DefaultPort
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from EndpointConfigTest
+[ RUN      ] EndpointConfigTest.DefaultPort
+[       OK ] EndpointConfigTest.DefaultPort (0 ms)
+[----------] 1 test from EndpointConfigTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"EndpointConfigTest.DefaultPort" end time: Dec 26 22:49 CST
+"EndpointConfigTest.DefaultPort" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/30 Testing: EndpointConfigTest.ValidPortRange
+21/30 Test: EndpointConfigTest.ValidPortRange
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=EndpointConfigTest.ValidPortRange" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"EndpointConfigTest.ValidPortRange" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = EndpointConfigTest.ValidPortRange
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from EndpointConfigTest
+[ RUN      ] EndpointConfigTest.ValidPortRange
+[       OK ] EndpointConfigTest.ValidPortRange (0 ms)
+[----------] 1 test from EndpointConfigTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"EndpointConfigTest.ValidPortRange" end time: Dec 26 22:49 CST
+"EndpointConfigTest.ValidPortRange" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/30 Testing: EndpointConfigTest.InvalidPortRange
+22/30 Test: EndpointConfigTest.InvalidPortRange
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=EndpointConfigTest.InvalidPortRange" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"EndpointConfigTest.InvalidPortRange" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = EndpointConfigTest.InvalidPortRange
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from EndpointConfigTest
+[ RUN      ] EndpointConfigTest.InvalidPortRange
+[       OK ] EndpointConfigTest.InvalidPortRange (0 ms)
+[----------] 1 test from EndpointConfigTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"EndpointConfigTest.InvalidPortRange" end time: Dec 26 22:49 CST
+"EndpointConfigTest.InvalidPortRange" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/30 Testing: EndpointConfigTest.ValidIPv4Format
+23/30 Test: EndpointConfigTest.ValidIPv4Format
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=EndpointConfigTest.ValidIPv4Format" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"EndpointConfigTest.ValidIPv4Format" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = EndpointConfigTest.ValidIPv4Format
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from EndpointConfigTest
+[ RUN      ] EndpointConfigTest.ValidIPv4Format
+[       OK ] EndpointConfigTest.ValidIPv4Format (0 ms)
+[----------] 1 test from EndpointConfigTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"EndpointConfigTest.ValidIPv4Format" end time: Dec 26 22:49 CST
+"EndpointConfigTest.ValidIPv4Format" time elapsed: 00:00:00
+----------------------------------------------------------
+
+24/30 Testing: EndpointConfigTest.InvalidIPv4Format
+24/30 Test: EndpointConfigTest.InvalidIPv4Format
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=EndpointConfigTest.InvalidIPv4Format" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"EndpointConfigTest.InvalidIPv4Format" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = EndpointConfigTest.InvalidIPv4Format
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from EndpointConfigTest
+[ RUN      ] EndpointConfigTest.InvalidIPv4Format
+[       OK ] EndpointConfigTest.InvalidIPv4Format (0 ms)
+[----------] 1 test from EndpointConfigTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"EndpointConfigTest.InvalidIPv4Format" end time: Dec 26 22:49 CST
+"EndpointConfigTest.InvalidIPv4Format" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/30 Testing: PacketHandlerTest.HandlerCalled
+25/30 Test: PacketHandlerTest.HandlerCalled
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=PacketHandlerTest.HandlerCalled" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"PacketHandlerTest.HandlerCalled" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = PacketHandlerTest.HandlerCalled
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PacketHandlerTest
+[ RUN      ] PacketHandlerTest.HandlerCalled
+[       OK ] PacketHandlerTest.HandlerCalled (0 ms)
+[----------] 1 test from PacketHandlerTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"PacketHandlerTest.HandlerCalled" end time: Dec 26 22:49 CST
+"PacketHandlerTest.HandlerCalled" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/30 Testing: PacketHandlerTest.HandlerCalledMultipleTimes
+26/30 Test: PacketHandlerTest.HandlerCalledMultipleTimes
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=PacketHandlerTest.HandlerCalledMultipleTimes" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"PacketHandlerTest.HandlerCalledMultipleTimes" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = PacketHandlerTest.HandlerCalledMultipleTimes
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PacketHandlerTest
+[ RUN      ] PacketHandlerTest.HandlerCalledMultipleTimes
+[       OK ] PacketHandlerTest.HandlerCalledMultipleTimes (0 ms)
+[----------] 1 test from PacketHandlerTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"PacketHandlerTest.HandlerCalledMultipleTimes" end time: Dec 26 22:49 CST
+"PacketHandlerTest.HandlerCalledMultipleTimes" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/30 Testing: PacketHandlerTest.HandlerWithEmptyPacket
+27/30 Test: PacketHandlerTest.HandlerWithEmptyPacket
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=PacketHandlerTest.HandlerWithEmptyPacket" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"PacketHandlerTest.HandlerWithEmptyPacket" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = PacketHandlerTest.HandlerWithEmptyPacket
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PacketHandlerTest
+[ RUN      ] PacketHandlerTest.HandlerWithEmptyPacket
+[       OK ] PacketHandlerTest.HandlerWithEmptyPacket (0 ms)
+[----------] 1 test from PacketHandlerTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"PacketHandlerTest.HandlerWithEmptyPacket" end time: Dec 26 22:49 CST
+"PacketHandlerTest.HandlerWithEmptyPacket" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/30 Testing: TimingTest.DelayAt100FPS
+28/30 Test: TimingTest.DelayAt100FPS
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=TimingTest.DelayAt100FPS" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"TimingTest.DelayAt100FPS" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = TimingTest.DelayAt100FPS
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TimingTest
+[ RUN      ] TimingTest.DelayAt100FPS
+[       OK ] TimingTest.DelayAt100FPS (0 ms)
+[----------] 1 test from TimingTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"TimingTest.DelayAt100FPS" end time: Dec 26 22:49 CST
+"TimingTest.DelayAt100FPS" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/30 Testing: TimingTest.DelayAt60FPS
+29/30 Test: TimingTest.DelayAt60FPS
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=TimingTest.DelayAt60FPS" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"TimingTest.DelayAt60FPS" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = TimingTest.DelayAt60FPS
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TimingTest
+[ RUN      ] TimingTest.DelayAt60FPS
+[       OK ] TimingTest.DelayAt60FPS (0 ms)
+[----------] 1 test from TimingTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"TimingTest.DelayAt60FPS" end time: Dec 26 22:49 CST
+"TimingTest.DelayAt60FPS" time elapsed: 00:00:00
+----------------------------------------------------------
+
+30/30 Testing: TimingTest.DelayAt30FPS
+30/30 Test: TimingTest.DelayAt30FPS
+Command: "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests" "--gtest_filter=TimingTest.DelayAt30FPS" "--gtest_also_run_disabled_tests"
+Directory: /home/j/src/jvishnefske/motionControl/build/test
+"TimingTest.DelayAt30FPS" start time: Dec 26 22:49 CST
+Output:
+----------------------------------------------------------
+Running main() from /home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/googletest/src/gtest_main.cc
+Note: Google Test filter = TimingTest.DelayAt30FPS
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TimingTest
+[ RUN      ] TimingTest.DelayAt30FPS
+[       OK ] TimingTest.DelayAt30FPS (0 ms)
+[----------] 1 test from TimingTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"TimingTest.DelayAt30FPS" end time: Dec 26 22:49 CST
+"TimingTest.DelayAt30FPS" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Dec 26 22:49 CST

@@ -24,6 +24,7 @@ set(dependencies Boost::boost spdlog::spdlog nlohmann_json::nlohmann_json)
 #
 project(motion_control)
 
+enable_testing()
 find_package(Boost REQUIRED)
 
 add_executable(motion_control src/main.cpp)

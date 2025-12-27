@@ -1,7 +1,6 @@
-enable_testing()
 include(GoogleTest)
 add_executable(NetworkingTests main.cpp)
-gtest_discover_tests(NetworkingTests)
 target_link_libraries(NetworkingTests PRIVATE ${dependencies} GTest::gtest_main)
+gtest_discover_tests(NetworkingTests DISCOVERY_TIMEOUT 60)
 add_executable(NetworkBenchmarks benchmark.cpp)
 target_link_libraries(NetworkBenchmarks PRIVATE ${dependencies} benchmark::benchmark_main )

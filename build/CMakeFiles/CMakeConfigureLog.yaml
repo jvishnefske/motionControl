@@ -1,0 +1,1304 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:204 (message)"
+      - "/home/j/.cache/CPM/json/b0624674a8aca048bfc219c71db772031ea0fc97/CMakeLists.txt:7 (project)"
+    message: |
+      The system is: Linux - 5.14.0-570.32.1.el9_6.x86_64 - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/home/j/.cache/CPM/json/b0624674a8aca048bfc219c71db772031ea0fc97/CMakeLists.txt:7 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /usr/bin/c++ 
+      Build flags: --coverage
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a-CMakeCXXCompilerId.gcno"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification could not be found in:
+        /home/j/src/jvishnefske/motionControl/build/CMakeFiles/3.26.5/CompilerIdCXX/a-CMakeCXXCompilerId.gcno
+      
+      The CXX compiler identification is GNU, found in:
+        /home/j/src/jvishnefske/motionControl/build/CMakeFiles/3.26.5/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/home/j/.cache/CPM/json/b0624674a8aca048bfc219c71db772031ea0fc97/CMakeLists.txt:7 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-x70rFK"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-x70rFK"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage"
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-x70rFK
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2894e/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-x70rFK'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_2894e.dir/build.make CMakeFiles/cmTC_2894e.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-x70rFK'
+        Building CXX object CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   --coverage    -v -o CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        OFFLOAD_TARGET_NAMES=nvptx-none
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-redhat-linux
+        Configured with: ../configure --enable-bootstrap --enable-host-pie --enable-host-bind-now --enable-languages=c,c++,fortran,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --without-isl --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_64=x86-64-v2 --with-arch_32=x86-64 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 11.5.0 20240719 (Red Hat 11.5.0-5) (GCC) 
+        COLLECT_GCC_OPTIONS='-coverage' '-v' '-o' 'CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_2894e.dir/'
+         /usr/libexec/gcc/x86_64-redhat-linux/11/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_2894e.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64-v2 -version -fprofile-arcs -ftest-coverage -o /home/j/tmp/ccdUyH1w.s
+        GNU C++17 (GCC) version 11.5.0 20240719 (Red Hat 11.5.0-5) (x86_64-redhat-linux)
+        	compiled by GNU C version 11.5.0 20240719 (Red Hat 11.5.0-5), GMP version 6.2.0, MPFR version 4.1.0-p9, MPC version 1.2.1, isl version none
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/11/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/11/../../../../x86_64-redhat-linux/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11
+         /usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11/x86_64-redhat-linux
+         /usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11/backward
+         /usr/lib/gcc/x86_64-redhat-linux/11/include
+         /usr/local/include
+         /usr/include
+        End of search list.
+        GNU C++17 (GCC) version 11.5.0 20240719 (Red Hat 11.5.0-5) (x86_64-redhat-linux)
+        	compiled by GNU C version 11.5.0 20240719 (Red Hat 11.5.0-5), GMP version 6.2.0, MPFR version 4.1.0-p9, MPC version 1.2.1, isl version none
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        Compiler executable checksum: 49af7bf74f046551c1979dd2b82e1084
+        COLLECT_GCC_OPTIONS='-coverage' '-v' '-o' 'CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_2894e.dir/'
+         as -v --64 -o CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o /home/j/tmp/ccdUyH1w.s
+        GNU assembler version 2.35.2 (x86_64-redhat-linux) using BFD version version 2.35.2-63.el9
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-coverage' '-v' '-o' 'CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_2894e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2894e.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage   -v -rdynamic CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_2894e 
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-redhat-linux
+        Configured with: ../configure --enable-bootstrap --enable-host-pie --enable-host-bind-now --enable-languages=c,c++,fortran,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --without-isl --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_64=x86-64-v2 --with-arch_32=x86-64 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 11.5.0 20240719 (Red Hat 11.5.0-5) (GCC) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-coverage' '-v' '-rdynamic' '-o' 'cmTC_2894e' '-shared-libgcc' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'cmTC_2894e.'
+         /usr/libexec/gcc/x86_64-redhat-linux/11/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/11/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper -plugin-opt=-fresolution=/home/j/tmp/ccxzjxwy.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_2894e /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/11/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/11 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../.. CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcov -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/11/crtend.o /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o
+        COLLECT_GCC_OPTIONS='-coverage' '-v' '-rdynamic' '-o' 'cmTC_2894e' '-shared-libgcc' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'cmTC_2894e.'
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-x70rFK'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-x70rFK'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/home/j/.cache/CPM/json/b0624674a8aca048bfc219c71db772031ea0fc97/CMakeLists.txt:7 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11]
+          add: [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11/x86_64-redhat-linux]
+          add: [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11/backward]
+          add: [/usr/lib/gcc/x86_64-redhat-linux/11/include]
+          add: [/usr/local/include]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11] ==> [/usr/include/c++/11]
+        collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11/x86_64-redhat-linux] ==> [/usr/include/c++/11/x86_64-redhat-linux]
+        collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11/backward] ==> [/usr/include/c++/11/backward]
+        collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/11/include] ==> [/usr/lib/gcc/x86_64-redhat-linux/11/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/include/c++/11;/usr/include/c++/11/x86_64-redhat-linux;/usr/include/c++/11/backward;/usr/lib/gcc/x86_64-redhat-linux/11/include;/usr/local/include;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:152 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/home/j/.cache/CPM/json/b0624674a8aca048bfc219c71db772031ea0fc97/CMakeLists.txt:7 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-x70rFK]
+        ignore line: []
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2894e/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-x70rFK']
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_2894e.dir/build.make CMakeFiles/cmTC_2894e.dir/build]
+        ignore line: [gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-x70rFK']
+        ignore line: [Building CXX object CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   --coverage    -v -o CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-redhat-linux]
+        ignore line: [Configured with: ../configure --enable-bootstrap --enable-host-pie --enable-host-bind-now --enable-languages=c c++ fortran lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --without-isl --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_64=x86-64-v2 --with-arch_32=x86-64 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 11.5.0 20240719 (Red Hat 11.5.0-5) (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-coverage' '-v' '-o' 'CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_2894e.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/11/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_2894e.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64-v2 -version -fprofile-arcs -ftest-coverage -o /home/j/tmp/ccdUyH1w.s]
+        ignore line: [GNU C++17 (GCC) version 11.5.0 20240719 (Red Hat 11.5.0-5) (x86_64-redhat-linux)]
+        ignore line: [	compiled by GNU C version 11.5.0 20240719 (Red Hat 11.5.0-5)  GMP version 6.2.0  MPFR version 4.1.0-p9  MPC version 1.2.1  isl version none]
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/11/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/11/../../../../x86_64-redhat-linux/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11]
+        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11/x86_64-redhat-linux]
+        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/11/../../../../include/c++/11/backward]
+        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/11/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [GNU C++17 (GCC) version 11.5.0 20240719 (Red Hat 11.5.0-5) (x86_64-redhat-linux)]
+        ignore line: [	compiled by GNU C version 11.5.0 20240719 (Red Hat 11.5.0-5)  GMP version 6.2.0  MPFR version 4.1.0-p9  MPC version 1.2.1  isl version none]
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [Compiler executable checksum: 49af7bf74f046551c1979dd2b82e1084]
+        ignore line: [COLLECT_GCC_OPTIONS='-coverage' '-v' '-o' 'CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_2894e.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o /home/j/tmp/ccdUyH1w.s]
+        ignore line: [GNU assembler version 2.35.2 (x86_64-redhat-linux) using BFD version version 2.35.2-63.el9]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-coverage' '-v' '-o' 'CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_2894e]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2894e.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/c++ --coverage   -v -rdynamic CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_2894e ]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-redhat-linux]
+        ignore line: [Configured with: ../configure --enable-bootstrap --enable-host-pie --enable-host-bind-now --enable-languages=c c++ fortran lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --without-isl --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_64=x86-64-v2 --with-arch_32=x86-64 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 11.5.0 20240719 (Red Hat 11.5.0-5) (GCC) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-coverage' '-v' '-rdynamic' '-o' 'cmTC_2894e' '-shared-libgcc' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'cmTC_2894e.']
+        link line: [ /usr/libexec/gcc/x86_64-redhat-linux/11/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/11/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper -plugin-opt=-fresolution=/home/j/tmp/ccxzjxwy.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_2894e /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/11/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/11 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../.. CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcov -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/11/crtend.o /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-redhat-linux/11/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-redhat-linux/11/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/home/j/tmp/ccxzjxwy.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--no-add-needed] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-export-dynamic] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_2894e] ==> ignore
+          arg [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/11/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/11/crtbegin.o]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/11] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/11]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/11/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../..]
+          arg [CMakeFiles/cmTC_2894e.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcov] ==> lib [gcov]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/11/crtend.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/11/crtend.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o]
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o] ==> [/usr/lib64/crt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o] ==> [/usr/lib64/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/11] ==> [/usr/lib/gcc/x86_64-redhat-linux/11]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../..] ==> [/usr/lib]
+        implicit libs: [stdc++;m;gcov;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/usr/lib64/crt1.o;/usr/lib64/crti.o;/usr/lib/gcc/x86_64-redhat-linux/11/crtbegin.o;/usr/lib/gcc/x86_64-redhat-linux/11/crtend.o;/usr/lib64/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/11;/usr/lib64;/lib64;/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:99 (CHECK_CXX_SOURCE_COMPILES)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "/home/j/.cache/CPM/spdlog/9e54045d2ed46657fbc9f452fecfa7f2fb223985/CMakeLists.txt:115 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-rasc6f"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-rasc6f"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-rasc6f
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f923f/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-rasc6f'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_f923f.dir/build.make CMakeFiles/cmTC_f923f.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-rasc6f'
+        Building CXX object CMakeFiles/cmTC_f923f.dir/src.cxx.o
+        /usr/bin/c++ -DCMAKE_HAVE_LIBC_PTHREAD  --coverage  -std=c++11 -o CMakeFiles/cmTC_f923f.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-rasc6f/src.cxx
+        Linking CXX executable cmTC_f923f
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f923f.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  CMakeFiles/cmTC_f923f.dir/src.cxx.o -o cmTC_f923f 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-rasc6f'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-rasc6f'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/CMakeLists.txt:14 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /usr/bin/cc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        /home/j/src/jvishnefske/motionControl/build/CMakeFiles/3.26.5/CompilerIdC/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/CMakeLists.txt:14 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-RZ8oCR"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-RZ8oCR"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-RZ8oCR
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_58b22/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-RZ8oCR'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_58b22.dir/build.make CMakeFiles/cmTC_58b22.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-RZ8oCR'
+        Building C object CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        OFFLOAD_TARGET_NAMES=nvptx-none
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-redhat-linux
+        Configured with: ../configure --enable-bootstrap --enable-host-pie --enable-host-bind-now --enable-languages=c,c++,fortran,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --without-isl --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_64=x86-64-v2 --with-arch_32=x86-64 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 11.5.0 20240719 (Red Hat 11.5.0-5) (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_58b22.dir/'
+         /usr/libexec/gcc/x86_64-redhat-linux/11/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_58b22.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64-v2 -version -o /home/j/tmp/ccKObHBB.s
+        GNU C17 (GCC) version 11.5.0 20240719 (Red Hat 11.5.0-5) (x86_64-redhat-linux)
+        	compiled by GNU C version 11.5.0 20240719 (Red Hat 11.5.0-5), GMP version 6.2.0, MPFR version 4.1.0-p9, MPC version 1.2.1, isl version none
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/11/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/11/../../../../x86_64-redhat-linux/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-redhat-linux/11/include
+         /usr/local/include
+         /usr/include
+        End of search list.
+        GNU C17 (GCC) version 11.5.0 20240719 (Red Hat 11.5.0-5) (x86_64-redhat-linux)
+        	compiled by GNU C version 11.5.0 20240719 (Red Hat 11.5.0-5), GMP version 6.2.0, MPFR version 4.1.0-p9, MPC version 1.2.1, isl version none
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        Compiler executable checksum: d8a17bc88c45c82103f770314ee9eca3
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_58b22.dir/'
+         as -v --64 -o CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o /home/j/tmp/ccKObHBB.s
+        GNU assembler version 2.35.2 (x86_64-redhat-linux) using BFD version version 2.35.2-63.el9
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_58b22
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_58b22.dir/link.txt --verbose=1
+        /usr/bin/cc  -v CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o -o cmTC_58b22 
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-redhat-linux
+        Configured with: ../configure --enable-bootstrap --enable-host-pie --enable-host-bind-now --enable-languages=c,c++,fortran,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --without-isl --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_64=x86-64-v2 --with-arch_32=x86-64 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 11.5.0 20240719 (Red Hat 11.5.0-5) (GCC) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_58b22' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'cmTC_58b22.'
+         /usr/libexec/gcc/x86_64-redhat-linux/11/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/11/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper -plugin-opt=-fresolution=/home/j/tmp/ccXasRM1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_58b22 /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/11/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/11 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../.. CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-redhat-linux/11/crtend.o /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_58b22' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'cmTC_58b22.'
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-RZ8oCR'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-RZ8oCR'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/CMakeLists.txt:14 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-redhat-linux/11/include]
+          add: [/usr/local/include]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/11/include] ==> [/usr/lib/gcc/x86_64-redhat-linux/11/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/lib/gcc/x86_64-redhat-linux/11/include;/usr/local/include;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:152 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/home/j/.cache/CPM/googletest/a36d6fcbd7356d396ea479e6b11f4b9760ad0c04/CMakeLists.txt:14 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-RZ8oCR]
+        ignore line: []
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_58b22/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-RZ8oCR']
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_58b22.dir/build.make CMakeFiles/cmTC_58b22.dir/build]
+        ignore line: [gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-RZ8oCR']
+        ignore line: [Building C object CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-redhat-linux]
+        ignore line: [Configured with: ../configure --enable-bootstrap --enable-host-pie --enable-host-bind-now --enable-languages=c c++ fortran lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --without-isl --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_64=x86-64-v2 --with-arch_32=x86-64 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 11.5.0 20240719 (Red Hat 11.5.0-5) (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_58b22.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/11/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_58b22.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64-v2 -version -o /home/j/tmp/ccKObHBB.s]
+        ignore line: [GNU C17 (GCC) version 11.5.0 20240719 (Red Hat 11.5.0-5) (x86_64-redhat-linux)]
+        ignore line: [	compiled by GNU C version 11.5.0 20240719 (Red Hat 11.5.0-5)  GMP version 6.2.0  MPFR version 4.1.0-p9  MPC version 1.2.1  isl version none]
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/11/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/11/../../../../x86_64-redhat-linux/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/11/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [GNU C17 (GCC) version 11.5.0 20240719 (Red Hat 11.5.0-5) (x86_64-redhat-linux)]
+        ignore line: [	compiled by GNU C version 11.5.0 20240719 (Red Hat 11.5.0-5)  GMP version 6.2.0  MPFR version 4.1.0-p9  MPC version 1.2.1  isl version none]
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [Compiler executable checksum: d8a17bc88c45c82103f770314ee9eca3]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_58b22.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o /home/j/tmp/ccKObHBB.s]
+        ignore line: [GNU assembler version 2.35.2 (x86_64-redhat-linux) using BFD version version 2.35.2-63.el9]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_58b22]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_58b22.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/cc  -v CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o -o cmTC_58b22 ]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-redhat-linux]
+        ignore line: [Configured with: ../configure --enable-bootstrap --enable-host-pie --enable-host-bind-now --enable-languages=c c++ fortran lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --without-isl --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_64=x86-64-v2 --with-arch_32=x86-64 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 11.5.0 20240719 (Red Hat 11.5.0-5) (GCC) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/11/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/11/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/11/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_58b22' '-mtune=generic' '-march=x86-64-v2' '-dumpdir' 'cmTC_58b22.']
+        link line: [ /usr/libexec/gcc/x86_64-redhat-linux/11/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/11/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper -plugin-opt=-fresolution=/home/j/tmp/ccXasRM1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_58b22 /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/11/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/11 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../.. CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-redhat-linux/11/crtend.o /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-redhat-linux/11/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-redhat-linux/11/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/home/j/tmp/ccXasRM1.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--no-add-needed] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_58b22] ==> ignore
+          arg [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/11/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/11/crtbegin.o]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/11] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/11]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/11/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../..]
+          arg [CMakeFiles/cmTC_58b22.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [/usr/lib/gcc/x86_64-redhat-linux/11/crtend.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/11/crtend.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o]
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o] ==> [/usr/lib64/crt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o] ==> [/usr/lib64/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/11] ==> [/usr/lib/gcc/x86_64-redhat-linux/11]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/11/../../..] ==> [/usr/lib]
+        implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+        implicit objs: [/usr/lib64/crt1.o;/usr/lib64/crti.o;/usr/lib/gcc/x86_64-redhat-linux/11/crtbegin.o;/usr/lib/gcc/x86_64-redhat-linux/11/crtend.o;/usr/lib64/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/11;/usr/lib64;/lib64;/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckLibraryExists.cmake:71 (try_compile)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:135 (check_library_exists)"
+    checks:
+      - "Looking for shm_open in rt"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-qLPFDM"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-qLPFDM"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_LIB_RT"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-qLPFDM
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0f474/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-qLPFDM'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_0f474.dir/build.make CMakeFiles/cmTC_0f474.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-qLPFDM'
+        Building CXX object CMakeFiles/cmTC_0f474.dir/CheckFunctionExists.cxx.o
+        /usr/bin/c++   --coverage -DCHECK_FUNCTION_EXISTS=shm_open -o CMakeFiles/cmTC_0f474.dir/CheckFunctionExists.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-qLPFDM/CheckFunctionExists.cxx
+        Linking CXX executable cmTC_0f474
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0f474.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage -DCHECK_FUNCTION_EXISTS=shm_open CMakeFiles/cmTC_0f474.dir/CheckFunctionExists.cxx.o -o cmTC_0f474  -lrt 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-qLPFDM'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-qLPFDM'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:184 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WALL"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-UajecH"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-UajecH"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WALL"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-UajecH
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d690a/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-UajecH'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_d690a.dir/build.make CMakeFiles/cmTC_d690a.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-UajecH'
+        Building CXX object CMakeFiles/cmTC_d690a.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WALL  --coverage  -Wall -std=c++11   -Wall -o CMakeFiles/cmTC_d690a.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-UajecH/src.cxx
+        Linking CXX executable cmTC_d690a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d690a.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall CMakeFiles/cmTC_d690a.dir/src.cxx.o -o cmTC_d690a 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-UajecH'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-UajecH'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:185 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WEXTRA"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-IL6w8Q"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-IL6w8Q"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WEXTRA"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-IL6w8Q
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2cbc8/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-IL6w8Q'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_2cbc8.dir/build.make CMakeFiles/cmTC_2cbc8.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-IL6w8Q'
+        Building CXX object CMakeFiles/cmTC_2cbc8.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WEXTRA  --coverage  -Wall  -Wextra -std=c++11   -Wextra -o CMakeFiles/cmTC_2cbc8.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-IL6w8Q/src.cxx
+        Linking CXX executable cmTC_2cbc8
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2cbc8.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra CMakeFiles/cmTC_2cbc8.dir/src.cxx.o -o cmTC_2cbc8 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-IL6w8Q'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-IL6w8Q'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:186 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WSHADOW"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-nzA0xa"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-nzA0xa"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WSHADOW"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-nzA0xa
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a220b/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-nzA0xa'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_a220b.dir/build.make CMakeFiles/cmTC_a220b.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-nzA0xa'
+        Building CXX object CMakeFiles/cmTC_a220b.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WSHADOW  --coverage  -Wall  -Wextra  -Wshadow -std=c++11   -Wshadow -o CMakeFiles/cmTC_a220b.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-nzA0xa/src.cxx
+        Linking CXX executable cmTC_a220b
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a220b.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow CMakeFiles/cmTC_a220b.dir/src.cxx.o -o cmTC_a220b 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-nzA0xa'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-nzA0xa'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:187 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WFLOAT_EQUAL"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-Vra4BY"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-Vra4BY"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WFLOAT_EQUAL"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-Vra4BY
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e652e/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-Vra4BY'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_e652e.dir/build.make CMakeFiles/cmTC_e652e.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-Vra4BY'
+        Building CXX object CMakeFiles/cmTC_e652e.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WFLOAT_EQUAL  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal -std=c++11   -Wfloat-equal -o CMakeFiles/cmTC_e652e.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-Vra4BY/src.cxx
+        Linking CXX executable cmTC_e652e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e652e.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal CMakeFiles/cmTC_e652e.dir/src.cxx.o -o cmTC_e652e 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-Vra4BY'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-Vra4BY'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:189 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WERROR"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-xqVxm0"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-xqVxm0"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WERROR"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-xqVxm0
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ec5f7/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-xqVxm0'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ec5f7.dir/build.make CMakeFiles/cmTC_ec5f7.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-xqVxm0'
+        Building CXX object CMakeFiles/cmTC_ec5f7.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WERROR  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Werror -std=c++11   -Werror -o CMakeFiles/cmTC_ec5f7.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-xqVxm0/src.cxx
+        Linking CXX executable cmTC_ec5f7
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ec5f7.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Werror CMakeFiles/cmTC_ec5f7.dir/src.cxx.o -o cmTC_ec5f7 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-xqVxm0'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-xqVxm0'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:195 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WSUGGEST_OVERRIDE"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-A7hHc4"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-A7hHc4"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WSUGGEST_OVERRIDE"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-A7hHc4
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4c060/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-A7hHc4'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_4c060.dir/build.make CMakeFiles/cmTC_4c060.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-A7hHc4'
+        Building CXX object CMakeFiles/cmTC_4c060.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WSUGGEST_OVERRIDE  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override -std=c++11   -Wsuggest-override -o CMakeFiles/cmTC_4c060.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-A7hHc4/src.cxx
+        Linking CXX executable cmTC_4c060
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4c060.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override CMakeFiles/cmTC_4c060.dir/src.cxx.o -o cmTC_4c060 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-A7hHc4'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-A7hHc4'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:197 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_PEDANTIC"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-jMSKH4"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-jMSKH4"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_PEDANTIC"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-jMSKH4
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_1da55/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-jMSKH4'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_1da55.dir/build.make CMakeFiles/cmTC_1da55.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-jMSKH4'
+        Building CXX object CMakeFiles/cmTC_1da55.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_PEDANTIC  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic -std=c++11   -pedantic -o CMakeFiles/cmTC_1da55.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-jMSKH4/src.cxx
+        Linking CXX executable cmTC_1da55
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1da55.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic CMakeFiles/cmTC_1da55.dir/src.cxx.o -o cmTC_1da55 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-jMSKH4'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-jMSKH4'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:198 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_PEDANTIC_ERRORS"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-t0s2Lp"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-t0s2Lp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_PEDANTIC_ERRORS"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-t0s2Lp
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_525a8/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-t0s2Lp'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_525a8.dir/build.make CMakeFiles/cmTC_525a8.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-t0s2Lp'
+        Building CXX object CMakeFiles/cmTC_525a8.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_PEDANTIC_ERRORS  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors -std=c++11   -pedantic-errors -o CMakeFiles/cmTC_525a8.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-t0s2Lp/src.cxx
+        Linking CXX executable cmTC_525a8
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_525a8.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors CMakeFiles/cmTC_525a8.dir/src.cxx.o -o cmTC_525a8 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-t0s2Lp'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-t0s2Lp'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:199 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WSHORTEN_64_TO_32"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-JpDdA2"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-JpDdA2"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WSHORTEN_64_TO_32"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-JpDdA2
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b007c/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-JpDdA2'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_b007c.dir/build.make CMakeFiles/cmTC_b007c.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-JpDdA2'
+        Building CXX object CMakeFiles/cmTC_b007c.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WSHORTEN_64_TO_32  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32 -std=c++11   -Wshorten-64-to-32 -o CMakeFiles/cmTC_b007c.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-JpDdA2/src.cxx
+        c++: error: unrecognized command-line option '-Wshorten-64-to-32'
+        c++: error: unrecognized command-line option '-Wshorten-64-to-32'
+        gmake[2]: *** [CMakeFiles/cmTC_b007c.dir/build.make:78: CMakeFiles/cmTC_b007c.dir/src.cxx.o] Error 1
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-JpDdA2'
+        gmake[1]: *** [Makefile:127: cmTC_b007c/fast] Error 2
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-JpDdA2'
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:200 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_FSTRICT_ALIASING"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-oOjKWg"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-oOjKWg"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_FSTRICT_ALIASING"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-oOjKWg
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_19713/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-oOjKWg'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_19713.dir/build.make CMakeFiles/cmTC_19713.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-oOjKWg'
+        Building CXX object CMakeFiles/cmTC_19713.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_FSTRICT_ALIASING  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing -std=c++11   -fstrict-aliasing -o CMakeFiles/cmTC_19713.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-oOjKWg/src.cxx
+        Linking CXX executable cmTC_19713
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_19713.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing CMakeFiles/cmTC_19713.dir/src.cxx.o -o cmTC_19713 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-oOjKWg'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-oOjKWg'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:203 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WNO_DEPRECATED_DECLARATIONS"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-gt3s5i"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-gt3s5i"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WNO_DEPRECATED_DECLARATIONS"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-gt3s5i
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_788eb/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-gt3s5i'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_788eb.dir/build.make CMakeFiles/cmTC_788eb.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-gt3s5i'
+        Building CXX object CMakeFiles/cmTC_788eb.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WNO_DEPRECATED_DECLARATIONS  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations -std=c++11   -Wno-deprecated-declarations -o CMakeFiles/cmTC_788eb.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-gt3s5i/src.cxx
+        Linking CXX executable cmTC_788eb
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_788eb.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations CMakeFiles/cmTC_788eb.dir/src.cxx.o -o cmTC_788eb 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-gt3s5i'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-gt3s5i'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:212 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WNO_DEPRECATED"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-2PXzYk"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-2PXzYk"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WNO_DEPRECATED"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-2PXzYk
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_921dd/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-2PXzYk'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_921dd.dir/build.make CMakeFiles/cmTC_921dd.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-2PXzYk'
+        Building CXX object CMakeFiles/cmTC_921dd.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WNO_DEPRECATED  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated -std=c++11   -Wno-deprecated -o CMakeFiles/cmTC_921dd.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-2PXzYk/src.cxx
+        Linking CXX executable cmTC_921dd
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_921dd.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated CMakeFiles/cmTC_921dd.dir/src.cxx.o -o cmTC_921dd 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-2PXzYk'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-2PXzYk'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:222 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WSTRICT_ALIASING"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-K1sI5g"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-K1sI5g"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WSTRICT_ALIASING"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-K1sI5g
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b38ae/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-K1sI5g'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_b38ae.dir/build.make CMakeFiles/cmTC_b38ae.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-K1sI5g'
+        Building CXX object CMakeFiles/cmTC_b38ae.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WSTRICT_ALIASING  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing -std=c++11   -Wstrict-aliasing -o CMakeFiles/cmTC_b38ae.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-K1sI5g/src.cxx
+        Linking CXX executable cmTC_b38ae
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b38ae.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing CMakeFiles/cmTC_b38ae.dir/src.cxx.o -o cmTC_b38ae 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-K1sI5g'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-K1sI5g'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:227 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WD654"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-crYMT9"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-crYMT9"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WD654"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-crYMT9
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ac54e/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-crYMT9'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ac54e.dir/build.make CMakeFiles/cmTC_ac54e.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-crYMT9'
+        Building CXX object CMakeFiles/cmTC_ac54e.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WD654  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  -wd654 -std=c++11   -wd654 -o CMakeFiles/cmTC_ac54e.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-crYMT9/src.cxx
+        c++: error: unrecognized command-line option '-wd654'
+        c++: error: unrecognized command-line option '-wd654'
+        gmake[2]: *** [CMakeFiles/cmTC_ac54e.dir/build.make:78: CMakeFiles/cmTC_ac54e.dir/src.cxx.o] Error 1
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-crYMT9'
+        gmake[1]: *** [Makefile:127: cmTC_ac54e/fast] Error 2
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-crYMT9'
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:228 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_WTHREAD_SAFETY"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-P1puME"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-P1puME"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_WTHREAD_SAFETY"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-P1puME
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b7610/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-P1puME'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_b7610.dir/build.make CMakeFiles/cmTC_b7610.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-P1puME'
+        Building CXX object CMakeFiles/cmTC_b7610.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_WTHREAD_SAFETY  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  -Wthread-safety -std=c++11   -Wthread-safety -o CMakeFiles/cmTC_b7610.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-P1puME/src.cxx
+        c++: error: unrecognized command-line option '-Wthread-safety'
+        c++: error: unrecognized command-line option '-Wthread-safety'
+        gmake[2]: *** [CMakeFiles/cmTC_b7610.dir/build.make:78: CMakeFiles/cmTC_b7610.dir/src.cxx.o] Error 1
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-P1puME'
+        gmake[1]: *** [Makefile:127: cmTC_b7610/fast] Error 2
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-P1puME'
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/AddCXXCompilerFlag.cmake:34 (check_cxx_compiler_flag)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:279 (add_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_CXX_FLAG_COVERAGE"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-C83Iyz"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-C83Iyz"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "HAVE_CXX_FLAG_COVERAGE"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-C83Iyz
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a772d/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-C83Iyz'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_a772d.dir/build.make CMakeFiles/cmTC_a772d.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-C83Iyz'
+        Building CXX object CMakeFiles/cmTC_a772d.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_CXX_FLAG_COVERAGE  --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  --coverage -std=c++11   --coverage -o CMakeFiles/cmTC_a772d.dir/src.cxx.o -c /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-C83Iyz/src.cxx
+        Linking CXX executable cmTC_a772d
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a772d.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  --coverage CMakeFiles/cmTC_a772d.dir/src.cxx.o -o cmTC_a772d 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-C83Iyz'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeScratch/TryCompile-C83Iyz'
+        
+      exitCode: 0
+  -
+    kind: "try_run-v1"
+    backtrace:
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/CXXFeatureCheck.cmake:55 (try_run)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:308 (cxx_feature_check)"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "COMPILE_HAVE_STD_REGEX"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9f955/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_9f955.dir/build.make CMakeFiles/cmTC_9f955.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        Building CXX object CMakeFiles/cmTC_9f955.dir/std_regex.cpp.o
+        /usr/bin/c++   --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  -std=c++11 -o CMakeFiles/cmTC_9f955.dir/std_regex.cpp.o -c /home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/std_regex.cpp
+        Linking CXX executable cmTC_9f955
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9f955.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  CMakeFiles/cmTC_9f955.dir/std_regex.cpp.o -o cmTC_9f955 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        
+      exitCode: 0
+    runResult:
+      variable: "RUN_HAVE_STD_REGEX"
+      cached: true
+      stdout: |
+      exitCode: 0
+  -
+    kind: "try_run-v1"
+    backtrace:
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/CXXFeatureCheck.cmake:55 (try_run)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:309 (cxx_feature_check)"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "COMPILE_HAVE_GNU_POSIX_REGEX"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ba6e1/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ba6e1.dir/build.make CMakeFiles/cmTC_ba6e1.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        Building CXX object CMakeFiles/cmTC_ba6e1.dir/gnu_posix_regex.cpp.o
+        /usr/bin/c++   --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  -std=c++11 -o CMakeFiles/cmTC_ba6e1.dir/gnu_posix_regex.cpp.o -c /home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/gnu_posix_regex.cpp
+        /home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/gnu_posix_regex.cpp:1:10: fatal error: gnuregex.h: No such file or directory
+            1 | #include <gnuregex.h>
+              |          ^~~~~~~~~~~~
+        compilation terminated.
+        gmake[2]: *** [CMakeFiles/cmTC_ba6e1.dir/build.make:78: CMakeFiles/cmTC_ba6e1.dir/gnu_posix_regex.cpp.o] Error 1
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        gmake[1]: *** [Makefile:127: cmTC_ba6e1/fast] Error 2
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        
+      exitCode: 2
+    runResult:
+      variable: "RUN_HAVE_GNU_POSIX_REGEX"
+      cached: true
+  -
+    kind: "try_run-v1"
+    backtrace:
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/CXXFeatureCheck.cmake:55 (try_run)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:310 (cxx_feature_check)"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "COMPILE_HAVE_POSIX_REGEX"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_1f8e1/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_1f8e1.dir/build.make CMakeFiles/cmTC_1f8e1.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        Building CXX object CMakeFiles/cmTC_1f8e1.dir/posix_regex.cpp.o
+        /usr/bin/c++   --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  -std=c++11 -o CMakeFiles/cmTC_1f8e1.dir/posix_regex.cpp.o -c /home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/posix_regex.cpp
+        Linking CXX executable cmTC_1f8e1
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1f8e1.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  CMakeFiles/cmTC_1f8e1.dir/posix_regex.cpp.o -o cmTC_1f8e1 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        
+      exitCode: 0
+    runResult:
+      variable: "RUN_HAVE_POSIX_REGEX"
+      cached: true
+      stdout: |
+      exitCode: 0
+  -
+    kind: "try_run-v1"
+    backtrace:
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/CXXFeatureCheck.cmake:55 (try_run)"
+      - "/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/CMakeLists.txt:319 (cxx_feature_check)"
+    directories:
+      source: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp"
+      binary: "/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "--coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/j/src/jvishnefske/motionControl/build/CPM_modules;;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/Modules;/home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake"
+    buildResult:
+      variable: "COMPILE_HAVE_STEADY_CLOCK"
+      cached: true
+      stdout: |
+        Change Dir: /home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_68c78/fast && gmake[1]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_68c78.dir/build.make CMakeFiles/cmTC_68c78.dir/build
+        gmake[2]: Entering directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        Building CXX object CMakeFiles/cmTC_68c78.dir/steady_clock.cpp.o
+        /usr/bin/c++   --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  -std=c++11 -o CMakeFiles/cmTC_68c78.dir/steady_clock.cpp.o -c /home/j/.cache/CPM/benchmark/90c6f6304c03ba17309fec31125fb33d4cdb1e1e/cmake/steady_clock.cpp
+        Linking CXX executable cmTC_68c78
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_68c78.dir/link.txt --verbose=1
+        /usr/bin/c++ --coverage  -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wsuggest-override  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing  CMakeFiles/cmTC_68c78.dir/steady_clock.cpp.o -o cmTC_68c78 
+        gmake[2]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        gmake[1]: Leaving directory '/home/j/src/jvishnefske/motionControl/build/CMakeFiles/CMakeTmp'
+        
+      exitCode: 0
+    runResult:
+      variable: "RUN_HAVE_STEADY_CLOCK"
+      cached: true
+      stdout: |
+      exitCode: 0
+...
