@@ -1,0 +1,5 @@
+if(EXISTS "/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests[1]_tests.cmake")
+  include("/home/j/src/jvishnefske/motionControl/build/test/NetworkingTests[1]_tests.cmake")
+else()
+  add_test(NetworkingTests_NOT_BUILT NetworkingTests_NOT_BUILT)
+endif()
