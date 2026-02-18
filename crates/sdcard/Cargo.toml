@@ -1,0 +1,17 @@
+[package]
+name = "sdcard"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+gcode-parser.workspace = true
+actor-framework.workspace = true
+embassy-executor.workspace = true
+embassy-time.workspace = true
+embassy-sync.workspace = true
+cortex-m.workspace = true
+defmt.workspace = true
+heapless.workspace = true
+embedded-hal.workspace = true
+embedded-hal-bus.workspace = true
+embedded-sdmmc.workspace = true
