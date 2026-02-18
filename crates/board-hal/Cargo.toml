@@ -1,0 +1,16 @@
+[package]
+name = "board-hal"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+actor-framework.workspace = true
+embassy-executor.workspace = true
+embassy-time.workspace = true
+embassy-sync.workspace = true
+cortex-m.workspace = true
+defmt.workspace = true
+heapless.workspace = true
+embedded-hal.workspace = true
+embedded-io.workspace = true
+libm.workspace = true

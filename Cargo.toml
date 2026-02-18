@@ -1,0 +1,59 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/actor-framework",
+    "crates/board-hal",
+    "crates/gcode-parser",
+    "crates/motion-planner",
+    "crates/thermal",
+    "crates/sdcard",
+    "firmware",
+]
+
+[workspace.package]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[workspace.dependencies]
+# Embassy async runtime
+embassy-executor = { version = "0.7", features = ["arch-cortex-m", "executor-thread", "executor-interrupt"] }
+embassy-time = { version = "0.4", features = ["tick-hz-1_000_000"] }
+embassy-sync = "0.6"
+embassy-futures = "0.1"
+
+# Cortex-M support
+cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
+cortex-m-rt = "0.7"
+
+# SAME54 HAL + PAC
+atsamd-hal = { version = "0.17", features = ["same54p-rt", "dma"] }
+
+# Logging
+defmt = "0.3"
+defmt-rtt = "0.4"
+panic-probe = { version = "0.3", features = ["print-defmt"] }
+
+# Utilities
+heapless = { version = "0.8", features = ["defmt-03"] }
+static_cell = "2"
+embedded-hal = "1.0"
+embedded-io = "0.6"
+fixed = "1.28"
+libm = "0.2"
+
+# SD card
+embedded-sdmmc = "0.8"
+embedded-hal-bus = "0.2"
+
+# Internal crates
+actor-framework = { path = "crates/actor-framework" }
+board-hal = { path = "crates/board-hal" }
+gcode-parser = { path = "crates/gcode-parser" }
+motion-planner = { path = "crates/motion-planner" }
+thermal = { path = "crates/thermal" }
+sdcard = { path = "crates/sdcard" }
+
+[profile.release]
+debug = 2
+lto = "fat"
+opt-level = "s"
