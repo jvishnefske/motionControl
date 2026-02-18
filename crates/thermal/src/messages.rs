@@ -7,32 +7,19 @@ use board_hal::thermistor::TempChannel;
 #[derive(Clone, Debug, defmt::Format)]
 pub enum ThermalCommand {
     /// Set target temperature for a heater (no wait).
-    SetTarget {
-        channel: TempChannel,
-        temp_c: f32,
-    },
+    SetTarget { channel: TempChannel, temp_c: f32 },
 
     /// Set target temperature and signal when reached.
-    SetTargetAndWait {
-        channel: TempChannel,
-        temp_c: f32,
-    },
+    SetTargetAndWait { channel: TempChannel, temp_c: f32 },
 
     /// Turn off a heater.
-    HeaterOff {
-        channel: TempChannel,
-    },
+    HeaterOff { channel: TempChannel },
 
     /// Set fan speed (0.0 - 1.0).
-    SetFanSpeed {
-        channel: PwmChannel,
-        speed: f32,
-    },
+    SetFanSpeed { channel: PwmChannel, speed: f32 },
 
     /// Turn fan off.
-    FanOff {
-        channel: PwmChannel,
-    },
+    FanOff { channel: PwmChannel },
 
     /// Report current temperatures.
     ReportTemperatures,
@@ -53,18 +40,11 @@ pub enum ThermalStatus {
     },
 
     /// Target temperature has been reached.
-    TargetReached {
-        channel: TempChannel,
-    },
+    TargetReached { channel: TempChannel },
 
     /// Thermal runaway detected.
-    ThermalRunaway {
-        channel: TempChannel,
-        temp_c: f32,
-    },
+    ThermalRunaway { channel: TempChannel, temp_c: f32 },
 
     /// Thermistor fault (open/short).
-    SensorFault {
-        channel: TempChannel,
-    },
+    SensorFault { channel: TempChannel },
 }

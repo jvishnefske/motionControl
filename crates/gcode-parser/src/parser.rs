@@ -62,10 +62,7 @@ fn parse_g_command(code: u16, params: &str) -> GCodeCommand {
         92 => GCodeCommand::SetPosition {
             axes: parse_axis_values(params),
         },
-        _ => GCodeCommand::Unknown {
-            letter: b'G',
-            code,
-        },
+        _ => GCodeCommand::Unknown { letter: b'G', code },
     }
 }
 
@@ -114,7 +111,7 @@ fn parse_m_command(code: u16, params: &str) -> GCodeCommand {
         },
         208 => GCodeCommand::SetAxisLimits {
             axes: parse_axis_values(params),
-            max: parse_param_f32(params, b'S').map_or(true, |v| v == 0.0),
+            max: parse_param_f32(params, b'S').is_none_or(|v| v == 0.0),
         },
         350 => GCodeCommand::SetMicrostepping {
             axes: parse_axis_values(params),
@@ -147,10 +144,7 @@ fn parse_m_command(code: u16, params: &str) -> GCodeCommand {
             axes: parse_axis_values(params),
             idle_percent: parse_param_f32(params, b'I'),
         },
-        _ => GCodeCommand::Unknown {
-            letter: b'M',
-            code,
-        },
+        _ => GCodeCommand::Unknown { letter: b'M', code },
     }
 }
 
@@ -269,7 +263,11 @@ fn parse_f32_at(bytes: &[u8], i: &mut usize) -> f32 {
     }
 
     let val = integer_part as f32 + frac_part;
-    if negative { -val } else { val }
+    if negative {
+        -val
+    } else {
+        val
+    }
 }
 
 #[cfg(test)]
@@ -390,7 +388,11 @@ mod tests {
     #[test]
     fn test_parse_m569() {
         match parse_line("M569 P0 S1 D3") {
-            GCodeCommand::SetDriverConfig { driver, direction, mode } => {
+            GCodeCommand::SetDriverConfig {
+                driver,
+                direction,
+                mode,
+            } => {
                 assert_eq!(driver, 0);
                 assert_eq!(direction, Some(true));
                 assert_eq!(mode, Some(DriverMode::StealthChop));

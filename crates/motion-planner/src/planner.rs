@@ -43,6 +43,12 @@ pub struct MotionPlanner {
     queue: heapless::Deque<MotionSegment, QUEUE_DEPTH>,
 }
 
+impl Default for MotionPlanner {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl MotionPlanner {
     pub fn new() -> Self {
         Self {
@@ -68,36 +74,72 @@ impl MotionPlanner {
     }
 
     pub fn set_steps_per_mm(&mut self, axes: &AxisValues) {
-        if let Some(v) = axes.x { self.steps_per_mm[0] = v; }
-        if let Some(v) = axes.y { self.steps_per_mm[1] = v; }
-        if let Some(v) = axes.z { self.steps_per_mm[2] = v; }
-        if let Some(v) = axes.e { self.steps_per_mm[3] = v; }
+        if let Some(v) = axes.x {
+            self.steps_per_mm[0] = v;
+        }
+        if let Some(v) = axes.y {
+            self.steps_per_mm[1] = v;
+        }
+        if let Some(v) = axes.z {
+            self.steps_per_mm[2] = v;
+        }
+        if let Some(v) = axes.e {
+            self.steps_per_mm[3] = v;
+        }
     }
 
     pub fn set_max_feedrate(&mut self, axes: &AxisValues) {
-        if let Some(v) = axes.x { self.max_feedrate[0] = v; }
-        if let Some(v) = axes.y { self.max_feedrate[1] = v; }
-        if let Some(v) = axes.z { self.max_feedrate[2] = v; }
-        if let Some(v) = axes.e { self.max_feedrate[3] = v; }
+        if let Some(v) = axes.x {
+            self.max_feedrate[0] = v;
+        }
+        if let Some(v) = axes.y {
+            self.max_feedrate[1] = v;
+        }
+        if let Some(v) = axes.z {
+            self.max_feedrate[2] = v;
+        }
+        if let Some(v) = axes.e {
+            self.max_feedrate[3] = v;
+        }
     }
 
     pub fn set_max_accel(&mut self, axes: &AxisValues) {
-        if let Some(v) = axes.x { self.max_accel[0] = v; }
-        if let Some(v) = axes.y { self.max_accel[1] = v; }
-        if let Some(v) = axes.z { self.max_accel[2] = v; }
-        if let Some(v) = axes.e { self.max_accel[3] = v; }
+        if let Some(v) = axes.x {
+            self.max_accel[0] = v;
+        }
+        if let Some(v) = axes.y {
+            self.max_accel[1] = v;
+        }
+        if let Some(v) = axes.z {
+            self.max_accel[2] = v;
+        }
+        if let Some(v) = axes.e {
+            self.max_accel[3] = v;
+        }
     }
 
     pub fn set_acceleration(&mut self, print_accel: Option<f32>, travel_accel: Option<f32>) {
-        if let Some(a) = print_accel { self.print_accel = a; }
-        if let Some(a) = travel_accel { self.travel_accel = a; }
+        if let Some(a) = print_accel {
+            self.print_accel = a;
+        }
+        if let Some(a) = travel_accel {
+            self.travel_accel = a;
+        }
     }
 
     pub fn set_position(&mut self, axes: &AxisValues) {
-        if let Some(v) = axes.x { self.position_steps[0] = (v * self.steps_per_mm[0]) as i64; }
-        if let Some(v) = axes.y { self.position_steps[1] = (v * self.steps_per_mm[1]) as i64; }
-        if let Some(v) = axes.z { self.position_steps[2] = (v * self.steps_per_mm[2]) as i64; }
-        if let Some(v) = axes.e { self.position_steps[3] = (v * self.steps_per_mm[3]) as i64; }
+        if let Some(v) = axes.x {
+            self.position_steps[0] = (v * self.steps_per_mm[0]) as i64;
+        }
+        if let Some(v) = axes.y {
+            self.position_steps[1] = (v * self.steps_per_mm[1]) as i64;
+        }
+        if let Some(v) = axes.z {
+            self.position_steps[2] = (v * self.steps_per_mm[2]) as i64;
+        }
+        if let Some(v) = axes.e {
+            self.position_steps[3] = (v * self.steps_per_mm[3]) as i64;
+        }
     }
 
     pub fn position_mm(&self) -> [f32; 4] {
@@ -114,9 +156,18 @@ impl MotionPlanner {
     }
 
     pub fn mark_homed(&mut self, x: bool, y: bool, z: bool) {
-        if x { self.homed[0] = true; self.position_steps[0] = 0; }
-        if y { self.homed[1] = true; self.position_steps[1] = 0; }
-        if z { self.homed[2] = true; self.position_steps[2] = 0; }
+        if x {
+            self.homed[0] = true;
+            self.position_steps[0] = 0;
+        }
+        if y {
+            self.homed[1] = true;
+            self.position_steps[1] = 0;
+        }
+        if z {
+            self.homed[2] = true;
+            self.position_steps[2] = 0;
+        }
     }
 
     /// Plan a linear move and push segments into the queue.
@@ -163,22 +214,19 @@ impl MotionPlanner {
         let feedrate_mm_s = self.clamp_feedrate(self.active_feedrate / 60.0, &delta, distance_mm);
 
         // Select acceleration
-        let accel = if is_extrusion { self.print_accel } else { self.travel_accel };
+        let accel = if is_extrusion {
+            self.print_accel
+        } else {
+            self.travel_accel
+        };
         let accel = self.clamp_acceleration(accel, &delta, distance_mm);
 
         // Generate trapezoidal profile
-        let segments_added = self.generate_trapezoid(
-            delta,
-            direction,
-            feedrate_mm_s,
-            accel,
-            distance_mm,
-        );
+        let segments_added =
+            self.generate_trapezoid(delta, direction, feedrate_mm_s, accel, distance_mm);
 
         // Update position
-        for i in 0..4 {
-            self.position_steps[i] = target_steps[i];
-        }
+        self.position_steps.copy_from_slice(&target_steps);
 
         segments_added
     }
@@ -223,9 +271,9 @@ impl MotionPlanner {
 
     fn compute_distance_mm(&self, delta: &[i32; 4]) -> f32 {
         let mut sum_sq: f32 = 0.0;
-        for i in 0..3 {
-            // XYZ only for distance
-            let d_mm = delta[i] as f32 / self.steps_per_mm[i];
+        // XYZ only for distance
+        for (i, &d) in delta.iter().enumerate().take(3) {
+            let d_mm = d as f32 / self.steps_per_mm[i];
             sum_sq += d_mm * d_mm;
         }
         libm::sqrtf(sum_sq)
@@ -234,9 +282,9 @@ impl MotionPlanner {
     fn clamp_feedrate(&self, desired_mm_s: f32, delta: &[i32; 4], distance_mm: f32) -> f32 {
         let mut max_speed = desired_mm_s;
 
-        for i in 0..4 {
-            if delta[i] != 0 {
-                let axis_distance = (delta[i] as f32 / self.steps_per_mm[i]).abs();
+        for (i, &d) in delta.iter().enumerate() {
+            if d != 0 {
+                let axis_distance = (d as f32 / self.steps_per_mm[i]).abs();
                 let fraction = axis_distance / distance_mm;
                 if fraction > 0.001 {
                     let axis_limit = self.max_feedrate[i] / 60.0; // convert to mm/s
@@ -254,9 +302,9 @@ impl MotionPlanner {
     fn clamp_acceleration(&self, desired: f32, delta: &[i32; 4], distance_mm: f32) -> f32 {
         let mut accel = desired;
 
-        for i in 0..4 {
-            if delta[i] != 0 {
-                let axis_distance = (delta[i] as f32 / self.steps_per_mm[i]).abs();
+        for (i, &d) in delta.iter().enumerate() {
+            if d != 0 {
+                let axis_distance = (d as f32 / self.steps_per_mm[i]).abs();
                 let fraction = axis_distance / distance_mm;
                 if fraction > 0.001 {
                     let limit = self.max_accel[i] / fraction;
@@ -270,6 +318,7 @@ impl MotionPlanner {
         accel
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn generate_trapezoid(
         &mut self,
         delta: [i32; 4],
@@ -278,7 +327,7 @@ impl MotionPlanner {
         accel: f32,
         distance_mm: f32,
     ) -> usize {
-        // Trapezoidal profile: accelerate → cruise → decelerate
+        // Trapezoidal profile: accelerate -> cruise -> decelerate
         // Distance to reach cruise speed: d = v^2 / (2*a)
         let accel_distance = (cruise_speed * cruise_speed) / (2.0 * accel);
         let decel_distance = accel_distance;
@@ -291,36 +340,76 @@ impl MotionPlanner {
             let half_distance = distance_mm / 2.0;
 
             // Acceleration phase
-            if self.push_segment(&delta, &direction, half_distance, distance_mm,
-                                  0.0, peak_speed, accel, SegmentPhase::Accelerate) {
+            if self.push_segment(
+                &delta,
+                &direction,
+                half_distance,
+                distance_mm,
+                0.0,
+                peak_speed,
+                accel,
+                SegmentPhase::Accelerate,
+            ) {
                 segments_added += 1;
             }
 
             // Deceleration phase
-            if self.push_segment(&delta, &direction, half_distance, distance_mm,
-                                  peak_speed, 0.0, accel, SegmentPhase::Decelerate) {
+            if self.push_segment(
+                &delta,
+                &direction,
+                half_distance,
+                distance_mm,
+                peak_speed,
+                0.0,
+                accel,
+                SegmentPhase::Decelerate,
+            ) {
                 segments_added += 1;
             }
         } else {
             let cruise_distance = distance_mm - accel_distance - decel_distance;
 
             // Acceleration phase
-            if self.push_segment(&delta, &direction, accel_distance, distance_mm,
-                                  0.0, cruise_speed, accel, SegmentPhase::Accelerate) {
+            if self.push_segment(
+                &delta,
+                &direction,
+                accel_distance,
+                distance_mm,
+                0.0,
+                cruise_speed,
+                accel,
+                SegmentPhase::Accelerate,
+            ) {
                 segments_added += 1;
             }
 
             // Cruise phase
-            if cruise_distance > 0.001 {
-                if self.push_segment(&delta, &direction, cruise_distance, distance_mm,
-                                      cruise_speed, cruise_speed, 0.0, SegmentPhase::Cruise) {
-                    segments_added += 1;
-                }
+            if cruise_distance > 0.001
+                && self.push_segment(
+                    &delta,
+                    &direction,
+                    cruise_distance,
+                    distance_mm,
+                    cruise_speed,
+                    cruise_speed,
+                    0.0,
+                    SegmentPhase::Cruise,
+                )
+            {
+                segments_added += 1;
             }
 
             // Deceleration phase
-            if self.push_segment(&delta, &direction, decel_distance, distance_mm,
-                                  cruise_speed, 0.0, accel, SegmentPhase::Decelerate) {
+            if self.push_segment(
+                &delta,
+                &direction,
+                decel_distance,
+                distance_mm,
+                cruise_speed,
+                0.0,
+                accel,
+                SegmentPhase::Decelerate,
+            ) {
                 segments_added += 1;
             }
         }
@@ -328,6 +417,7 @@ impl MotionPlanner {
         segments_added
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn push_segment(
         &mut self,
         delta: &[i32; 4],
@@ -342,13 +432,17 @@ impl MotionPlanner {
         let fraction = seg_distance / total_distance;
 
         let mut steps = [0i32; 4];
-        for i in 0..4 {
-            steps[i] = (delta[i] as f32 * fraction) as i32;
+        for (i, s) in steps.iter_mut().enumerate() {
+            *s = (delta[i] as f32 * fraction) as i32;
         }
 
         // Compute step intervals (microseconds per step for dominant axis)
         let avg_speed = (initial_speed + final_speed) / 2.0;
-        let duration_s = if avg_speed > 0.001 { seg_distance / avg_speed } else { 0.0 };
+        let duration_s = if avg_speed > 0.001 {
+            seg_distance / avg_speed
+        } else {
+            0.0
+        };
         let duration_us = (duration_s * 1_000_000.0) as u32;
 
         let initial_interval_us = if initial_speed > 0.001 {

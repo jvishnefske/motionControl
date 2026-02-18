@@ -14,9 +14,9 @@
 #![no_std]
 
 pub mod pins;
-pub mod stepper;
-pub mod tmc2209;
 pub mod pwm_output;
+pub mod stepper;
 pub mod thermistor;
+pub mod tmc2209;
 
 pub use pins::Duet3Pins;

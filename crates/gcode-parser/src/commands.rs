@@ -12,14 +12,12 @@ pub enum GCodeCommand {
     /// G0/G1: Linear move.
     LinearMove {
         axes: AxisValues,
-        feedrate: Option<f32>,    // F parameter, mm/min
+        feedrate: Option<f32>,      // F parameter, mm/min
         endstop_action: Option<u8>, // H parameter (0-4)
     },
 
     /// G28: Home axes.
-    Home {
-        axes: AxisFlags,
-    },
+    Home { axes: AxisFlags },
 
     /// G90: Set absolute positioning.
     AbsolutePositioning,
@@ -28,36 +26,26 @@ pub enum GCodeCommand {
     RelativePositioning,
 
     /// G92: Set position without movement.
-    SetPosition {
-        axes: AxisValues,
-    },
+    SetPosition { axes: AxisValues },
 
     // ── Configuration ─────────────────────────────────────────────
     /// M92: Set steps per mm.
-    SetStepsPerMm {
-        axes: AxisValues,
-    },
+    SetStepsPerMm { axes: AxisValues },
 
     /// M201: Set max per-axis accelerations (mm/s^2).
-    SetMaxAccelPerAxis {
-        axes: AxisValues,
-    },
+    SetMaxAccelPerAxis { axes: AxisValues },
 
     /// M203: Set max feedrates (mm/min).
-    SetMaxFeedrate {
-        axes: AxisValues,
-    },
+    SetMaxFeedrate { axes: AxisValues },
 
     /// M204: Set default acceleration.
     SetAcceleration {
-        print_accel: Option<f32>,   // P
-        travel_accel: Option<f32>,  // T
+        print_accel: Option<f32>,  // P
+        travel_accel: Option<f32>, // T
     },
 
     /// M206: Set home offsets.
-    SetHomeOffset {
-        axes: AxisValues,
-    },
+    SetHomeOffset { axes: AxisValues },
 
     /// M208: Set axis limits.
     SetAxisLimits {
@@ -73,15 +61,13 @@ pub enum GCodeCommand {
 
     /// M569: Set stepper driver direction and mode.
     SetDriverConfig {
-        driver: u8,                      // P parameter
-        direction: Option<bool>,         // S parameter (true = forward)
-        mode: Option<DriverMode>,        // D parameter
+        driver: u8,               // P parameter
+        direction: Option<bool>,  // S parameter (true = forward)
+        mode: Option<DriverMode>, // D parameter
     },
 
     /// M584: Set drive mapping.
-    SetDriveMapping {
-        axes: AxisValues,
-    },
+    SetDriveMapping { axes: AxisValues },
 
     /// M906: Set motor currents (mA).
     SetMotorCurrent {
@@ -91,16 +77,10 @@ pub enum GCodeCommand {
 
     // ── Temperature ───────────────────────────────────────────────
     /// M104: Set hotend temperature (no wait).
-    SetHotendTemp {
-        temp: f32,
-        tool: Option<u8>,
-    },
+    SetHotendTemp { temp: f32, tool: Option<u8> },
 
     /// M109: Set hotend temperature and wait.
-    SetHotendTempWait {
-        temp: f32,
-        tool: Option<u8>,
-    },
+    SetHotendTempWait { temp: f32, tool: Option<u8> },
 
     /// M140: Set bed temperature (no wait) or configure bed heater.
     SetBedTemp {
@@ -109,9 +89,7 @@ pub enum GCodeCommand {
     },
 
     /// M190: Set bed temperature and wait.
-    SetBedTempWait {
-        temp: f32,
-    },
+    SetBedTempWait { temp: f32 },
 
     // ── Persistence ───────────────────────────────────────────────
     /// M500: Save parameters to SD card.
@@ -123,13 +101,13 @@ pub enum GCodeCommand {
     // ── Fan control ───────────────────────────────────────────────
     /// M106: Set fan speed.
     SetFanSpeed {
-        fan: Option<u8>,   // P parameter
-        speed: f32,        // S parameter (0.0 - 1.0)
+        fan: Option<u8>, // P parameter
+        speed: f32,      // S parameter (0.0 - 1.0)
     },
 
     /// M107: Turn fan off.
     FanOff {
-        fan: Option<u8>,   // P parameter
+        fan: Option<u8>, // P parameter
     },
 
     // ── Misc ──────────────────────────────────────────────────────
@@ -152,8 +130,5 @@ pub enum GCodeCommand {
     Comment,
 
     /// Unrecognized command.
-    Unknown {
-        letter: u8,
-        code: u16,
-    },
+    Unknown { letter: u8, code: u16 },
 }

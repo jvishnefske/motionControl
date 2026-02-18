@@ -12,8 +12,8 @@
 
 #![no_std]
 
-pub mod reader;
 pub mod messages;
+pub mod reader;
 
-pub use reader::LineReader;
 pub use messages::*;
+pub use reader::LineReader;

@@ -29,21 +29,21 @@
 #![no_std]
 #![no_main]
 
-use embassy_executor::Spawner;
-use embassy_sync::channel::Channel;
-use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
-use embassy_time::{Duration, Ticker, Timer};
 use defmt::*;
+use embassy_executor::Spawner;
+use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
+use embassy_sync::channel::Channel;
+use embassy_time::{Duration, Ticker, Timer};
 use {defmt_rtt as _, panic_probe as _};
 
 use actor_framework::event_bus::EventBus;
 use actor_framework::select::{select, select3, Either, Either3};
-use board_hal::thermistor::TempChannel;
 use board_hal::pwm_output::PwmChannel;
+use board_hal::thermistor::TempChannel;
 use gcode_parser::{self, GCodeCommand};
-use motion_planner::{MotionCommand, MotionStatus, MotionPlanner, MotionSegment};
-use thermal::{ThermalCommand, ThermalStatus, ThermalManager};
-use sdcard::{SdCardCommand, SdCardStatus, SdCardError};
+use motion_planner::{MotionCommand, MotionPlanner, MotionSegment, MotionStatus};
+use sdcard::{SdCardCommand, SdCardError, SdCardStatus};
+use thermal::{ThermalCommand, ThermalManager, ThermalStatus};
 
 // ══════════════════════════════════════════════════════════════════
 //  Actor Mailboxes (static channels)
@@ -107,18 +107,22 @@ async fn gcode_dispatcher_task() {
             // ── Motion ────────────────────────────────────────────
             GCodeCommand::LinearMove { axes, feedrate, .. } => {
                 let is_rapid = feedrate.is_none();
-                motion_tx.send(MotionCommand::LinearMove {
-                    target: axes,
-                    feedrate_mm_min: feedrate.unwrap_or(0.0),
-                    is_rapid,
-                }).await;
+                motion_tx
+                    .send(MotionCommand::LinearMove {
+                        target: axes,
+                        feedrate_mm_min: feedrate.unwrap_or(0.0),
+                        is_rapid,
+                    })
+                    .await;
             }
             GCodeCommand::Home { axes } => {
-                motion_tx.send(MotionCommand::Home {
-                    x: !axes.any() || axes.x,
-                    y: !axes.any() || axes.y,
-                    z: !axes.any() || axes.z,
-                }).await;
+                motion_tx
+                    .send(MotionCommand::Home {
+                        x: !axes.any() || axes.x,
+                        y: !axes.any() || axes.y,
+                        z: !axes.any() || axes.z,
+                    })
+                    .await;
             }
             GCodeCommand::AbsolutePositioning => {
                 motion_tx.send(MotionCommand::SetAbsolute).await;
@@ -138,56 +142,77 @@ async fn gcode_dispatcher_task() {
                 motion_tx.send(MotionCommand::SetMaxFeedrate { axes }).await;
             }
             GCodeCommand::SetMaxAccelPerAxis { axes } => {
-                motion_tx.send(MotionCommand::SetMaxAccelPerAxis { axes }).await;
+                motion_tx
+                    .send(MotionCommand::SetMaxAccelPerAxis { axes })
+                    .await;
             }
-            GCodeCommand::SetAcceleration { print_accel, travel_accel } => {
-                motion_tx.send(MotionCommand::SetAcceleration {
-                    print_accel,
-                    travel_accel,
-                }).await;
+            GCodeCommand::SetAcceleration {
+                print_accel,
+                travel_accel,
+            } => {
+                motion_tx
+                    .send(MotionCommand::SetAcceleration {
+                        print_accel,
+                        travel_accel,
+                    })
+                    .await;
             }
-            GCodeCommand::SetMicrostepping { axes, interpolation } => {
-                motion_tx.send(MotionCommand::SetMicrostepping {
-                    axes,
-                    interpolation,
-                }).await;
+            GCodeCommand::SetMicrostepping {
+                axes,
+                interpolation,
+            } => {
+                motion_tx
+                    .send(MotionCommand::SetMicrostepping {
+                        axes,
+                        interpolation,
+                    })
+                    .await;
             }
             GCodeCommand::SetMotorCurrent { axes, idle_percent } => {
-                motion_tx.send(MotionCommand::SetMotorCurrent {
-                    axes,
-                    idle_percent,
-                }).await;
+                motion_tx
+                    .send(MotionCommand::SetMotorCurrent { axes, idle_percent })
+                    .await;
             }
-            GCodeCommand::SetDriverConfig { driver, direction, mode } => {
-                let stealthchop = mode.map(|m| {
-                    matches!(m, gcode_parser::DriverMode::StealthChop)
-                });
-                motion_tx.send(MotionCommand::SetDriverConfig {
-                    driver,
-                    direction,
-                    stealthchop,
-                }).await;
+            GCodeCommand::SetDriverConfig {
+                driver,
+                direction,
+                mode,
+            } => {
+                let stealthchop = mode.map(|m| matches!(m, gcode_parser::DriverMode::StealthChop));
+                motion_tx
+                    .send(MotionCommand::SetDriverConfig {
+                        driver,
+                        direction,
+                        stealthchop,
+                    })
+                    .await;
             }
 
             // ── Temperature ───────────────────────────────────────
             GCodeCommand::SetHotendTemp { temp, .. } => {
-                thermal_tx.send(ThermalCommand::SetTarget {
-                    channel: TempChannel::Hotend1,
-                    temp_c: temp,
-                }).await;
+                thermal_tx
+                    .send(ThermalCommand::SetTarget {
+                        channel: TempChannel::Hotend1,
+                        temp_c: temp,
+                    })
+                    .await;
             }
             GCodeCommand::SetHotendTempWait { temp, .. } => {
-                thermal_tx.send(ThermalCommand::SetTargetAndWait {
-                    channel: TempChannel::Hotend1,
-                    temp_c: temp,
-                }).await;
+                thermal_tx
+                    .send(ThermalCommand::SetTargetAndWait {
+                        channel: TempChannel::Hotend1,
+                        temp_c: temp,
+                    })
+                    .await;
             }
             GCodeCommand::SetBedTemp { temp, heater } => {
                 if let Some(temp) = temp {
-                    thermal_tx.send(ThermalCommand::SetTarget {
-                        channel: TempChannel::Bed,
-                        temp_c: temp,
-                    }).await;
+                    thermal_tx
+                        .send(ThermalCommand::SetTarget {
+                            channel: TempChannel::Bed,
+                            temp_c: temp,
+                        })
+                        .await;
                 }
                 if heater.is_some() {
                     // Configuration-only (M140 Hn in config.g) — just note the mapping
@@ -195,10 +220,12 @@ async fn gcode_dispatcher_task() {
                 }
             }
             GCodeCommand::SetBedTempWait { temp } => {
-                thermal_tx.send(ThermalCommand::SetTargetAndWait {
-                    channel: TempChannel::Bed,
-                    temp_c: temp,
-                }).await;
+                thermal_tx
+                    .send(ThermalCommand::SetTargetAndWait {
+                        channel: TempChannel::Bed,
+                        temp_c: temp,
+                    })
+                    .await;
             }
             GCodeCommand::SetFanSpeed { fan, speed } => {
                 let channel = match fan.unwrap_or(0) {
@@ -207,10 +234,9 @@ async fn gcode_dispatcher_task() {
                     2 => PwmChannel::Fan2,
                     _ => PwmChannel::Fan3,
                 };
-                thermal_tx.send(ThermalCommand::SetFanSpeed {
-                    channel,
-                    speed,
-                }).await;
+                thermal_tx
+                    .send(ThermalCommand::SetFanSpeed { channel, speed })
+                    .await;
             }
             GCodeCommand::FanOff { fan } => {
                 let channel = match fan.unwrap_or(0) {
@@ -284,7 +310,11 @@ async fn motion_planner_task() {
         let cmd = cmd_rx.receive().await;
 
         match cmd {
-            MotionCommand::LinearMove { target, feedrate_mm_min, is_rapid } => {
+            MotionCommand::LinearMove {
+                target,
+                feedrate_mm_min,
+                is_rapid,
+            } => {
                 let has_extrusion = target.e.is_some();
                 let feedrate = if feedrate_mm_min > 0.0 {
                     Some(feedrate_mm_min)
@@ -304,7 +334,9 @@ async fn motion_planner_task() {
             MotionCommand::Home { x, y, z } => {
                 info!("Homing: X={} Y={} Z={}", x, y, z);
                 planner.mark_homed(x, y, z);
-                status_tx.send(MotionStatus::HomingComplete { x, y, z }).await;
+                status_tx
+                    .send(MotionStatus::HomingComplete { x, y, z })
+                    .await;
             }
             MotionCommand::SetAbsolute => {
                 planner.set_absolute();
@@ -324,17 +356,33 @@ async fn motion_planner_task() {
             MotionCommand::SetMaxAccelPerAxis { axes } => {
                 planner.set_max_accel(&axes);
             }
-            MotionCommand::SetAcceleration { print_accel, travel_accel } => {
+            MotionCommand::SetAcceleration {
+                print_accel,
+                travel_accel,
+            } => {
                 planner.set_acceleration(print_accel, travel_accel);
             }
-            MotionCommand::SetMicrostepping { axes, interpolation: _ } => {
+            MotionCommand::SetMicrostepping {
+                axes,
+                interpolation: _,
+            } => {
                 info!("Microstepping set: {:?}", axes);
             }
-            MotionCommand::SetMotorCurrent { axes, idle_percent: _ } => {
+            MotionCommand::SetMotorCurrent {
+                axes,
+                idle_percent: _,
+            } => {
                 info!("Motor current set: {:?}", axes);
             }
-            MotionCommand::SetDriverConfig { driver, direction, stealthchop } => {
-                info!("Driver {} config: dir={:?} stealth={:?}", driver, direction, stealthchop);
+            MotionCommand::SetDriverConfig {
+                driver,
+                direction,
+                stealthchop,
+            } => {
+                info!(
+                    "Driver {} config: dir={:?} stealth={:?}",
+                    driver, direction, stealthchop
+                );
             }
             MotionCommand::WaitForCompletion => {
                 // Wait until the step queue is drained
@@ -349,12 +397,14 @@ async fn motion_planner_task() {
             }
             MotionCommand::ReportPosition => {
                 let pos = planner.position_mm();
-                status_tx.send(MotionStatus::Position {
-                    x_mm: pos[0],
-                    y_mm: pos[1],
-                    z_mm: pos[2],
-                    e_mm: pos[3],
-                }).await;
+                status_tx
+                    .send(MotionStatus::Position {
+                        x_mm: pos[0],
+                        y_mm: pos[1],
+                        z_mm: pos[2],
+                        e_mm: pos[3],
+                    })
+                    .await;
             }
         }
     }
@@ -375,7 +425,9 @@ async fn step_generator_task() {
         let segment = seg_rx.receive().await;
 
         // Execute the segment by generating step pulses
-        let total_steps: i32 = segment.steps.iter()
+        let total_steps: i32 = segment
+            .steps
+            .iter()
             .map(|s| s.unsigned_abs() as i32)
             .max()
             .unwrap_or(0);
@@ -389,18 +441,18 @@ async fn step_generator_task() {
         let mut current_interval = segment.initial_interval_us;
         let interval_delta = if total_steps > 1 {
             (segment.final_interval_us as i32 - segment.initial_interval_us as i32)
-                / (total_steps - 1).max(1) as i32
+                / (total_steps - 1).max(1)
         } else {
             0
         };
 
         for _step in 0..total_steps {
             // For each axis, decide if this master step produces an axis step
-            for axis in 0..4 {
+            for (axis, acc) in accum.iter_mut().enumerate() {
                 let axis_steps = segment.steps[axis].unsigned_abs() as i32;
-                accum[axis] += axis_steps;
-                if accum[axis] >= total_steps {
-                    accum[axis] -= total_steps;
+                *acc += axis_steps;
+                if *acc >= total_steps {
+                    *acc -= total_steps;
                     // TODO: Toggle step pin for this axis using PAC GPIO
                     // The direction was already set before the segment started
                 }
@@ -413,8 +465,7 @@ async fn step_generator_task() {
             }
 
             // Update interval for acceleration/deceleration
-            current_interval = (current_interval as i32 + interval_delta)
-                .max(1) as u32;
+            current_interval = (current_interval as i32 + interval_delta).max(1) as u32;
         }
     }
 }
@@ -436,57 +487,62 @@ async fn thermal_manager_task() {
 
     loop {
         match select(cmd_rx.receive(), ticker.next()).await {
-            Either::First(cmd) => {
-                match cmd {
-                    ThermalCommand::SetTarget { channel, temp_c } => {
-                        info!("Thermal: Set {} to {}C", channel, temp_c);
-                        manager.set_target(channel, temp_c);
-                    }
-                    ThermalCommand::SetTargetAndWait { channel, temp_c } => {
-                        info!("Thermal: Set {} to {}C (wait)", channel, temp_c);
-                        manager.set_target_and_wait(channel, temp_c);
-                    }
-                    ThermalCommand::HeaterOff { channel } => {
-                        manager.heater_off(channel);
-                    }
-                    ThermalCommand::SetFanSpeed { channel, speed } => {
-                        manager.set_fan_speed(channel, speed);
-                    }
-                    ThermalCommand::FanOff { channel } => {
-                        manager.fan_off(channel);
-                    }
-                    ThermalCommand::ReportTemperatures => {
-                        for &ch in &[TempChannel::Bed, TempChannel::Hotend1, TempChannel::Hotend2] {
-                            let idx = match ch {
-                                TempChannel::Bed => 0,
-                                TempChannel::Hotend1 => 1,
-                                TempChannel::Hotend2 => 2,
-                            };
-                            let h = &manager.heaters[idx];
-                            status_tx.send(ThermalStatus::Temperature {
+            Either::First(cmd) => match cmd {
+                ThermalCommand::SetTarget { channel, temp_c } => {
+                    info!("Thermal: Set {} to {}C", channel, temp_c);
+                    manager.set_target(channel, temp_c);
+                }
+                ThermalCommand::SetTargetAndWait { channel, temp_c } => {
+                    info!("Thermal: Set {} to {}C (wait)", channel, temp_c);
+                    manager.set_target_and_wait(channel, temp_c);
+                }
+                ThermalCommand::HeaterOff { channel } => {
+                    manager.heater_off(channel);
+                }
+                ThermalCommand::SetFanSpeed { channel, speed } => {
+                    manager.set_fan_speed(channel, speed);
+                }
+                ThermalCommand::FanOff { channel } => {
+                    manager.fan_off(channel);
+                }
+                ThermalCommand::ReportTemperatures => {
+                    for &ch in &[TempChannel::Bed, TempChannel::Hotend1, TempChannel::Hotend2] {
+                        let idx = match ch {
+                            TempChannel::Bed => 0,
+                            TempChannel::Hotend1 => 1,
+                            TempChannel::Hotend2 => 2,
+                        };
+                        let h = &manager.heaters[idx];
+                        status_tx
+                            .send(ThermalStatus::Temperature {
                                 channel: ch,
                                 current_c: h.current_c,
                                 target_c: h.target_c,
                                 pwm: h.pwm_output.fraction(),
-                            }).await;
-                        }
-                    }
-                    ThermalCommand::EmergencyStop => {
-                        manager.emergency_stop();
-                        warn!("Thermal: Emergency stop — all heaters off");
+                            })
+                            .await;
                     }
                 }
-            }
+                ThermalCommand::EmergencyStop => {
+                    manager.emergency_stop();
+                    warn!("Thermal: Emergency stop — all heaters off");
+                }
+            },
             Either::Second(_tick) => {
                 // PID update cycle
                 // TODO: Read actual ADC values from thermistors via PAC
                 // For now, simulate readings
                 for &ch in &[TempChannel::Bed, TempChannel::Hotend1, TempChannel::Hotend2] {
-                    let _duty = manager.update_heater(ch, manager.heaters[match ch {
-                        TempChannel::Bed => 0,
-                        TempChannel::Hotend1 => 1,
-                        TempChannel::Hotend2 => 2,
-                    }].current_c, dt);
+                    let _duty = manager.update_heater(
+                        ch,
+                        manager.heaters[match ch {
+                            TempChannel::Bed => 0,
+                            TempChannel::Hotend1 => 1,
+                            TempChannel::Hotend2 => 2,
+                        }]
+                        .current_c,
+                        dt,
+                    );
 
                     // TODO: Write duty cycle to PWM hardware via PAC
 
@@ -494,14 +550,17 @@ async fn thermal_manager_task() {
                     if manager.check_runaway(ch, 20.0) {
                         warn!("Thermal runaway detected on {:?}", ch);
                         manager.emergency_stop();
-                        status_tx.send(ThermalStatus::ThermalRunaway {
-                            channel: ch,
-                            temp_c: manager.heaters[match ch {
-                                TempChannel::Bed => 0,
-                                TempChannel::Hotend1 => 1,
-                                TempChannel::Hotend2 => 2,
-                            }].current_c,
-                        }).await;
+                        status_tx
+                            .send(ThermalStatus::ThermalRunaway {
+                                channel: ch,
+                                temp_c: manager.heaters[match ch {
+                                    TempChannel::Bed => 0,
+                                    TempChannel::Hotend1 => 1,
+                                    TempChannel::Hotend2 => 2,
+                                }]
+                                .current_c,
+                            })
+                            .await;
                     }
 
                     // Check if we've reached target (for wait commands)
@@ -512,7 +571,9 @@ async fn thermal_manager_task() {
                     };
                     if manager.heaters[idx].waiting && manager.is_at_target(ch, 2.0) {
                         manager.heaters[idx].waiting = false;
-                        status_tx.send(ThermalStatus::TargetReached { channel: ch }).await;
+                        status_tx
+                            .send(ThermalStatus::TargetReached { channel: ch })
+                            .await;
                     }
                 }
             }
@@ -562,14 +623,18 @@ async fn sdcard_reader_task() {
                         count += 1;
                     }
                 }
-                status_tx.send(SdCardStatus::ConfigLoaded {
-                    commands_executed: count,
-                }).await;
+                status_tx
+                    .send(SdCardStatus::ConfigLoaded {
+                        commands_executed: count,
+                    })
+                    .await;
             }
             SdCardCommand::StartJob { filename } => {
                 info!("SD: Starting job: {}", filename.as_str());
                 // TODO: Open file, read line by line, feed to dispatcher
-                status_tx.send(SdCardStatus::Error(SdCardError::FileNotFound)).await;
+                status_tx
+                    .send(SdCardStatus::Error(SdCardError::FileNotFound))
+                    .await;
             }
             SdCardCommand::PauseJob => {
                 info!("SD: Job paused");
@@ -601,56 +666,70 @@ async fn status_monitor_task() {
             motion_rx.receive(),
             thermal_rx.receive(),
             sdcard_rx.receive(),
-        ).await {
-            Either3::First(status) => {
-                match status {
-                    MotionStatus::Position { x_mm, y_mm, z_mm, e_mm } => {
-                        info!("Position: X={} Y={} Z={} E={}", x_mm, y_mm, z_mm, e_mm);
-                    }
-                    MotionStatus::HomingComplete { x, y, z } => {
-                        info!("Homing complete: X={} Y={} Z={}", x, y, z);
-                    }
-                    MotionStatus::MovesComplete => {
-                        info!("All moves complete");
-                    }
-                    MotionStatus::Error(e) => {
-                        error!("Motion error: {:?}", e);
-                    }
+        )
+        .await
+        {
+            Either3::First(status) => match status {
+                MotionStatus::Position {
+                    x_mm,
+                    y_mm,
+                    z_mm,
+                    e_mm,
+                } => {
+                    info!("Position: X={} Y={} Z={} E={}", x_mm, y_mm, z_mm, e_mm);
                 }
-            }
-            Either3::Second(status) => {
-                match status {
-                    ThermalStatus::Temperature { channel, current_c, target_c, pwm } => {
-                        debug!("{:?}: {}C / {}C (PWM: {}%)",
-                            channel, current_c, target_c, pwm * 100.0);
-                    }
-                    ThermalStatus::TargetReached { channel } => {
-                        info!("Temperature reached on {:?}", channel);
-                    }
-                    ThermalStatus::ThermalRunaway { channel, temp_c } => {
-                        error!("THERMAL RUNAWAY on {:?} at {}C!", channel, temp_c);
-                    }
-                    ThermalStatus::SensorFault { channel } => {
-                        error!("Sensor fault on {:?}!", channel);
-                    }
+                MotionStatus::HomingComplete { x, y, z } => {
+                    info!("Homing complete: X={} Y={} Z={}", x, y, z);
                 }
-            }
-            Either3::Third(status) => {
-                match status {
-                    SdCardStatus::ConfigLoaded { commands_executed } => {
-                        info!("Config loaded: {} commands", commands_executed);
-                    }
-                    SdCardStatus::JobProgress { lines_processed, percent_complete } => {
-                        info!("Job: {} lines ({}%)", lines_processed, percent_complete);
-                    }
-                    SdCardStatus::JobComplete => {
-                        info!("Job complete");
-                    }
-                    SdCardStatus::Error(e) => {
-                        error!("SD card error: {:?}", e);
-                    }
+                MotionStatus::MovesComplete => {
+                    info!("All moves complete");
                 }
-            }
+                MotionStatus::Error(e) => {
+                    error!("Motion error: {:?}", e);
+                }
+            },
+            Either3::Second(status) => match status {
+                ThermalStatus::Temperature {
+                    channel,
+                    current_c,
+                    target_c,
+                    pwm,
+                } => {
+                    debug!(
+                        "{:?}: {}C / {}C (PWM: {}%)",
+                        channel,
+                        current_c,
+                        target_c,
+                        pwm * 100.0
+                    );
+                }
+                ThermalStatus::TargetReached { channel } => {
+                    info!("Temperature reached on {:?}", channel);
+                }
+                ThermalStatus::ThermalRunaway { channel, temp_c } => {
+                    error!("THERMAL RUNAWAY on {:?} at {}C!", channel, temp_c);
+                }
+                ThermalStatus::SensorFault { channel } => {
+                    error!("Sensor fault on {:?}!", channel);
+                }
+            },
+            Either3::Third(status) => match status {
+                SdCardStatus::ConfigLoaded { commands_executed } => {
+                    info!("Config loaded: {} commands", commands_executed);
+                }
+                SdCardStatus::JobProgress {
+                    lines_processed,
+                    percent_complete,
+                } => {
+                    info!("Job: {} lines ({}%)", lines_processed, percent_complete);
+                }
+                SdCardStatus::JobComplete => {
+                    info!("Job complete");
+                }
+                SdCardStatus::Error(e) => {
+                    error!("SD card error: {:?}", e);
+                }
+            },
         }
     }
 }
@@ -696,22 +775,20 @@ async fn main(spawner: Spawner) {
     if let Ok(mut sub) = SYSTEM_EVENTS.subscriber() {
         loop {
             match select(sub.next_message_pure(), ticker.next()).await {
-                Either::First(event) => {
-                    match event {
-                        SystemEvent::EmergencyStop => {
-                            error!("SYSTEM: Emergency stop activated!");
-                        }
-                        SystemEvent::ThermalRunaway { channel } => {
-                            error!("SYSTEM: Thermal runaway on {:?}!", channel);
-                        }
-                        SystemEvent::HomingComplete => {
-                            info!("SYSTEM: Homing complete");
-                        }
-                        SystemEvent::JobComplete => {
-                            info!("SYSTEM: Job complete");
-                        }
+                Either::First(event) => match event {
+                    SystemEvent::EmergencyStop => {
+                        error!("SYSTEM: Emergency stop activated!");
                     }
-                }
+                    SystemEvent::ThermalRunaway { channel } => {
+                        error!("SYSTEM: Thermal runaway on {:?}!", channel);
+                    }
+                    SystemEvent::HomingComplete => {
+                        info!("SYSTEM: Homing complete");
+                    }
+                    SystemEvent::JobComplete => {
+                        info!("SYSTEM: Job complete");
+                    }
+                },
                 Either::Second(_) => {
                     debug!("Heartbeat — system running");
                 }

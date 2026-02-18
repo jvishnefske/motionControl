@@ -13,11 +13,7 @@ pub enum MotionCommand {
     },
 
     /// Home specified axes (from G28).
-    Home {
-        x: bool,
-        y: bool,
-        z: bool,
-    },
+    Home { x: bool, y: bool, z: bool },
 
     /// Set absolute positioning (G90).
     SetAbsolute,
@@ -26,24 +22,16 @@ pub enum MotionCommand {
     SetRelative,
 
     /// Set current position without motion (G92).
-    SetPosition {
-        axes: AxisValues,
-    },
+    SetPosition { axes: AxisValues },
 
     /// Configure steps per mm (M92).
-    SetStepsPerMm {
-        axes: AxisValues,
-    },
+    SetStepsPerMm { axes: AxisValues },
 
     /// Set maximum feedrate (M203).
-    SetMaxFeedrate {
-        axes: AxisValues,
-    },
+    SetMaxFeedrate { axes: AxisValues },
 
     /// Set per-axis max acceleration (M201).
-    SetMaxAccelPerAxis {
-        axes: AxisValues,
-    },
+    SetMaxAccelPerAxis { axes: AxisValues },
 
     /// Set default acceleration (M204).
     SetAcceleration {
@@ -92,11 +80,7 @@ pub enum MotionStatus {
     },
 
     /// Homing completed for an axis.
-    HomingComplete {
-        x: bool,
-        y: bool,
-        z: bool,
-    },
+    HomingComplete { x: bool, y: bool, z: bool },
 
     /// All queued moves have been executed.
     MovesComplete,

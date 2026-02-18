@@ -3,8 +3,8 @@
 //! Events like emergency stop, thermal runaway, and homing complete
 //! are published once and delivered to every subscriber.
 
-use embassy_sync::pubsub::PubSubChannel;
 use super::Mutex;
+use embassy_sync::pubsub::PubSubChannel;
 
 /// A broadcast event bus with `CAP` message slots, `SUBS` subscribers, and `PUBS` publishers.
 pub type EventBus<E, const CAP: usize, const SUBS: usize, const PUBS: usize> =

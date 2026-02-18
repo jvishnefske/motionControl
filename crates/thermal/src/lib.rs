@@ -6,10 +6,10 @@
 
 #![no_std]
 
-pub mod pid;
-pub mod messages;
 pub mod manager;
+pub mod messages;
+pub mod pid;
 
-pub use messages::*;
 pub use manager::ThermalManager;
+pub use messages::*;
 pub use pid::PidController;

@@ -108,15 +108,13 @@ pub fn current_to_irun(current_ma: u16) -> u8 {
     const VFS: f32 = 0.180; // vsense=1
 
     let i_rms = current_ma as f32 / 1000.0;
-    let cs = (32.0 * 1.41421 * i_rms * RSENSE / VFS) as i32 - 1;
+    let cs = (32.0 * core::f32::consts::SQRT_2 * i_rms * RSENSE / VFS) as i32 - 1;
     cs.clamp(0, 31) as u8
 }
 
 /// Build the IHOLD_IRUN register value.
 pub fn ihold_irun(irun: u8, ihold: u8, iholddelay: u8) -> u32 {
-    ((iholddelay as u32 & 0x0F) << 16)
-        | ((irun as u32 & 0x1F) << 8)
-        | (ihold as u32 & 0x1F)
+    ((iholddelay as u32 & 0x0F) << 16) | ((irun as u32 & 0x1F) << 8) | (ihold as u32 & 0x1F)
 }
 
 /// Build CHOPCONF register value for given microstepping.
@@ -138,7 +136,7 @@ pub fn chopconf(microsteps: u16, interpolation: bool) -> u32 {
     val |= 4 << 4; // hstrt=4
     val |= 2 << 15; // tbl=2
     val |= 1 << 17; // vsense=1 (low-scale 180mV)
-    val |= (mres & 0x0F) as u32 >> 0 << 24; // mres
+    val |= ((mres & 0x0F) as u32) << 24; // mres
     if interpolation {
         val |= 1 << 28; // intpol
     }
