@@ -8,9 +8,9 @@
 
 #![no_std]
 
+pub mod messages;
 pub mod planner;
 pub mod segment;
-pub mod messages;
 
 pub use messages::*;
 pub use planner::MotionPlanner;

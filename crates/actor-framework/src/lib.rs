@@ -6,12 +6,12 @@
 
 #![no_std]
 
-pub mod mailbox;
 pub mod event_bus;
+pub mod mailbox;
 pub mod select;
 
-pub use mailbox::{Mailbox, MailboxSender, MailboxReceiver};
 pub use event_bus::{EventBus, EventPublisher, EventSubscriber};
+pub use mailbox::{Mailbox, MailboxReceiver, MailboxSender};
 
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
 

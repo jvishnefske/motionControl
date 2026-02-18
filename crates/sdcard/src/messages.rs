@@ -29,9 +29,7 @@ pub enum SdCardCommand {
 #[derive(Clone, Debug, defmt::Format)]
 pub enum SdCardStatus {
     /// Config file loaded successfully, N commands executed.
-    ConfigLoaded {
-        commands_executed: u32,
-    },
+    ConfigLoaded { commands_executed: u32 },
 
     /// Job progress update.
     JobProgress {

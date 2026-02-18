@@ -1,8 +1,8 @@
 //! Thermal manager — owns all heater/fan state and runs PID loops.
 
 use crate::pid::PidController;
+use board_hal::pwm_output::{DutyCycle, PwmChannel};
 use board_hal::thermistor::TempChannel;
-use board_hal::pwm_output::{PwmChannel, DutyCycle};
 
 /// Number of heater channels.
 const NUM_HEATERS: usize = 3;
@@ -38,13 +38,19 @@ pub struct ThermalManager {
     pub fan_speeds: [DutyCycle; NUM_FANS],
 }
 
+impl Default for ThermalManager {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl ThermalManager {
     pub fn new() -> Self {
         Self {
             heaters: [
-                HeaterState::new(PidController::bed_default()),     // Bed
-                HeaterState::new(PidController::hotend_default()),  // Hotend 1
-                HeaterState::new(PidController::hotend_default()),  // Hotend 2
+                HeaterState::new(PidController::bed_default()), // Bed
+                HeaterState::new(PidController::hotend_default()), // Hotend 1
+                HeaterState::new(PidController::hotend_default()), // Hotend 2
             ],
             fan_speeds: [DutyCycle::off(); NUM_FANS],
         }
@@ -156,8 +162,7 @@ impl ThermalManager {
         }
 
         // Simple check: if heater is on full power but temp is far below target
-        heater.pwm_output.fraction() > 0.95
-            && (heater.target_c - heater.current_c) > max_deviation
+        heater.pwm_output.fraction() > 0.95 && (heater.target_c - heater.current_c) > max_deviation
     }
 
     /// Emergency stop — turn off all heaters and fans.
