@@ -10,6 +10,7 @@ dispatcher.workspace = true
 gcode-parser.workspace = true
 motion-planner.workspace = true
 thermal.workspace = true
+sdcard.workspace = true
 
 # Board-specific
 board-pico = { path = "../crates/board-pico" }

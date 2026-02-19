@@ -31,8 +31,24 @@ use actor_framework::event_bus::EventBus;
 use actor_framework::select::{select, Either};
 use dispatcher::{dispatch_line, DispatchAction};
 use motion_planner::{MotionCommand, MotionPlanner, MotionSegment, MotionStatus};
-use printer_hal::TempChannel;
+use printer_hal::{NullFs, TempChannel};
 use thermal::{ThermalCommand, ThermalManager, ThermalStatus};
+
+/// SKR Pico built-in defaults.
+/// Used when CONFIG.G is not found on storage.
+const PICO_DEFAULTS: &[&str] = &[
+    "M569 P0 S1 D3", // X driver (TMC2209 addr 0)
+    "M569 P1 S1 D3", // Y driver (TMC2209 addr 2)
+    "M569 P2 S1 D3", // Z driver (TMC2209 addr 1)
+    "M569 P3 S1 D3", // E driver (TMC2209 addr 3)
+    "M350 X16 Y16 Z16 E16 I1",
+    "M92 X80 Y80 Z400 E420",
+    "M203 X6000 Y6000 Z600 E3600",
+    "M201 X500 Y500 Z100 E500",
+    "M204 P500 T1000",
+    "M906 X800 Y800 Z800 E800 I30",
+    "G90",
+];
 
 // ══════════════════════════════════════════════════════════════════
 //  Static Channels (actor mailboxes)
@@ -384,35 +400,34 @@ async fn main(spawner: Spawner) {
     //   - USB for host communication
     //   - UART0 (GPIO0/1) for Raspberry Pi
 
-    // Load default configuration (no SD card on SKR Pico)
-    let defaults: &[&str] = &[
-        "M569 P0 S1 D3", // X driver
-        "M569 P1 S1 D3", // Y driver
-        "M569 P2 S1 D3", // Z driver
-        "M569 P3 S1 D3", // E driver
-        "M350 X16 Y16 Z16 E16 I1",
-        "M92 X80 Y80 Z400 E420",
-        "M203 X6000 Y6000 Z600 E3600",
-        "M201 X500 Y500 Z100 E500",
-        "M204 P500 T1000",
-        "M906 X800 Y800 Z800 E800 I30",
-        "G90",
-    ];
-
     spawner.spawn(gcode_dispatcher_task()).unwrap();
     spawner.spawn(motion_planner_task()).unwrap();
     spawner.spawn(step_generator_task()).unwrap();
     spawner.spawn(thermal_manager_task()).unwrap();
     spawner.spawn(status_monitor_task()).unwrap();
 
-    info!("All actors spawned — loading defaults");
+    info!("All actors spawned — loading config");
 
+    // TODO: Replace NullFs with flash-based FileSystem impl
+    // (reserved QSPI flash partition for CONFIG.G).
+    // Until then, built-in defaults are used.
+    let mut fs = NullFs;
     let line_tx = GCODE_LINE.sender();
-    for line in defaults {
+
+    let result = sdcard::load_config_with_fallback(&mut fs, PICO_DEFAULTS, |line| {
         let mut s = heapless::String::<256>::new();
         if s.push_str(line).is_ok() {
-            line_tx.send(s).await;
+            let _ = line_tx.try_send(s);
         }
+    });
+
+    if result.from_file {
+        info!("Loaded CONFIG.G ({} commands)", result.commands_executed);
+    } else {
+        info!(
+            "No CONFIG.G, using defaults ({} commands)",
+            result.commands_executed
+        );
     }
 
     // Heartbeat + system event monitoring
