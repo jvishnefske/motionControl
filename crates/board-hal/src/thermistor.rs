@@ -3,16 +3,7 @@
 //! Supports NTC thermistors with configurable beta parameter
 //! in a voltage divider circuit with known series resistance.
 
-/// Identifies an ADC temperature channel.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, defmt::Format)]
-pub enum TempChannel {
-    /// TEMP_0: Bed thermistor
-    Bed,
-    /// TEMP_1: Hotend 1 thermistor
-    Hotend1,
-    /// TEMP_2: Hotend 2 / aux thermistor
-    Hotend2,
-}
+pub use printer_hal::TempChannel;
 
 /// Thermistor calibration parameters.
 #[derive(Clone, Copy, Debug)]

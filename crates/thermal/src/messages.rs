@@ -1,7 +1,6 @@
 //! Messages for the thermal manager actor.
 
-use board_hal::pwm_output::PwmChannel;
-use board_hal::thermistor::TempChannel;
+use printer_hal::{PwmChannel, TempChannel};
 
 /// Commands sent TO the thermal manager.
 #[derive(Clone, Debug, defmt::Format)]

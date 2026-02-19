@@ -3,11 +3,14 @@ resolver = "2"
 members = [
     "crates/actor-framework",
     "crates/board-hal",
+    "crates/dispatcher",
     "crates/gcode-parser",
     "crates/motion-planner",
+    "crates/printer-hal",
     "crates/thermal",
     "crates/sdcard",
     "firmware",
+    "wasm-sim",
 ]
 
 [workspace.package]
@@ -48,8 +51,10 @@ embedded-hal-bus = "0.2"
 # Internal crates
 actor-framework = { path = "crates/actor-framework" }
 board-hal = { path = "crates/board-hal" }
+dispatcher = { path = "crates/dispatcher" }
 gcode-parser = { path = "crates/gcode-parser" }
 motion-planner = { path = "crates/motion-planner" }
+printer-hal = { path = "crates/printer-hal" }
 thermal = { path = "crates/thermal" }
 sdcard = { path = "crates/sdcard" }
 

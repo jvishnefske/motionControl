@@ -1,8 +1,7 @@
 //! Thermal manager — owns all heater/fan state and runs PID loops.
 
 use crate::pid::PidController;
-use board_hal::pwm_output::{DutyCycle, PwmChannel};
-use board_hal::thermistor::TempChannel;
+use printer_hal::{DutyCycle, PwmChannel, TempChannel};
 
 /// Number of heater channels.
 const NUM_HEATERS: usize = 3;
@@ -56,24 +55,12 @@ impl ThermalManager {
         }
     }
 
-    /// Map a TempChannel to a heater index.
     fn heater_index(channel: TempChannel) -> usize {
-        match channel {
-            TempChannel::Bed => 0,
-            TempChannel::Hotend1 => 1,
-            TempChannel::Hotend2 => 2,
-        }
+        channel.index()
     }
 
-    /// Map a PwmChannel to a fan index. Returns None for heater channels.
     fn fan_index(channel: PwmChannel) -> Option<usize> {
-        match channel {
-            PwmChannel::Fan0 => Some(0),
-            PwmChannel::Fan1 => Some(1),
-            PwmChannel::Fan2 => Some(2),
-            PwmChannel::Fan3 => Some(3),
-            _ => None,
-        }
+        channel.fan_index()
     }
 
     /// Set the target temperature for a heater.
@@ -177,5 +164,93 @@ impl ThermalManager {
         for fan in &mut self.fan_speeds {
             *fan = DutyCycle::off();
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_set_target_enables_heater() {
+        let mut mgr = ThermalManager::new();
+        mgr.set_target(TempChannel::Hotend1, 200.0);
+        assert!(mgr.heaters[1].enabled);
+        assert_eq!(mgr.heaters[1].target_c, 200.0);
+    }
+
+    #[test]
+    fn test_set_target_zero_disables() {
+        let mut mgr = ThermalManager::new();
+        mgr.set_target(TempChannel::Hotend1, 200.0);
+        mgr.set_target(TempChannel::Hotend1, 0.0);
+        assert!(!mgr.heaters[1].enabled);
+    }
+
+    #[test]
+    fn test_set_target_and_wait() {
+        let mut mgr = ThermalManager::new();
+        mgr.set_target_and_wait(TempChannel::Bed, 60.0);
+        assert!(mgr.heaters[0].waiting);
+        assert!(mgr.heaters[0].enabled);
+    }
+
+    #[test]
+    fn test_heater_off() {
+        let mut mgr = ThermalManager::new();
+        mgr.set_target(TempChannel::Hotend1, 200.0);
+        mgr.heater_off(TempChannel::Hotend1);
+        assert!(!mgr.heaters[1].enabled);
+        assert_eq!(mgr.heaters[1].pwm_output.fraction(), 0.0);
+    }
+
+    #[test]
+    fn test_fan_speed() {
+        let mut mgr = ThermalManager::new();
+        mgr.set_fan_speed(PwmChannel::Fan0, 0.75);
+        assert!((mgr.fan_speeds[0].fraction() - 0.75).abs() < 0.001);
+    }
+
+    #[test]
+    fn test_fan_off() {
+        let mut mgr = ThermalManager::new();
+        mgr.set_fan_speed(PwmChannel::Fan1, 1.0);
+        mgr.fan_off(PwmChannel::Fan1);
+        assert_eq!(mgr.fan_speeds[1].fraction(), 0.0);
+    }
+
+    #[test]
+    fn test_update_heater_disabled_returns_zero() {
+        let mut mgr = ThermalManager::new();
+        let duty = mgr.update_heater(TempChannel::Hotend1, 25.0, 0.1);
+        assert_eq!(duty.fraction(), 0.0);
+    }
+
+    #[test]
+    fn test_update_heater_enabled_returns_nonzero() {
+        let mut mgr = ThermalManager::new();
+        mgr.set_target(TempChannel::Hotend1, 200.0);
+        let duty = mgr.update_heater(TempChannel::Hotend1, 25.0, 0.1);
+        assert!(duty.fraction() > 0.0);
+    }
+
+    #[test]
+    fn test_is_at_target() {
+        let mut mgr = ThermalManager::new();
+        mgr.set_target(TempChannel::Bed, 60.0);
+        mgr.heaters[0].current_c = 59.5;
+        assert!(mgr.is_at_target(TempChannel::Bed, 2.0));
+        mgr.heaters[0].current_c = 50.0;
+        assert!(!mgr.is_at_target(TempChannel::Bed, 2.0));
+    }
+
+    #[test]
+    fn test_emergency_stop() {
+        let mut mgr = ThermalManager::new();
+        mgr.set_target(TempChannel::Hotend1, 200.0);
+        mgr.set_fan_speed(PwmChannel::Fan0, 1.0);
+        mgr.emergency_stop();
+        assert!(!mgr.heaters[1].enabled);
+        assert_eq!(mgr.fan_speeds[0].fraction(), 0.0);
     }
 }

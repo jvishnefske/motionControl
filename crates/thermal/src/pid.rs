@@ -82,3 +82,65 @@ fn clamp(val: f32, min: f32, max: f32) -> f32 {
         val
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_pid_positive_error_gives_positive_output() {
+        let mut pid = PidController::new(1.0, 0.0, 0.0);
+        let out = pid.update(20.0, 200.0, 0.1);
+        assert!(out > 0.0);
+    }
+
+    #[test]
+    fn test_pid_at_target_gives_zero() {
+        let mut pid = PidController::new(1.0, 0.0, 0.0);
+        let out = pid.update(200.0, 200.0, 0.1);
+        assert!((out - 0.0).abs() < 0.001);
+    }
+
+    #[test]
+    fn test_pid_output_clamped_to_1() {
+        let mut pid = PidController::new(100.0, 0.0, 0.0);
+        let out = pid.update(0.0, 200.0, 0.1);
+        assert!((out - 1.0).abs() < 0.001);
+    }
+
+    #[test]
+    fn test_pid_output_clamped_to_0() {
+        let mut pid = PidController::new(100.0, 0.0, 0.0);
+        let out = pid.update(300.0, 200.0, 0.1); // overshoot
+        assert!((out - 0.0).abs() < 0.001);
+    }
+
+    #[test]
+    fn test_pid_integral_accumulates() {
+        let mut pid = PidController::new(0.0, 1.0, 0.0);
+        pid.update(190.0, 200.0, 0.1); // error=10, integral=1.0
+        let out = pid.update(195.0, 200.0, 0.1); // error=5, integral=1.5
+        assert!(out > 0.0);
+    }
+
+    #[test]
+    fn test_pid_reset_clears_state() {
+        let mut pid = PidController::new(0.0, 1.0, 0.0);
+        pid.update(100.0, 200.0, 0.1);
+        pid.reset();
+        let out = pid.update(200.0, 200.0, 0.1); // at target, no integral
+        assert!((out - 0.0).abs() < 0.001);
+    }
+
+    #[test]
+    fn test_pid_converges_towards_target() {
+        let mut pid = PidController::hotend_default();
+        let mut temp = 25.0;
+        for _ in 0..100 {
+            let duty = pid.update(temp, 200.0, 0.1);
+            // Simulated heating: temp increases proportional to duty
+            temp += duty * 5.0;
+        }
+        assert!((temp - 200.0).abs() < 10.0, "temp={}", temp);
+    }
+}

@@ -1,12 +1,13 @@
 [package]
-name = "board-hal"
+name = "dispatcher"
 version = "0.1.0"
 edition.workspace = true
 
 [dependencies]
 printer-hal.workspace = true
+gcode-parser.workspace = true
+motion-planner.workspace = true
+thermal.workspace = true
+sdcard.workspace = true
 defmt.workspace = true
 heapless.workspace = true
-embedded-hal.workspace = true
-embedded-io.workspace = true
-libm.workspace = true

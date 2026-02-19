@@ -76,3 +76,81 @@ impl LineReader {
         self.line_len = 0;
     }
 }
+
+#[cfg(test)]
+mod tests {
+    extern crate std;
+    use super::*;
+
+    fn collect_lines(data: &[u8]) -> std::vec::Vec<std::string::String> {
+        let mut reader = LineReader::new();
+        let mut lines = std::vec::Vec::new();
+        reader.feed(data, |line| lines.push(std::string::String::from(line)));
+        reader.flush(|line| lines.push(std::string::String::from(line)));
+        lines
+    }
+
+    #[test]
+    fn test_single_line() {
+        let lines = collect_lines(b"G1 X10\n");
+        assert_eq!(lines.len(), 1);
+        assert_eq!(lines[0], "G1 X10");
+    }
+
+    #[test]
+    fn test_multiple_lines() {
+        let lines = collect_lines(b"G1 X10\nG1 Y20\nG1 Z5\n");
+        assert_eq!(lines.len(), 3);
+        assert_eq!(lines[0], "G1 X10");
+        assert_eq!(lines[1], "G1 Y20");
+        assert_eq!(lines[2], "G1 Z5");
+    }
+
+    #[test]
+    fn test_crlf() {
+        let lines = collect_lines(b"G1 X10\r\nG1 Y20\r\n");
+        assert_eq!(lines.len(), 2);
+        assert_eq!(lines[0], "G1 X10");
+        assert_eq!(lines[1], "G1 Y20");
+    }
+
+    #[test]
+    fn test_partial_line_flushed() {
+        let lines = collect_lines(b"G1 X10");
+        assert_eq!(lines.len(), 1);
+        assert_eq!(lines[0], "G1 X10");
+    }
+
+    #[test]
+    fn test_chunked_input() {
+        let mut reader = LineReader::new();
+        let mut lines = std::vec::Vec::new();
+        reader.feed(b"G1 X", |line| lines.push(std::string::String::from(line)));
+        reader.feed(b"10\nG1 Y20\n", |line| {
+            lines.push(std::string::String::from(line))
+        });
+        assert_eq!(lines.len(), 2);
+        assert_eq!(lines[0], "G1 X10");
+        assert_eq!(lines[1], "G1 Y20");
+    }
+
+    #[test]
+    fn test_empty_lines_skipped() {
+        let lines = collect_lines(b"\n\nG1 X10\n\n");
+        assert_eq!(lines.len(), 1);
+        assert_eq!(lines[0], "G1 X10");
+    }
+
+    #[test]
+    fn test_reset() {
+        let mut reader = LineReader::new();
+        let mut lines = std::vec::Vec::new();
+        reader.feed(b"G1 X", |_| {});
+        reader.reset();
+        reader.feed(b"G1 Y20\n", |line| {
+            lines.push(std::string::String::from(line))
+        });
+        assert_eq!(lines.len(), 1);
+        assert_eq!(lines[0], "G1 Y20");
+    }
+}

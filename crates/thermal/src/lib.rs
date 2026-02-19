@@ -1,8 +1,7 @@
-//! # Thermal Manager — PID Temperature Control Actor
+//! # Thermal Manager — PID Temperature Control
 //!
 //! Manages heater outputs using PID control with configurable parameters.
-//! Runs as an async actor, receiving temperature setpoints and reporting
-//! current temperatures via the event bus.
+//! Portable: depends only on `printer-hal` traits, not on board-specific code.
 
 #![no_std]
 

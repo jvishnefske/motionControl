@@ -470,3 +470,106 @@ impl MotionPlanner {
         self.queue.push_back(segment).is_ok()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use gcode_parser::AxisValues;
+
+    fn axes(x: Option<f32>, y: Option<f32>, z: Option<f32>, e: Option<f32>) -> AxisValues {
+        AxisValues { x, y, z, e }
+    }
+
+    #[test]
+    fn test_plan_generates_segments() {
+        let mut planner = MotionPlanner::new();
+        let n = planner.plan_linear_move(&axes(Some(10.0), None, None, None), Some(3000.0), false);
+        assert!(n > 0, "Expected segments, got {}", n);
+    }
+
+    #[test]
+    fn test_plan_updates_position() {
+        let mut planner = MotionPlanner::new();
+        planner.plan_linear_move(
+            &axes(Some(10.0), Some(20.0), None, None),
+            Some(3000.0),
+            false,
+        );
+        let pos = planner.position_mm();
+        assert!((pos[0] - 10.0).abs() < 0.1);
+        assert!((pos[1] - 20.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_zero_move_generates_nothing() {
+        let mut planner = MotionPlanner::new();
+        let n = planner.plan_linear_move(&axes(Some(0.0), None, None, None), Some(3000.0), false);
+        assert_eq!(n, 0);
+    }
+
+    #[test]
+    fn test_relative_mode() {
+        let mut planner = MotionPlanner::new();
+        planner.plan_linear_move(&axes(Some(10.0), None, None, None), Some(3000.0), false);
+        planner.set_relative();
+        planner.plan_linear_move(&axes(Some(5.0), None, None, None), Some(3000.0), false);
+        let pos = planner.position_mm();
+        assert!((pos[0] - 15.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_absolute_mode() {
+        let mut planner = MotionPlanner::new();
+        planner.plan_linear_move(&axes(Some(10.0), None, None, None), Some(3000.0), false);
+        planner.plan_linear_move(&axes(Some(5.0), None, None, None), Some(3000.0), false);
+        let pos = planner.position_mm();
+        assert!((pos[0] - 5.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_set_position() {
+        let mut planner = MotionPlanner::new();
+        planner.set_position(&axes(Some(100.0), Some(200.0), None, None));
+        let pos = planner.position_mm();
+        assert!((pos[0] - 100.0).abs() < 0.1);
+        assert!((pos[1] - 200.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_homing() {
+        let mut planner = MotionPlanner::new();
+        assert!(!planner.is_homed());
+        planner.mark_homed(true, true, true);
+        assert!(planner.is_homed());
+    }
+
+    #[test]
+    fn test_emergency_stop_clears_queue() {
+        let mut planner = MotionPlanner::new();
+        planner.plan_linear_move(&axes(Some(100.0), None, None, None), Some(3000.0), false);
+        assert!(planner.has_pending());
+        planner.emergency_stop();
+        assert!(!planner.has_pending());
+    }
+
+    #[test]
+    fn test_segments_are_consumable() {
+        let mut planner = MotionPlanner::new();
+        let n = planner.plan_linear_move(&axes(Some(10.0), None, None, None), Some(3000.0), false);
+        let mut consumed = 0;
+        while planner.next_segment().is_some() {
+            consumed += 1;
+        }
+        assert_eq!(consumed, n);
+    }
+
+    #[test]
+    fn test_set_steps_per_mm() {
+        let mut planner = MotionPlanner::new();
+        planner.set_steps_per_mm(&axes(Some(160.0), None, None, None));
+        // Move 10mm = 1600 steps at 160 steps/mm
+        planner.plan_linear_move(&axes(Some(10.0), None, None, None), Some(3000.0), false);
+        let pos = planner.position_mm();
+        assert!((pos[0] - 10.0).abs() < 0.1);
+    }
+}

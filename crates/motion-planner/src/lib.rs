@@ -11,7 +11,9 @@
 pub mod messages;
 pub mod planner;
 pub mod segment;
+pub mod step_generator;
 
 pub use messages::*;
 pub use planner::MotionPlanner;
 pub use segment::*;
+pub use step_generator::execute_segment;
