@@ -9,6 +9,6 @@ pub mod manager;
 pub mod messages;
 pub mod pid;
 
-pub use manager::ThermalManager;
+pub use manager::{HeaterFault, HeaterSafetyLimits, ThermalManager};
 pub use messages::*;
 pub use pid::PidController;

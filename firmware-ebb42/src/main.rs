@@ -139,6 +139,10 @@ async fn thermal_task() {
                     manager.set_target_and_wait(channel, temp_c);
                 }
                 ThermalCommand::HeaterOff { channel } => manager.heater_off(channel),
+                ThermalCommand::ClearFault { channel } => {
+                    info!("Thermal: clearing fault on {}", channel);
+                    manager.clear_fault(channel);
+                }
                 ThermalCommand::SetFanSpeed { channel, speed } => {
                     manager.set_fan_speed(channel, speed)
                 }
@@ -161,21 +165,17 @@ async fn thermal_task() {
                 }
             },
             Either::Second(_tick) => {
-                // PID update — only hotend on EBB42
+                // PID update + safety checks — only hotend on EBB42
                 let ch = TempChannel::Hotend1;
                 // TODO: Read actual ADC thermistor (PA3 / ADC_IN3)
                 let current = manager.heaters[ch.index()].current_c;
                 let _duty = manager.update_heater(ch, current, dt);
                 // TODO: Write duty to PB13 (HEATER_HOTEND) via PWM
 
-                if manager.check_runaway(ch, 20.0) {
-                    warn!("Thermal runaway detected on hotend");
-                    manager.emergency_stop();
+                if let Some(fault) = manager.check_safety(ch, dt) {
+                    warn!("Heater fault {:?} on hotend", fault);
                     status_tx
-                        .send(ThermalStatus::ThermalRunaway {
-                            channel: ch,
-                            temp_c: manager.heaters[ch.index()].current_c,
-                        })
+                        .send(ThermalStatus::HeaterFaulted { channel: ch, fault })
                         .await;
                 }
 

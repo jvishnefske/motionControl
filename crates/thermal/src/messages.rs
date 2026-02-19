@@ -1,5 +1,6 @@
 //! Messages for the thermal manager actor.
 
+use crate::manager::HeaterFault;
 use printer_hal::{PwmChannel, TempChannel};
 
 /// Commands sent TO the thermal manager.
@@ -13,6 +14,9 @@ pub enum ThermalCommand {
 
     /// Turn off a heater.
     HeaterOff { channel: TempChannel },
+
+    /// Clear a latched heater fault so a new target can be set.
+    ClearFault { channel: TempChannel },
 
     /// Set fan speed (0.0 - 1.0).
     SetFanSpeed { channel: PwmChannel, speed: f32 },
@@ -46,4 +50,11 @@ pub enum ThermalStatus {
 
     /// Thermistor fault (open/short).
     SensorFault { channel: TempChannel },
+
+    /// A heater safety limit was violated.  The heater is locked out
+    /// until a `ClearFault` command is received.
+    HeaterFaulted {
+        channel: TempChannel,
+        fault: HeaterFault,
+    },
 }

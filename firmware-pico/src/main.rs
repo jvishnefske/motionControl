@@ -270,6 +270,10 @@ async fn thermal_manager_task() {
                     manager.set_target_and_wait(channel, temp_c);
                 }
                 ThermalCommand::HeaterOff { channel } => manager.heater_off(channel),
+                ThermalCommand::ClearFault { channel } => {
+                    info!("Thermal: clearing fault on {}", channel);
+                    manager.clear_fault(channel);
+                }
                 ThermalCommand::SetFanSpeed { channel, speed } => {
                     manager.set_fan_speed(channel, speed)
                 }
@@ -294,7 +298,7 @@ async fn thermal_manager_task() {
                 }
             },
             Either::Second(_tick) => {
-                // PID update — bed + hotend on SKR Pico
+                // PID update + safety checks — bed + hotend on SKR Pico
                 for &ch in &[TempChannel::Bed, TempChannel::Hotend1] {
                     // TODO: Read ADC thermistor
                     //   Bed = GPIO26 (ADC0), Hotend = GPIO27 (ADC1)
@@ -303,14 +307,10 @@ async fn thermal_manager_task() {
                     // TODO: Write duty to heater PWM
                     //   Hotend = GPIO23, Bed = GPIO21
 
-                    if manager.check_runaway(ch, 20.0) {
-                        warn!("Thermal runaway on {:?}", ch);
-                        manager.emergency_stop();
+                    if let Some(fault) = manager.check_safety(ch, dt) {
+                        warn!("Heater fault {:?} on {:?}", fault, ch);
                         status_tx
-                            .send(ThermalStatus::ThermalRunaway {
-                                channel: ch,
-                                temp_c: manager.heaters[ch.index()].current_c,
-                            })
+                            .send(ThermalStatus::HeaterFaulted { channel: ch, fault })
                             .await;
                     }
 
@@ -373,6 +373,9 @@ async fn status_monitor_task() {
                 }
                 ThermalStatus::SensorFault { channel } => {
                     error!("Sensor fault on {:?}!", channel)
+                }
+                ThermalStatus::HeaterFaulted { channel, fault } => {
+                    error!("HEATER FAULT {:?} on {:?} — locked out", fault, channel)
                 }
             },
         }
