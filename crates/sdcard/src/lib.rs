@@ -12,8 +12,10 @@
 
 #![no_std]
 
+pub mod config;
 pub mod messages;
 pub mod reader;
 
+pub use config::{load_config_file, load_config_with_fallback, ConfigResult};
 pub use messages::*;
 pub use reader::LineReader;

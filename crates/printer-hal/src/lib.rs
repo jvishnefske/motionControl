@@ -62,6 +62,25 @@ pub trait EndstopReader {
     fn is_triggered(&self, axis: u8) -> bool;
 }
 
+/// Null filesystem — always returns "file not found".
+///
+/// Use on boards without storage (e.g. CAN toolboards).
+/// `load_config_with_fallback` will fall through to compiled-in defaults.
+pub struct NullFs;
+
+impl FileSystem for NullFs {
+    fn exists(&mut self, _path: &str) -> bool {
+        false
+    }
+    fn open(&mut self, _path: &str) -> bool {
+        false
+    }
+    fn read(&mut self, _buf: &mut [u8]) -> usize {
+        0
+    }
+    fn close(&mut self) {}
+}
+
 // ── Channel index types (portable, no board dependency) ────────
 
 /// Identifies a temperature sensor channel.

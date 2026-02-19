@@ -6,3 +6,4 @@ edition.workspace = true
 [dependencies]
 defmt.workspace = true
 heapless.workspace = true
+printer-hal.workspace = true

@@ -25,6 +25,7 @@ use actor_framework::event_bus::EventBus;
 use actor_framework::select::{select, select3, Either, Either3};
 use dispatcher::{dispatch_line, DispatchAction};
 use motion_planner::{MotionCommand, MotionPlanner, MotionSegment, MotionStatus};
+use printer_hal::NullFs;
 use printer_hal::TempChannel;
 use sdcard::{SdCardCommand, SdCardError, SdCardStatus};
 use thermal::{ThermalCommand, ThermalManager, ThermalStatus};
@@ -307,6 +308,23 @@ async fn thermal_manager_task() {
 //  Task: SD Card Reader
 // ══════════════════════════════════════════════════════════════════
 
+/// Duet 3 Mini 5+ built-in defaults.
+/// Used when CONFIG.G is not found on the SD card.
+const DUET3_DEFAULTS: &[&str] = &[
+    "M569 P0 S1 D3", // X driver
+    "M569 P1 S1 D3", // Y driver
+    "M569 P2 S1 D3", // Z driver
+    "M569 P3 S1 D3", // E0 driver
+    "M569 P4 S1 D3", // E1 driver
+    "M350 X16 Y16 Z16 E16 I1",
+    "M92 X80 Y80 Z400 E420",
+    "M203 X6000 Y6000 Z600 E3600",
+    "M201 X500 Y500 Z100 E500",
+    "M204 P500 T1000",
+    "M906 X800 Y800 Z800 E800 I30",
+    "G90",
+];
+
 #[embassy_executor::task]
 async fn sdcard_reader_task() {
     info!("SD card reader started");
@@ -314,38 +332,40 @@ async fn sdcard_reader_task() {
     let status_tx = SDCARD_STATUS.sender();
     let line_tx = GCODE_LINE.sender();
 
+    // TODO: Replace NullFs with actual SD card FileSystem impl
+    // once SPI + FAT32 driver is wired up via board-hal.
+    let mut fs = NullFs;
+
     loop {
         let cmd = cmd_rx.receive().await;
 
         match cmd {
             SdCardCommand::LoadConfig | SdCardCommand::LoadConfigOverride => {
-                info!("SD: Loading config");
-                // TODO: Read from SD card via printer_hal::FileSystem
-                let defaults: &[&str] = &[
-                    "M569 P0 S1 D3",
-                    "M569 P1 S1 D3",
-                    "M569 P2 S1 D3",
-                    "M569 P3 S1 D3",
-                    "M569 P4 S1 D3",
-                    "M350 X16 Y16 Z16 E16 I1",
-                    "M92 X80 Y80 Z400 E420",
-                    "M203 X6000 Y6000 Z600 E3600",
-                    "M201 X500 Y500 Z100 E500",
-                    "M204 P500 T1000",
-                    "M906 X800 Y800 Z800 E800 I30",
-                    "G90",
-                ];
-                let mut count: u32 = 0;
-                for line in defaults {
+                info!("SD: Loading config (CONFIG.G → fallback defaults)");
+
+                let result = sdcard::load_config_with_fallback(&mut fs, DUET3_DEFAULTS, |line| {
                     let mut s = heapless::String::<256>::new();
                     if s.push_str(line).is_ok() {
-                        line_tx.send(s).await;
-                        count += 1;
+                        // Can't .await inside closure — use try_send
+                        let _ = line_tx.try_send(s);
                     }
+                });
+
+                if result.from_file {
+                    info!(
+                        "SD: Loaded CONFIG.G ({} commands)",
+                        result.commands_executed
+                    );
+                } else {
+                    info!(
+                        "SD: No CONFIG.G found, using defaults ({} commands)",
+                        result.commands_executed
+                    );
                 }
+
                 status_tx
                     .send(SdCardStatus::ConfigLoaded {
-                        commands_executed: count,
+                        commands_executed: result.commands_executed,
                     })
                     .await;
             }

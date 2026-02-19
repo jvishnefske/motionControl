@@ -515,6 +515,7 @@ dependencies = [
  "motion-planner",
  "panic-probe",
  "printer-hal",
+ "sdcard",
  "static_cell",
  "thermal",
 ]
@@ -593,6 +594,7 @@ version = "0.1.0"
 dependencies = [
  "defmt 0.3.100",
  "heapless",
+ "printer-hal",
 ]
 
 [[package]]
