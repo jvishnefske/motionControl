@@ -18,19 +18,16 @@ jobs:
             package: duet3-firmware
             target: thumbv7em-none-eabihf
             binary: duet3-firmware
-            memory_x: memory.x
 
           - board: ebb42
             package: ebb42-firmware
             target: thumbv6m-none-eabi
             binary: ebb42-firmware
-            memory_x: firmware-ebb42/memory.x
 
           - board: skr-pico
             package: pico-firmware
             target: thumbv6m-none-eabi
             binary: pico-firmware
-            memory_x: firmware-pico/memory.x
 
     steps:
       - uses: actions/checkout@v4
