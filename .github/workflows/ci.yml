@@ -13,6 +13,7 @@ jobs:
   fmt:
     name: Format
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     permissions:
       contents: write
     steps:
@@ -34,6 +35,7 @@ jobs:
   check:
     name: Check
     needs: fmt
+    if: always() && !failure()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,6 +48,7 @@ jobs:
   test:
     name: Test
     needs: fmt
+    if: always() && !failure()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -61,6 +64,7 @@ jobs:
   clippy:
     name: Clippy
     needs: fmt
+    if: always() && !failure()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
