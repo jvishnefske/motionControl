@@ -4,20 +4,33 @@ version = "0.1.0"
 edition.workspace = true
 
 [dependencies]
-actor-framework.workspace = true
-board-hal.workspace = true
+# Portable library crates
+printer-hal.workspace = true
+dispatcher.workspace = true
 gcode-parser.workspace = true
 motion-planner.workspace = true
 thermal.workspace = true
 sdcard.workspace = true
+
+# Board-specific
+board-hal.workspace = true
+actor-framework.workspace = true
+
+# Embassy async runtime
 embassy-executor.workspace = true
 embassy-time.workspace = true
 embassy-sync.workspace = true
 embassy-futures.workspace = true
+
+# Cortex-M
 cortex-m.workspace = true
 cortex-m-rt.workspace = true
+
+# Logging
 defmt.workspace = true
 defmt-rtt.workspace = true
 panic-probe.workspace = true
+
+# Utilities
 static_cell.workspace = true
 heapless.workspace = true

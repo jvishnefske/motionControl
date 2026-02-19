@@ -14,9 +14,14 @@
 #![no_std]
 
 pub mod pins;
-pub mod pwm_output;
 pub mod stepper;
 pub mod thermistor;
 pub mod tmc2209;
 
 pub use pins::Duet3Pins;
+
+// Re-export portable types from printer-hal for backward compat.
+pub mod pwm_output {
+    pub use printer_hal::{DutyCycle, PwmChannel};
+}
+pub use printer_hal;

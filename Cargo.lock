@@ -40,16 +40,12 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 name = "board-hal"
 version = "0.1.0"
 dependencies = [
- "actor-framework",
- "cortex-m",
  "defmt 0.3.100",
- "embassy-executor",
- "embassy-sync",
- "embassy-time",
  "embedded-hal 1.0.0",
  "embedded-io",
  "heapless",
  "libm",
+ "printer-hal",
 ]
 
 [[package]]
@@ -190,6 +186,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "dispatcher"
+version = "0.1.0"
+dependencies = [
+ "defmt 0.3.100",
+ "gcode-parser",
+ "heapless",
+ "motion-planner",
+ "printer-hal",
+ "sdcard",
+ "thermal",
+]
+
+[[package]]
 name = "document-features"
 version = "0.2.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -208,6 +217,7 @@ dependencies = [
  "cortex-m-rt",
  "defmt 0.3.100",
  "defmt-rtt",
+ "dispatcher",
  "embassy-executor",
  "embassy-futures",
  "embassy-sync",
@@ -216,6 +226,7 @@ dependencies = [
  "heapless",
  "motion-planner",
  "panic-probe",
+ "printer-hal",
  "sdcard",
  "static_cell",
  "thermal",
@@ -316,17 +327,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "embedded-hal-bus"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0d3980bf28e8577db59fe2bdb3df868a419469d2cecb363644eea2b6f7797669"
-dependencies = [
- "critical-section",
- "embedded-hal 1.0.0",
- "portable-atomic",
-]
-
-[[package]]
 name = "embedded-io"
 version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -339,18 +339,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3ff09972d4073aa8c299395be75161d582e7629cd663171d62af73c8d50dba3f"
 dependencies = [
  "embedded-io",
-]
-
-[[package]]
-name = "embedded-sdmmc"
-version = "0.8.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1132a10f327a9dff9d0629124e8b26cb2b3a930ab3dfedbadd295c107955e92"
-dependencies = [
- "byteorder",
- "embedded-hal 1.0.0",
- "heapless",
- "log",
 ]
 
 [[package]]
@@ -435,25 +423,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "11d3d7f243d5c5a8b9bb5d6dd2b1602c0cb0b9db1621bafc7ed66e35ff9fe092"
 
 [[package]]
-name = "log"
-version = "0.4.29"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5e5032e24019045c762d3c0f28f5b6b8bbf38563a65908389bf7978758920897"
-
-[[package]]
 name = "motion-planner"
 version = "0.1.0"
 dependencies = [
- "actor-framework",
- "cortex-m",
  "defmt 0.3.100",
- "embassy-executor",
- "embassy-futures",
- "embassy-sync",
- "embassy-time",
  "gcode-parser",
  "heapless",
  "libm",
+ "printer-hal",
 ]
 
 [[package]]
@@ -492,6 +469,13 @@ name = "portable-atomic"
 version = "1.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c33a9471896f1c69cecef8d20cbe2f7accd12527ce60845ff44c153bb2a21b49"
+
+[[package]]
+name = "printer-hal"
+version = "0.1.0"
+dependencies = [
+ "defmt 0.3.100",
+]
 
 [[package]]
 name = "proc-macro-error-attr2"
@@ -546,16 +530,7 @@ dependencies = [
 name = "sdcard"
 version = "0.1.0"
 dependencies = [
- "actor-framework",
- "cortex-m",
  "defmt 0.3.100",
- "embassy-executor",
- "embassy-sync",
- "embassy-time",
- "embedded-hal 1.0.0",
- "embedded-hal-bus",
- "embedded-sdmmc",
- "gcode-parser",
  "heapless",
 ]
 
@@ -610,17 +585,10 @@ dependencies = [
 name = "thermal"
 version = "0.1.0"
 dependencies = [
- "actor-framework",
- "board-hal",
- "cortex-m",
  "defmt 0.3.100",
- "embassy-executor",
- "embassy-futures",
- "embassy-sync",
- "embassy-time",
- "gcode-parser",
  "heapless",
  "libm",
+ "printer-hal",
 ]
 
 [[package]]
@@ -668,4 +636,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "de437e2a6208b014ab52972a27e59b33fa2920d3e00fe05026167a1c509d19cc"
 dependencies = [
  "vcell",
+]
+
+[[package]]
+name = "wasm-sim"
+version = "0.1.0"
+dependencies = [
+ "defmt 0.3.100",
+ "dispatcher",
+ "gcode-parser",
+ "motion-planner",
+ "printer-hal",
+ "sdcard",
+ "thermal",
 ]

@@ -1,0 +1,13 @@
+[package]
+name = "wasm-sim"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+printer-hal = { path = "../crates/printer-hal" }
+gcode-parser = { path = "../crates/gcode-parser" }
+dispatcher = { path = "../crates/dispatcher" }
+motion-planner = { path = "../crates/motion-planner" }
+thermal = { path = "../crates/thermal" }
+sdcard = { path = "../crates/sdcard" }
+defmt.workspace = true

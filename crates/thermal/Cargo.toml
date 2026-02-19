@@ -4,14 +4,7 @@ version = "0.1.0"
 edition.workspace = true
 
 [dependencies]
-actor-framework.workspace = true
-gcode-parser.workspace = true
-board-hal.workspace = true
-embassy-executor.workspace = true
-embassy-time.workspace = true
-embassy-sync.workspace = true
-embassy-futures.workspace = true
-cortex-m.workspace = true
+printer-hal.workspace = true
 defmt.workspace = true
 heapless.workspace = true
 libm.workspace = true
