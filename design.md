@@ -1,10 +1,10 @@
-# MVP Functional Requirements — 3D Printer Control Firmware
+# Design — Multi-Board 3D Printer Firmware
 
 ## Architecture
 
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
-│  Portable library crates (no_std, test on host + WASM)         │
+│  Portable library crates (no_std, 71 tests on host)            │
 │                                                                 │
 │  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │
 │  │ gcode-parser │  │  dispatcher  │  │  motion-planner    │   │
@@ -13,40 +13,51 @@
 │                                                                 │
 │  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │
 │  │   thermal    │  │    sdcard    │  │  actor-framework   │   │
-│  │  (PID + mgr) │  │ (line reader)│  │  (mailbox, select) │   │
+│  │  (PID + mgr) │  │ (config +   │  │  (mailbox, select) │   │
+│  │              │  │  line reader)│  │                    │   │
 │  └──────────────┘  └──────────────┘  └────────────────────┘   │
 │                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐  │
-│  │  printer-hal  (trait definitions — no implementations)   │  │
+│  │  printer-hal  (traits + NullFs — no board dependency)    │  │
 │  └──────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────┘
 
 ┌───────────────────────────┐  ┌───────────────────────────┐
 │  firmware/ (binary)       │  │  firmware-pico/ (binary)   │
-│  Duet 3 ATSAME54 HAL     │  │  BTT SKR Pico RP2040      │
+│  Duet 3 Mini 5+ mainboard│  │  BTT SKR Pico mainboard   │
+│  ATSAME54P20A Cortex-M4F │  │  RP2040 dual Cortex-M0+   │
 │  board-hal pin mappings   │  │  board-pico pin mappings   │
-│  Embassy executor spawn   │  │  4x TMC2209 shared UART   │
-│  Full mainboard stack     │  │  Full mainboard stack      │
+│  SD card CONFIG.G         │  │  Flash CONFIG.G (planned)  │
 └───────────────────────────┘  └───────────────────────────┘
 
 ┌───────────────────────────┐  ┌──────────────────────────────┐
 │  firmware-ebb42/ (binary) │  │  wasm-sim/ (binary/lib)      │
-│  BTT EBB42 STM32G0B1     │  │  Browser mock HAL impls      │
-│  board-ebb42 pin mappings │  │  Embassy arch-wasm32         │
-│  CAN toolboard (subset)  │  │  Canvas rendering, WebSerial │
+│  BTT EBB42 CAN toolboard │  │  Browser mock HAL impls      │
+│  STM32G0B1 Cortex-M0+    │  │  Embassy arch-wasm32         │
+│  board-ebb42 pin mappings │  │  Canvas rendering, WebSerial │
 │  Stepper + thermal + CAN │  │  No hardware dependencies    │
 └───────────────────────────┘  └──────────────────────────────┘
 ```
 
 ## Supported Boards
 
-| Board | MCU | Role | Crate | Firmware |
-|-------|-----|------|-------|----------|
-| Duet 3 Mini 5+ Ethernet | ATSAME54P20A (Cortex-M4F, 120MHz) | Mainboard | `board-hal` | `firmware/` |
-| BTT EBB42 v1.2 | STM32G0B1CBT6 (Cortex-M0+, 64MHz) | CAN Toolboard | `board-ebb42` | `firmware-ebb42/` |
-| BTT SKR Pico v1.0 | RP2040 (dual Cortex-M0+, 133MHz) | Mainboard | `board-pico` | `firmware-pico/` |
+| Board | MCU | Role | Crate | Firmware | Config Source |
+|-------|-----|------|-------|----------|---------------|
+| Duet 3 Mini 5+ Ethernet | ATSAME54P20A (Cortex-M4F, 120MHz) | Mainboard | `board-hal` | `firmware/` | SD card `CONFIG.G` |
+| BTT EBB42 v1.2 | STM32G0B1CBT6 (Cortex-M0+, 64MHz) | CAN Toolboard | `board-ebb42` | `firmware-ebb42/` | CAN from mainboard |
+| BTT SKR Pico v1.0 | RP2040 (dual Cortex-M0+, 133MHz) | Mainboard | `board-pico` | `firmware-pico/` | Flash partition (planned) |
 
-## MVP Checklist
+Each board gets a single binary release. The binary reads `CONFIG.G` from storage
+at boot and falls back to compiled-in defaults when no file is found.
+
+## Release
+
+Tag push (`v*`) triggers per-board `.bin` builds via GitHub Actions matrix:
+- `duet3-mini5.bin` — `thumbv7em-none-eabihf`
+- `ebb42.bin` — `thumbv6m-none-eabi`
+- `skr-pico.bin` — `thumbv6m-none-eabi`
+
+## Implementation Status
 
 ### 1. Motion Control
 
@@ -61,7 +72,7 @@
 - [x] Position reporting (M114)
 - [ ] Endstop reading (homing actually hits a switch)
 - [ ] Software endstops (min/max travel limits)
-- [ ] Backlash compensation (optional)
+- [ ] Backlash compensation
 
 ### 2. Pressure Advance
 
@@ -72,25 +83,19 @@ tube or hotend melt zone.
 - [ ] Pressure advance factor (K) storage per extruder (M572)
 - [ ] Extruder step lookahead — advance E steps based on instantaneous speed
 - [ ] Deceleration compensation — retract extra E steps on deceleration
-- [ ] G-code: M572 D0 S0.06 — set advance factor per extruder
 - [ ] Per-segment E-step adjustment in step generator
 - [ ] Unit tests: verify E steps lead/lag XY motion by K × velocity
 
-### 3. Input Shaping / Dynamic Speed Control
+### 3. Input Shaping
 
-Reduce ringing (ghosting) artifacts by filtering acceleration profiles to
-cancel resonant frequencies of the printer frame and toolhead.
+Reduce ringing artifacts by filtering acceleration profiles to cancel
+resonant frequencies of the printer frame and toolhead.
 
 - [ ] Input shaper filter (ZV, MZV, EI, 2HUMP_EI, 3HUMP_EI types)
-- [ ] Configurable shaper frequency per axis (M593)
-- [ ] Configurable damping ratio per axis
-- [ ] Shaped acceleration profile generation (pre-filter trapezoid into shaped segments)
-- [ ] G-code: M593 F45.0 — set input shaper frequency
-- [ ] G-code: M593 P"mzv" — select shaper type
-- [ ] Acceleration limit adjustment based on shaper (max_accel × shaper_factor)
-- [ ] Dynamic speed scaling — reduce speed at sharp corners to limit vibration
-- [ ] Unit tests: verify shaped profile has correct number of impulses
-- [ ] Unit tests: verify frequency response attenuation at resonant frequency
+- [ ] Configurable shaper frequency and damping ratio per axis (M593)
+- [ ] Shaped acceleration profile generation
+- [ ] Acceleration limit adjustment based on shaper
+- [ ] Unit tests: shaped profile impulse count and frequency response
 
 ### 4. Thermal Management
 
@@ -100,8 +105,8 @@ cancel resonant frequencies of the printer frame and toolhead.
 - [x] Temperature set (M104) and set-and-wait (M109)
 - [x] Bed temperature set (M140) and wait (M190)
 - [x] Fan speed control (M106 / M107)
-- [ ] Actual ADC thermistor reading (HAL trait)
-- [ ] Actual PWM heater/fan output (HAL trait)
+- [ ] ADC thermistor reading (wire HAL trait to hardware)
+- [ ] PWM heater/fan output (wire HAL trait to hardware)
 - [ ] PID auto-tune (M303)
 
 ### 5. Configuration
@@ -113,15 +118,20 @@ cancel resonant frequencies of the printer frame and toolhead.
 - [x] Microstepping (M350)
 - [x] Motor current (M906)
 - [x] Driver direction/mode (M569)
-- [x] Built-in config defaults
-- [ ] SD card config load (CONFIG.G)
-- [ ] Config save/restore (M500/M501)
+- [x] Built-in config defaults per board
+- [x] Config loader with FileSystem trait (`CONFIG.G` → fallback defaults)
+- [x] Config override layering (`CONFIGO.G` on top of base config)
+- [x] NullFs for boards without storage
+- [ ] Config save to storage (M500)
+- [ ] Config restore from storage (M501)
 
 ### 6. SD Card / File I/O
 
-- [x] Line reader (zero-allocation line parser)
+- [x] Line reader (zero-allocation, chunked input)
 - [x] SD card actor message protocol
-- [ ] SPI init + FAT32 mount (HAL trait)
+- [x] Portable config loader (`load_config_with_fallback`)
+- [x] Comment stripping in config files
+- [ ] SPI + FAT32 mount (board-specific HAL wiring)
 - [ ] Stream G-code file for job execution
 - [ ] Job pause / resume / cancel
 - [ ] Job progress reporting
@@ -130,25 +140,21 @@ cancel resonant frequencies of the printer frame and toolhead.
 
 - [ ] USB serial G-code input
 - [ ] Serial response output (ok, error, temperature reports)
+- [ ] UART to Raspberry Pi (SKR Pico GPIO0/1)
 
-### 8. CAN Toolboard Support (CBOR)
+### 8. CAN Toolboard Support
 
-CAN-FD bus for distributed tool boards (e.g., Duet 3 1HCL, 3HC, toolboard 1LC).
-Uses CBOR encoding for compact, schema-flexible messages over CAN frames.
+CAN-FD bus for distributed tool boards (Duet 3 ecosystem).
 
+- [x] EBB42 firmware binary with CAN task structure
+- [x] Stepper + thermal actor tasks on toolboard
+- [x] CAN command/response message types defined
 - [ ] CAN-FD driver (1 Mbit arbitration, 5 Mbit data phase)
 - [ ] CBOR message serialization/deserialization (no_std, zero-alloc)
-- [ ] Toolboard discovery and address assignment protocol
-- [ ] Remote heater control — set target temp, read current temp via CAN
-- [ ] Remote stepper control — send step/dir commands to toolboard drivers
-- [ ] Remote endstop reading — poll toolboard endstop state
-- [ ] Remote thermistor reading — stream ADC values over CAN
-- [ ] Remote fan control — set fan PWM via CAN
+- [ ] Toolboard discovery and address assignment
+- [ ] Remote heater/stepper/endstop/thermistor/fan control via CAN
 - [ ] Heartbeat / watchdog — detect toolboard disconnect
-- [ ] printer-hal trait proxying — wrap CAN transport as HAL trait impls
-- [ ] G-code: M954 — configure CAN toolboard mapping
-- [ ] Unit tests: CBOR encode/decode roundtrip
-- [ ] Unit tests: mock CAN transport with loopback
+- [ ] printer-hal trait proxying over CAN transport
 
 ### 9. Hardware Abstraction (printer-hal traits)
 
@@ -157,6 +163,7 @@ Uses CBOR encoding for compact, schema-flexible messages over CAN frames.
 - [x] `HeaterOutput` — set PWM duty cycle for heater/fan
 - [x] `FileSystem` — open/read/close files from storage
 - [x] `EndstopReader` — read endstop switch state
+- [x] `NullFs` — stub for boards without storage
 - [ ] `Delay` — microsecond-precision timing for step pulses
 
 ### 10. Actor System
@@ -168,7 +175,18 @@ Uses CBOR encoding for compact, schema-flexible messages over CAN frames.
 - [x] Thermal manager 10Hz PID loop
 - [x] Status monitor (aggregates all actor outputs)
 
-### 11. WASM Simulation Target
+### 11. Board Support
+
+- [x] Duet 3 Mini 5+ pin mappings (ATSAME54P20A)
+- [x] BTT EBB42 v1.2 pin mappings (STM32G0B1CBT6)
+- [x] BTT SKR Pico v1.0 pin mappings (RP2040)
+- [x] Per-board firmware binaries with Embassy task spawn
+- [x] Per-board compiled-in config defaults
+- [x] Memory layouts (memory.x) for all three targets
+- [ ] TMC2209 UART driver (shared bus on Pico, per-driver on Duet)
+- [ ] RP2040 PIO for TMC2209 single-wire UART
+
+### 12. WASM Simulation Target
 
 - [x] Mock `StepperDriver` — logs steps, tracks position
 - [x] Mock `TemperatureSensor` — simulated thermal model
@@ -179,15 +197,17 @@ Uses CBOR encoding for compact, schema-flexible messages over CAN frames.
 - [ ] Browser entry point (wasm-bindgen)
 - [ ] Simulated time (embassy-time with wasm tick source)
 
-### 12. Portability Requirements
+### 13. Portability & CI
 
 - [x] All business logic in `no_std` library crates
-- [x] Library crates depend only on `printer-hal` traits (not board-hal)
-- [x] Firmware binary: only hardware init + task spawn + HAL impl wiring
-- [x] Unit tests run on host (`x86_64-unknown-linux-gnu`)
+- [x] Library crates depend only on `printer-hal` traits
+- [x] Firmware binary: only hardware init + task spawn + HAL wiring
+- [x] 71 unit tests run on host (`x86_64-unknown-linux-gnu`)
+- [x] CI: fmt auto-commit on PRs, check, test, clippy
+- [x] Release workflow: per-board `.bin` on tag push
 - [ ] WASM target compiles with mock HAL
 
-### 13. Safety
+### 14. Safety
 
 - [x] Thermal runaway detection
 - [x] Emergency stop propagation to all actors
