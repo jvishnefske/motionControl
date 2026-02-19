@@ -21,14 +21,30 @@
 │  └──────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────┘
 
+┌───────────────────────────┐  ┌───────────────────────────┐
+│  firmware/ (binary)       │  │  firmware-pico/ (binary)   │
+│  Duet 3 ATSAME54 HAL     │  │  BTT SKR Pico RP2040      │
+│  board-hal pin mappings   │  │  board-pico pin mappings   │
+│  Embassy executor spawn   │  │  4x TMC2209 shared UART   │
+│  Full mainboard stack     │  │  Full mainboard stack      │
+└───────────────────────────┘  └───────────────────────────┘
+
 ┌───────────────────────────┐  ┌──────────────────────────────┐
-│  firmware/ (binary)       │  │  wasm-sim/ (binary/lib)      │
-│  Duet 3 ATSAME54 HAL     │  │  Browser mock HAL impls      │
-│  Embassy executor spawn   │  │  Embassy arch-wasm32         │
-│  Clock, GPIO, ADC, SPI   │  │  Canvas rendering, WebSerial │
-│  board-hal pin mappings   │  │  No hardware dependencies    │
+│  firmware-ebb42/ (binary) │  │  wasm-sim/ (binary/lib)      │
+│  BTT EBB42 STM32G0B1     │  │  Browser mock HAL impls      │
+│  board-ebb42 pin mappings │  │  Embassy arch-wasm32         │
+│  CAN toolboard (subset)  │  │  Canvas rendering, WebSerial │
+│  Stepper + thermal + CAN │  │  No hardware dependencies    │
 └───────────────────────────┘  └──────────────────────────────┘
 ```
+
+## Supported Boards
+
+| Board | MCU | Role | Crate | Firmware |
+|-------|-----|------|-------|----------|
+| Duet 3 Mini 5+ Ethernet | ATSAME54P20A (Cortex-M4F, 120MHz) | Mainboard | `board-hal` | `firmware/` |
+| BTT EBB42 v1.2 | STM32G0B1CBT6 (Cortex-M0+, 64MHz) | CAN Toolboard | `board-ebb42` | `firmware-ebb42/` |
+| BTT SKR Pico v1.0 | RP2040 (dual Cortex-M0+, 133MHz) | Mainboard | `board-pico` | `firmware-pico/` |
 
 ## MVP Checklist
 

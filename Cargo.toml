@@ -3,6 +3,8 @@ resolver = "2"
 members = [
     "crates/actor-framework",
     "crates/board-hal",
+    "crates/board-ebb42",
+    "crates/board-pico",
     "crates/dispatcher",
     "crates/gcode-parser",
     "crates/motion-planner",
@@ -10,6 +12,8 @@ members = [
     "crates/thermal",
     "crates/sdcard",
     "firmware",
+    "firmware-ebb42",
+    "firmware-pico",
     "wasm-sim",
 ]
 
@@ -51,6 +55,8 @@ embedded-hal-bus = "0.2"
 # Internal crates
 actor-framework = { path = "crates/actor-framework" }
 board-hal = { path = "crates/board-hal" }
+board-ebb42 = { path = "crates/board-ebb42" }
+board-pico = { path = "crates/board-pico" }
 dispatcher = { path = "crates/dispatcher" }
 gcode-parser = { path = "crates/gcode-parser" }
 motion-planner = { path = "crates/motion-planner" }
