@@ -74,3 +74,37 @@ jobs:
           components: clippy
       - uses: Swatinem/rust-cache@v2
       - run: cargo clippy --workspace -- -D warnings
+
+  coverage:
+    name: Coverage
+    needs: fmt
+    if: always() && !failure()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+      - uses: Swatinem/rust-cache@v2
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-llvm-cov
+      # Same host-testable crate set as the Test job. Threshold sits just
+      # below the measured baseline (74.5% lines) so coverage can't regress.
+      - name: Library coverage on host
+        run: |
+          cargo llvm-cov --workspace \
+            --exclude duet3-firmware --exclude ebb42-firmware --exclude pico-firmware \
+            --exclude actor-framework --exclude wasm-sim \
+            --target x86_64-unknown-linux-gnu \
+            --lcov --output-path lcov.info --fail-under-lines 74
+      - name: Coverage summary
+        if: always()
+        run: cargo llvm-cov report --target x86_64-unknown-linux-gnu --summary-only
+      - name: Upload lcov report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lcov
+          path: lcov.info
+          if-no-files-found: ignore
