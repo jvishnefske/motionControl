@@ -80,6 +80,10 @@ jobs:
     needs: fmt
     if: always() && !failure()
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Upload to GitHub Code Quality's code coverage (actions/upload-code-coverage).
+      code-quality: write
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -101,6 +105,20 @@ jobs:
       - name: Coverage summary
         if: always()
         run: cargo llvm-cov report --target x86_64-unknown-linux-gnu --summary-only
+      - name: Cobertura report
+        if: always()
+        run: cargo llvm-cov report --target x86_64-unknown-linux-gnu --cobertura --output-path coverage.xml
+      # Code Quality compares PR coverage with main, so this runs on both.
+      # It needs Code Quality enabled on the repo (Settings > Security > Code
+      # quality); until then the upload fails without failing the job.
+      - name: Upload coverage to Code Quality
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        continue-on-error: true
+        uses: actions/upload-code-coverage@v1
+        with:
+          file: coverage.xml
+          language: Rust
+          label: code-coverage/llvm-cov
       - name: Upload lcov report
         if: always()
         uses: actions/upload-artifact@v4
@@ -108,3 +126,51 @@ jobs:
           name: lcov
           path: lcov.info
           if-no-files-found: ignore
+
+  # flight/ is its own workspace (host only). It depends on
+  # jvishnefske/middleware through `../../middleware`, so that is checked out
+  # next to the repo at the commit flight/flake.lock pins.
+  flight:
+    name: Flight sim
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      code-quality: write
+    defaults:
+      run:
+        working-directory: flight
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check out middleware at the pinned commit
+        uses: actions/checkout@v4
+        with:
+          repository: jvishnefske/middleware
+          ref: ac0b741017a4c875798f67cf0c533e6c713e62b2
+          path: _middleware
+      - name: Put middleware where ../../middleware resolves
+        working-directory: .
+        run: mv _middleware ../middleware
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy, llvm-tools-preview
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: flight
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-llvm-cov
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: Tests with coverage
+        run: cargo llvm-cov --workspace --cobertura --output-path coverage.xml
+      - name: Coverage summary
+        if: always()
+        run: cargo llvm-cov report --summary-only
+      - name: Upload coverage to Code Quality
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        continue-on-error: true
+        uses: actions/upload-code-coverage@v1
+        with:
+          file: flight/coverage.xml
+          language: Rust
+          label: code-coverage/flight
