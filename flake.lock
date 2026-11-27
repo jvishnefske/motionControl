@@ -5,16 +5,16 @@
       "locked": {
         "lastModified": 1795744216,
         "narHash": "sha256-zGtlLyV2gVq0R5em//PwVTKrUQ5nVwU+VlZSNUzWuHU=",
-        "ref": "HEAD",
+        "owner": "jvishnefske",
+        "repo": "middleware",
         "rev": "ac0b741017a4c875798f67cf0c533e6c713e62b2",
-        "revCount": 114,
-        "type": "git",
-        "url": "file:///home/j/src/middleware"
+        "type": "github"
       },
       "original": {
-        "ref": "HEAD",
-        "type": "git",
-        "url": "file:///home/j/src/middleware"
+        "owner": "jvishnefske",
+        "repo": "middleware",
+        "rev": "ac0b741017a4c875798f67cf0c533e6c713e62b2",
+        "type": "github"
       }
     },
     "nixpkgs": {

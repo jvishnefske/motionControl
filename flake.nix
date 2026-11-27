@@ -20,22 +20,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # The workspace depends on `middleware = { path = "../../middleware" }`
-    # (this repo lives at ~/src/katas/flight). A flake build cannot reach
+    # (a `middleware` checkout next to the repo holding this directory, e.g. ~/src/middleware beside ~/src/motionControl/flight). A flake build cannot reach
     # outside its own source, so middleware is an input and the build
     # assembles a tree where ../../middleware resolves (see `src` below).
     #
-    # git+file rather than path: it copies only git-tracked files (not
-    # middleware's multi-GB target/ or result symlinks). `ref=HEAD` makes
-    # it the committed HEAD of whatever branch is checked out, so it locks
-    # to a rev even while the middleware tree is dirty (without a ref nix
-    # takes the dirty working tree, cannot lock it and refuses to write
-    # flake.lock). Uncommitted middleware edits are therefore NOT in the
-    # nix build (cargo builds see them). Refresh with
-    # `nix flake update middleware`; point elsewhere with e.g.
-    #   nix build .#flightsim --override-input middleware git+file:///path/to/middleware
-    #   nix build .#flightsim --override-input middleware github:jvishnefske/middleware
+    # Pinned to the middleware commit this was built and tested against
+    # (ac0b741, on its `updates-channel` branch), so the build works on any
+    # machine. To build against a local checkout, including uncommitted
+    # edits once they are committed:
+    #   nix build .#flightsim --override-input middleware git+file:///path/to/middleware?ref=HEAD
     middleware = {
-      url = "git+file:///home/j/src/middleware?ref=HEAD";
+      url = "github:jvishnefske/middleware/ac0b741017a4c875798f67cf0c533e6c713e62b2";
       flake = false;
     };
   };

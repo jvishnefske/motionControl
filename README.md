@@ -6,11 +6,11 @@ be switched at runtime between the real program and a Rust stand-in behind the s
 trait (`flight_core::Module`).
 
 ```
-nix develop            # rust, qgroundcontrol, docker client, just
+nix develop ./flight   # rust, qgroundcontrol, docker client, just
 just run               # = cargo run -p flightsim -- ; open http://127.0.0.1:8080/
 flightsim --preset all-sim --run box          # headless one-click test
 flightsim --airframe fixed_wing --preset px4-sih
-nix run                # build + run flightsim through nix
+nix run ./flight       # build + run flightsim through nix
 ```
 
 ## Modules
@@ -70,6 +70,9 @@ mission runner) · `flight-sim` (Rust stand-ins) · `flight-launch` (PX4, gz and
 processes) · `flight-bus` (middleware) · `flight-ui` (orchestrator and web menu) ·
 `flightsim` (binary).
 
-The middleware is a path dependency, `../../middleware`. Nix takes it from the flake
-input `middleware` (the committed HEAD of `/home/j/src/middleware`); to use a different
-copy, pass `--override-input middleware <path-or-url>`.
+The middleware is a path dependency, `../../middleware`, so cargo builds need a
+checkout of [jvishnefske/middleware](https://github.com/jvishnefske/middleware) next
+to this repo, e.g. `~/src/middleware` beside `~/src/motionControl/flight`. Nix takes
+it from the flake input `middleware`, pinned to the commit this was tested with
+(`ac0b741`, on its `updates-channel` branch); pass `--override-input middleware
+<path-or-url>` to use a different copy.
