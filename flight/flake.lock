@@ -1,0 +1,66 @@
+{
+  "nodes": {
+    "middleware": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795744216,
+        "narHash": "sha256-zGtlLyV2gVq0R5em//PwVTKrUQ5nVwU+VlZSNUzWuHU=",
+        "owner": "jvishnefske",
+        "repo": "middleware",
+        "rev": "ac0b741017a4c875798f67cf0c533e6c713e62b2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jvishnefske",
+        "repo": "middleware",
+        "rev": "ac0b741017a4c875798f67cf0c533e6c713e62b2",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1795370043,
+        "narHash": "sha256-s/0jq8usZtLVOolYBwmyUmd3JsfAu7w3FU+a0dgMqSY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0dc498bfe49baeb18b0f9891e800b53bb2603193",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "middleware": "middleware",
+        "nixpkgs": "nixpkgs",
+        "rust-overlay": "rust-overlay"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795689650,
+        "narHash": "sha256-gvke5rg5P9S2TAXdOASCqEPc/OdvPKaHIGoMlbYLJ/E=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "8771c4aba509d6efb8bf376fd8cb657cce52b013",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

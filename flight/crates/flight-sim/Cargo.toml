@@ -1,0 +1,21 @@
+[package]
+name = "flight-sim"
+description = "Rust stand-ins (PX4-compatible autopilot + dynamics, physics, ground station) behind the Module trait"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+flight-core.workspace = true
+anyhow.workspace = true
+async-trait.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+mavlink.workspace = true
+# mavlink-core 0.17.1 with `tokio-1` uses `futures::lock::Mutex`, which needs
+# futures' `std` feature, which it does not enable itself.
+futures = { version = "0.3", default-features = false, features = ["std"] }
+
+[dev-dependencies]
+flight-mav = { path = "../flight-mav" }
