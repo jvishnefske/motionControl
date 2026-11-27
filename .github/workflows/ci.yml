@@ -86,13 +86,17 @@ jobs:
       code-quality: write
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      # Pinned: the 74% floor was measured with rustc 1.99.1 + cargo-llvm-cov
+      # 0.9.1. With stable 1.100.1 + 0.9.2 (2026-11) the run exits 1 after
+      # writing the report and prints no total; bump both together and
+      # re-measure the floor.
+      - uses: dtolnay/rust-toolchain@1.99.1
         with:
           components: llvm-tools-preview
       - uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@v2
         with:
-          tool: cargo-llvm-cov
+          tool: cargo-llvm-cov@0.9.1
       # Same host-testable crate set as the Test job. Threshold sits just
       # below the measured baseline (74.5% lines) so coverage can't regress.
       - name: Library coverage on host
@@ -150,7 +154,8 @@ jobs:
       - name: Put middleware where ../../middleware resolves
         working-directory: .
         run: mv _middleware ../middleware
-      - uses: dtolnay/rust-toolchain@stable
+      # Same pins as the Coverage job.
+      - uses: dtolnay/rust-toolchain@1.99.1
         with:
           components: rustfmt, clippy, llvm-tools-preview
       - uses: Swatinem/rust-cache@v2
@@ -158,8 +163,9 @@ jobs:
           workspaces: flight
       - uses: taiki-e/install-action@v2
         with:
-          tool: cargo-llvm-cov
-      - run: cargo fmt --all --check
+          tool: cargo-llvm-cov@0.9.1
+      # No --all: that also formats path dependencies (../../middleware).
+      - run: cargo fmt --check
       - run: cargo clippy --workspace --all-targets -- -D warnings
       - name: Tests with coverage
         run: cargo llvm-cov --workspace --cobertura --output-path coverage.xml
