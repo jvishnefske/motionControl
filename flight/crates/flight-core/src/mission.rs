@@ -9,7 +9,12 @@ pub enum MissionItem {
     /// MAV_CMD_NAV_TAKEOFF at the current position (lat/lon given for fixed-wing climb-out direction).
     Takeoff { lat: f64, lon: f64, alt_m: f64 },
     /// MAV_CMD_NAV_WAYPOINT.
-    Waypoint { lat: f64, lon: f64, alt_m: f64, acceptance_m: f64 },
+    Waypoint {
+        lat: f64,
+        lon: f64,
+        alt_m: f64,
+        acceptance_m: f64,
+    },
     /// MAV_CMD_NAV_LAND at a position (multicopter).
     Land { lat: f64, lon: f64 },
     /// MAV_CMD_NAV_RETURN_TO_LAUNCH.
@@ -20,7 +25,9 @@ impl MissionItem {
     pub fn target(&self) -> Option<(f64, f64, f64)> {
         match *self {
             MissionItem::Takeoff { lat, lon, alt_m } => Some((lat, lon, alt_m)),
-            MissionItem::Waypoint { lat, lon, alt_m, .. } => Some((lat, lon, alt_m)),
+            MissionItem::Waypoint {
+                lat, lon, alt_m, ..
+            } => Some((lat, lon, alt_m)),
             MissionItem::Land { lat, lon } => Some((lat, lon, 0.0)),
             MissionItem::ReturnToLaunch => None,
         }
@@ -50,12 +57,25 @@ impl Mission {
         let acc = airframe.acceptance_radius_m();
         let wp = |n: f64, e: f64| {
             let p = home.offset(n * scale, e * scale);
-            MissionItem::Waypoint { lat: p.lat, lon: p.lon, alt_m: alt, acceptance_m: acc }
+            MissionItem::Waypoint {
+                lat: p.lat,
+                lon: p.lon,
+                alt_m: alt,
+                acceptance_m: acc,
+            }
         };
         let takeoff = {
             // Fixed-wing climbs out north; the takeoff point sets the heading.
-            let p = if airframe.is_fixed_wing() { home.offset(scale, 0.0) } else { home };
-            MissionItem::Takeoff { lat: p.lat, lon: p.lon, alt_m: alt }
+            let p = if airframe.is_fixed_wing() {
+                home.offset(scale, 0.0)
+            } else {
+                home
+            };
+            MissionItem::Takeoff {
+                lat: p.lat,
+                lon: p.lon,
+                alt_m: alt,
+            }
         };
         let mut items = vec![takeoff];
         match name {
@@ -70,12 +90,21 @@ impl Mission {
             _ => return None,
         }
         match airframe {
-            Airframe::Quadrotor => items.push(MissionItem::Land { lat: home.lat, lon: home.lon }),
+            Airframe::Quadrotor => items.push(MissionItem::Land {
+                lat: home.lat,
+                lon: home.lon,
+            }),
             Airframe::FixedWing => items.push(MissionItem::ReturnToLaunch),
         }
         let path_m = path_length_m(&home, &items);
         let timeout_s = 60.0 + 2.0 * path_m / airframe.cruise_speed_ms();
-        Some(Mission { name: name.to_string(), airframe, home, items, timeout_s })
+        Some(Mission {
+            name: name.to_string(),
+            airframe,
+            home,
+            items,
+            timeout_s,
+        })
     }
 }
 
@@ -84,7 +113,11 @@ fn path_length_m(home: &GeoPoint, items: &[MissionItem]) -> f64 {
     let mut total = 0.0;
     for it in items {
         let p = match it.target() {
-            Some((lat, lon, _)) => GeoPoint { lat, lon, alt_m: 0.0 },
+            Some((lat, lon, _)) => GeoPoint {
+                lat,
+                lon,
+                alt_m: 0.0,
+            },
             None => *home,
         };
         total += prev.horizontal_distance_m(&p);
@@ -107,6 +140,8 @@ mod tests {
                 assert!(m.timeout_s > 60.0);
             }
         }
-        assert!(Mission::builtin("nope", Airframe::Quadrotor, GeoPoint::PX4_DEFAULT_HOME).is_none());
+        assert!(
+            Mission::builtin("nope", Airframe::Quadrotor, GeoPoint::PX4_DEFAULT_HOME).is_none()
+        );
     }
 }

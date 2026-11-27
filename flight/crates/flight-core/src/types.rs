@@ -95,13 +95,21 @@ pub const EARTH_RADIUS_M: f64 = 6_371_000.0;
 
 impl GeoPoint {
     /// PX4's default SITL home (Zurich).
-    pub const PX4_DEFAULT_HOME: GeoPoint = GeoPoint { lat: 47.397742, lon: 8.545594, alt_m: 488.0 };
+    pub const PX4_DEFAULT_HOME: GeoPoint = GeoPoint {
+        lat: 47.397742,
+        lon: 8.545594,
+        alt_m: 488.0,
+    };
 
     /// The point `north_m`/`east_m` metres away (flat-earth, fine for < 10 km).
     pub fn offset(&self, north_m: f64, east_m: f64) -> GeoPoint {
         let dlat = north_m / EARTH_RADIUS_M;
         let dlon = east_m / (EARTH_RADIUS_M * self.lat.to_radians().cos());
-        GeoPoint { lat: self.lat + dlat.to_degrees(), lon: self.lon + dlon.to_degrees(), alt_m: self.alt_m }
+        GeoPoint {
+            lat: self.lat + dlat.to_degrees(),
+            lon: self.lon + dlon.to_degrees(),
+            alt_m: self.alt_m,
+        }
     }
 
     /// (north, east) metres from `self` to `other`.
@@ -179,7 +187,10 @@ pub struct MavPorts {
 
 impl Default for MavPorts {
     fn default() -> Self {
-        MavPorts { gcs: 14550, api: 14540 }
+        MavPorts {
+            gcs: 14550,
+            api: 14540,
+        }
     }
 }
 

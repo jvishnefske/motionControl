@@ -253,8 +253,11 @@ fn handle_cmd(shared: &Shared, req: &Request<'_>, out: &mut [u8]) -> Result<usiz
     match body.trim() {
         "status" => {
             shared.on_command();
-            let json = serde_json::to_vec(&shared.snapshot()).map_err(|_| HandlerError::Internal)?;
-            let slot = out.get_mut(..json.len()).ok_or(HandlerError::BufferTooSmall)?;
+            let json =
+                serde_json::to_vec(&shared.snapshot()).map_err(|_| HandlerError::Internal)?;
+            let slot = out
+                .get_mut(..json.len())
+                .ok_or(HandlerError::BufferTooSmall)?;
             slot.copy_from_slice(&json);
             Ok(json.len())
         }
@@ -296,7 +299,12 @@ pub struct MemoryBus {
 impl MemoryBus {
     /// A bus publishing the reports seen on `reports`.
     pub fn new(reports: watch::Receiver<Option<TestReport>>) -> Self {
-        MemoryBus { reports, shared: None, worker: None, state: ModuleStatus::Stopped }
+        MemoryBus {
+            reports,
+            shared: None,
+            worker: None,
+            state: ModuleStatus::Stopped,
+        }
     }
 
     /// Current statistics, `None` when stopped.
@@ -307,9 +315,14 @@ impl MemoryBus {
     /// Sends `cmd` as a request through the bus to `flight/<airframe>/cmd`
     /// (from a separate node on the hub) and returns the reply text.
     pub async fn command(&self, cmd: &str) -> anyhow::Result<String> {
-        let w = self.worker.as_ref().ok_or_else(|| anyhow!("memory bus not running"))?;
+        let w = self
+            .worker
+            .as_ref()
+            .ok_or_else(|| anyhow!("memory bus not running"))?;
         let (tx, rx) = oneshot::channel();
-        w.cmds.send((cmd.to_string(), tx)).map_err(|_| anyhow!("memory bus thread gone"))?;
+        w.cmds
+            .send((cmd.to_string(), tx))
+            .map_err(|_| anyhow!("memory bus thread gone"))?;
         rx.await.map_err(|_| anyhow!("memory bus thread gone"))?
     }
 }
@@ -331,7 +344,9 @@ async fn memory_main(
     let bus = MwMemoryBus::new();
     let setup = (|| -> Result<_, middleware::transport::memory::MemoryError> {
         let sub = bus.node(NODE_SUB).subscriber(flight_filter())?;
-        let resp = bus.node(NODE_CMD).responder(KeyFilter::Exact(cmd_key(af)))?;
+        let resp = bus
+            .node(NODE_CMD)
+            .responder(KeyFilter::Exact(cmd_key(af)))?;
         Ok((sub, resp))
     })();
     let (sub, resp) = match setup {
@@ -343,7 +358,13 @@ async fn memory_main(
     };
     tokio::task::spawn_local(subscribe_loop(sub, shared.clone()));
     tokio::task::spawn_local(serve_loop(resp, shared.clone()));
-    tokio::task::spawn_local(publish_loop(bus.node(NODE_PUB), af, telemetry, reports, shared.clone()));
+    tokio::task::spawn_local(publish_loop(
+        bus.node(NODE_PUB),
+        af,
+        telemetry,
+        reports,
+        shared.clone(),
+    ));
     let mut req = bus.node(NODE_REQ);
     tokio::task::spawn_local(async move {
         let mut buf = vec![0u8; SCRATCH];
@@ -388,7 +409,10 @@ impl Module for MemoryBus {
         let thread = std::thread::Builder::new()
             .name("memory-bus".into())
             .spawn(move || {
-                let rt = match tokio::runtime::Builder::new_current_thread().enable_all().build() {
+                let rt = match tokio::runtime::Builder::new_current_thread()
+                    .enable_all()
+                    .build()
+                {
                     Ok(rt) => rt,
                     Err(e) => {
                         let _ = ready_tx.send(Err(anyhow!("runtime: {e}")));
@@ -396,16 +420,27 @@ impl Module for MemoryBus {
                     }
                 };
                 let local = tokio::task::LocalSet::new();
-                local.block_on(&rt, memory_main(af, telemetry, reports, sh, ready_tx, stop_rx, cmd_rx));
+                local.block_on(
+                    &rt,
+                    memory_main(af, telemetry, reports, sh, ready_tx, stop_rx, cmd_rx),
+                );
             })
             .context("spawn memory-bus thread")?;
-        let worker = MemoryWorker { stop: stop_tx, cmds: cmd_tx, thread };
+        let worker = MemoryWorker {
+            stop: stop_tx,
+            cmds: cmd_tx,
+            thread,
+        };
         match ready_rx.await {
             Ok(Ok(())) => {
                 self.worker = Some(worker);
                 self.shared = Some(shared);
                 self.state = ModuleStatus::Running(String::new());
-                ctx.log("memory-bus", LogLevel::Info, format!("in-process bus up, publishing {}", telemetry_key(af)));
+                ctx.log(
+                    "memory-bus",
+                    LogLevel::Info,
+                    format!("in-process bus up, publishing {}", telemetry_key(af)),
+                );
                 Ok(())
             }
             Ok(Err(e)) => {
@@ -437,7 +472,9 @@ impl Module for MemoryBus {
 
     fn status(&self) -> ModuleStatus {
         match (&self.state, &self.shared) {
-            (ModuleStatus::Running(_), Some(s)) => ModuleStatus::Running(summary("memory", &s.snapshot())),
+            (ModuleStatus::Running(_), Some(s)) => {
+                ModuleStatus::Running(summary("memory", &s.snapshot()))
+            }
             (st, _) => st.clone(),
         }
     }
@@ -478,7 +515,15 @@ impl ZenohConfig {
     /// Default, overridden by `FLIGHT_ZENOH_LISTEN` (comma-separated
     /// endpoints), `FLIGHT_ZENOH_CONNECT` and `FLIGHT_ZENOH_SCOUT=1`.
     pub fn from_env() -> Self {
-        let list = |v: &str| std::env::var(v).ok().map(|s| s.split(',').map(str::trim).filter(|s| !s.is_empty()).map(String::from).collect::<Vec<_>>());
+        let list = |v: &str| {
+            std::env::var(v).ok().map(|s| {
+                s.split(',')
+                    .map(str::trim)
+                    .filter(|s| !s.is_empty())
+                    .map(String::from)
+                    .collect::<Vec<_>>()
+            })
+        };
         let mut c = ZenohConfig::default();
         if let Some(l) = list("FLIGHT_ZENOH_LISTEN") {
             c.listen = l;
@@ -492,7 +537,12 @@ impl ZenohConfig {
 
     /// Loopback only, no scouting: for tests and local runs.
     pub fn loopback(listen: impl Into<String>) -> Self {
-        ZenohConfig { listen: vec![listen.into()], connect: Vec::new(), answer_scouts: false, local_delivery: true }
+        ZenohConfig {
+            listen: vec![listen.into()],
+            connect: Vec::new(),
+            answer_scouts: false,
+            local_delivery: true,
+        }
     }
 
     fn session_config(&self) -> SessionConfig {
@@ -530,7 +580,14 @@ pub struct ZenohBus {
 
 impl ZenohBus {
     pub fn new(config: ZenohConfig, reports: watch::Receiver<Option<TestReport>>) -> Self {
-        ZenohBus { config, reports, transport: None, tasks: Vec::new(), shared: None, state: ModuleStatus::Stopped }
+        ZenohBus {
+            config,
+            reports,
+            transport: None,
+            tasks: Vec::new(),
+            shared: None,
+            state: ModuleStatus::Stopped,
+        }
     }
 
     /// Current statistics, `None` when stopped.
@@ -540,17 +597,29 @@ impl ZenohBus {
 
     async fn open(&mut self, ctx: &SimContext) -> anyhow::Result<()> {
         let af = ctx.airframe;
-        let config = self.config.session_config().build().map_err(|e| anyhow!("zenoh config: {e}"))?;
+        let config = self
+            .config
+            .session_config()
+            .build()
+            .map_err(|e| anyhow!("zenoh config: {e}"))?;
         let t = ZenohTransport::open(config)
             .await
             .map_err(|e| anyhow!("zenoh open: {e}"))?
             .with_local_delivery(self.config.local_delivery);
         let shared = Shared::new("zenoh", af);
         let mut sub_t = t.clone();
-        let sub = sub_t.subscribe(flight_filter()).await.map_err(|e| anyhow!("zenoh subscribe: {e}"))?;
-        let resp = t.responder(cmd_key(af)).await.map_err(|e| anyhow!("zenoh responder: {e}"))?;
-        self.tasks.push(tokio::spawn(subscribe_loop(sub, shared.clone())));
-        self.tasks.push(tokio::spawn(serve_loop(resp, shared.clone())));
+        let sub = sub_t
+            .subscribe(flight_filter())
+            .await
+            .map_err(|e| anyhow!("zenoh subscribe: {e}"))?;
+        let resp = t
+            .responder(cmd_key(af))
+            .await
+            .map_err(|e| anyhow!("zenoh responder: {e}"))?;
+        self.tasks
+            .push(tokio::spawn(subscribe_loop(sub, shared.clone())));
+        self.tasks
+            .push(tokio::spawn(serve_loop(resp, shared.clone())));
         self.tasks.push(tokio::spawn(publish_loop(
             t.clone(),
             af,
@@ -585,7 +654,11 @@ impl Module for ZenohBus {
                 ctx.log(
                     "zenoh-bus",
                     LogLevel::Info,
-                    format!("{} up, publishing {}", self.config.endpoint_label(), telemetry_key(ctx.airframe)),
+                    format!(
+                        "{} up, publishing {}",
+                        self.config.endpoint_label(),
+                        telemetry_key(ctx.airframe)
+                    ),
                 );
                 Ok(())
             }
@@ -605,7 +678,10 @@ impl Module for ZenohBus {
         }
         self.shared = None;
         if let Some(t) = self.transport.take() {
-            t.session().close().await.map_err(|e| anyhow!("zenoh close: {e}"))?;
+            t.session()
+                .close()
+                .await
+                .map_err(|e| anyhow!("zenoh close: {e}"))?;
         }
         self.state = ModuleStatus::Stopped;
         Ok(())
@@ -639,7 +715,10 @@ impl Default for Factory {
 
 impl Factory {
     pub fn new() -> Self {
-        Factory { zenoh: ZenohConfig::default(), reports: watch::channel(None).0 }
+        Factory {
+            zenoh: ZenohConfig::default(),
+            reports: watch::channel(None).0,
+        }
     }
 
     pub fn with_zenoh_config(mut self, config: ZenohConfig) -> Self {
@@ -669,10 +748,13 @@ impl ModuleFactory for Factory {
 
     fn create(&self, kind: ModuleKind, backend: Backend) -> Option<Box<dyn Module>> {
         match (kind, backend) {
-            (ModuleKind::Middleware, Backend::Real) => {
-                Some(Box::new(ZenohBus::new(self.zenoh.clone(), self.reports.subscribe())))
+            (ModuleKind::Middleware, Backend::Real) => Some(Box::new(ZenohBus::new(
+                self.zenoh.clone(),
+                self.reports.subscribe(),
+            ))),
+            (ModuleKind::Middleware, Backend::Simulated) => {
+                Some(Box::new(MemoryBus::new(self.reports.subscribe())))
             }
-            (ModuleKind::Middleware, Backend::Simulated) => Some(Box::new(MemoryBus::new(self.reports.subscribe()))),
             _ => None,
         }
     }

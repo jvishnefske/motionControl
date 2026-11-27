@@ -71,7 +71,11 @@ pub struct MissionTest {
 
 impl MissionTest {
     pub fn new(m: &Mission) -> Self {
-        let alt_tol = if m.airframe.is_fixed_wing() { 15.0 } else { 3.0 };
+        let alt_tol = if m.airframe.is_fixed_wing() {
+            15.0
+        } else {
+            3.0
+        };
         let mut goals = vec![Goal::Armed];
         let mut names = vec!["armed".to_string()];
         let mut wp = 0;
@@ -81,13 +85,30 @@ impl MissionTest {
                     goals.push(Goal::Altitude(alt_m * 0.9));
                     names.push(format!("takeoff to {alt_m:.0} m"));
                 }
-                MissionItem::Waypoint { lat, lon, alt_m, acceptance_m } => {
+                MissionItem::Waypoint {
+                    lat,
+                    lon,
+                    alt_m,
+                    acceptance_m,
+                } => {
                     wp += 1;
-                    goals.push(Goal::Reach { p: GeoPoint { lat, lon, alt_m: 0.0 }, alt: alt_m, acc: acceptance_m });
+                    goals.push(Goal::Reach {
+                        p: GeoPoint {
+                            lat,
+                            lon,
+                            alt_m: 0.0,
+                        },
+                        alt: alt_m,
+                        acc: acceptance_m,
+                    });
                     names.push(format!("wp {wp}"));
                 }
                 MissionItem::Land { lat, lon } => {
-                    goals.push(Goal::Landed(GeoPoint { lat, lon, alt_m: 0.0 }));
+                    goals.push(Goal::Landed(GeoPoint {
+                        lat,
+                        lon,
+                        alt_m: 0.0,
+                    }));
                     names.push("landed + disarmed".into());
                 }
                 MissionItem::ReturnToLaunch => {
@@ -98,7 +119,12 @@ impl MissionTest {
         }
         let checks = names
             .into_iter()
-            .map(|name| Check { name, state: CheckState::Pending, at_s: None, detail: String::new() })
+            .map(|name| Check {
+                name,
+                state: CheckState::Pending,
+                at_s: None,
+                detail: String::new(),
+            })
             .collect();
         MissionTest {
             goals,
@@ -161,7 +187,9 @@ impl MissionTest {
                     }
                     t.position.horizontal_distance_m(p) <= *acc && err <= self.alt_tol
                 }
-                Goal::Landed(p) => !t.armed && t.rel_alt_m < 1.0 && t.position.horizontal_distance_m(p) <= 5.0,
+                Goal::Landed(p) => {
+                    !t.armed && t.rel_alt_m < 1.0 && t.position.horizontal_distance_m(p) <= 5.0
+                }
                 Goal::Home(r) => t.position.horizontal_distance_m(&home) <= *r,
             };
             if !met {
@@ -177,7 +205,10 @@ impl MissionTest {
         } else if elapsed_s > self.timeout_s {
             self.fail(elapsed_s, format!("timeout after {:.0} s", self.timeout_s));
         } else if self.was_airborne && !t.armed && t.rel_alt_m > 2.0 {
-            self.fail(elapsed_s, format!("disarmed in the air at {:.1} m", t.rel_alt_m));
+            self.fail(
+                elapsed_s,
+                format!("disarmed in the air at {:.1} m", t.rel_alt_m),
+            );
         }
         &self.report
     }
@@ -214,7 +245,11 @@ mod tests {
         t.update(&tel(home, 15.0, true), 5.0);
         for it in &m.items[1..] {
             if let Some((lat, lon, alt)) = it.target() {
-                let p = GeoPoint { lat, lon, alt_m: 0.0 };
+                let p = GeoPoint {
+                    lat,
+                    lon,
+                    alt_m: 0.0,
+                };
                 if alt > 0.0 {
                     t.update(&tel(p, alt, true), 10.0);
                 } else {
@@ -231,12 +266,19 @@ mod tests {
         let m = Mission::builtin("box", Airframe::Quadrotor, home).unwrap();
         let mut t = MissionTest::new(&m);
         t.update(&tel(home, 0.0, true), 1.0);
-        assert_eq!(t.update(&tel(home, 0.0, true), m.timeout_s + 1.0).verdict, TestVerdict::Failed);
+        assert_eq!(
+            t.update(&tel(home, 0.0, true), m.timeout_s + 1.0).verdict,
+            TestVerdict::Failed
+        );
 
         let mut t = MissionTest::new(&m);
         t.update(&tel(home, 15.0, true), 1.0);
         let r = t.update(&tel(home, 10.0, false), 2.0);
         assert_eq!(r.verdict, TestVerdict::Failed);
-        assert!(r.checks.iter().any(|c| c.detail.contains("disarmed in the air")));
+        assert!(
+            r.checks
+                .iter()
+                .any(|c| c.detail.contains("disarmed in the air"))
+        );
     }
 }

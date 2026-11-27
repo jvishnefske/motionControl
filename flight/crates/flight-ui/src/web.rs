@@ -64,14 +64,29 @@ pub fn router(orch: Orch) -> Router {
 /// (which a cross-site form cannot send without a preflight).
 async fn same_origin_only(req: axum::extract::Request, next: axum::middleware::Next) -> Response {
     let h = req.headers();
-    let host = h.get(axum::http::header::HOST).and_then(|v| v.to_str().ok()).unwrap_or("");
-    let host_name = host.rsplit_once(':').map_or(host, |(n, p)| if p.chars().all(|c| c.is_ascii_digit()) { n } else { host });
+    let host = h
+        .get(axum::http::header::HOST)
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("");
+    let host_name = host.rsplit_once(':').map_or(host, |(n, p)| {
+        if p.chars().all(|c| c.is_ascii_digit()) {
+            n
+        } else {
+            host
+        }
+    });
     if !host.is_empty() && !matches!(host_name, "localhost" | "127.0.0.1" | "[::1]") {
         return (StatusCode::FORBIDDEN, "host not allowed").into_response();
     }
     if req.method() == axum::http::Method::POST {
-        if let Some(origin) = h.get(axum::http::header::ORIGIN).and_then(|v| v.to_str().ok()) {
-            let ok = origin.strip_prefix("http://").or_else(|| origin.strip_prefix("https://")) == Some(host);
+        if let Some(origin) = h
+            .get(axum::http::header::ORIGIN)
+            .and_then(|v| v.to_str().ok())
+        {
+            let ok = origin
+                .strip_prefix("http://")
+                .or_else(|| origin.strip_prefix("https://"))
+                == Some(host);
             if !ok {
                 return (StatusCode::FORBIDDEN, "cross-origin request").into_response();
             }
@@ -81,7 +96,11 @@ async fn same_origin_only(req: axum::extract::Request, next: axum::middleware::N
             .and_then(|v| v.to_str().ok())
             .is_some_and(|v| v.starts_with("application/json"));
         if !json {
-            return (StatusCode::UNSUPPORTED_MEDIA_TYPE, "POST needs Content-Type: application/json").into_response();
+            return (
+                StatusCode::UNSUPPORTED_MEDIA_TYPE,
+                "POST needs Content-Type: application/json",
+            )
+                .into_response();
         }
     }
     next.run(req).await
@@ -98,12 +117,20 @@ pub async fn serve(addr: SocketAddr, orch: Arc<Orchestrator>) -> anyhow::Result<
 fn reply(r: anyhow::Result<()>) -> Response {
     match r {
         Ok(()) => Json(json!({ "ok": true })).into_response(),
-        Err(e) => (StatusCode::CONFLICT, Json(json!({ "ok": false, "error": format!("{e:#}") }))).into_response(),
+        Err(e) => (
+            StatusCode::CONFLICT,
+            Json(json!({ "ok": false, "error": format!("{e:#}") })),
+        )
+            .into_response(),
     }
 }
 
 fn bad(e: impl std::fmt::Display) -> Response {
-    (StatusCode::BAD_REQUEST, Json(json!({ "ok": false, "error": e.to_string() }))).into_response()
+    (
+        StatusCode::BAD_REQUEST,
+        Json(json!({ "ok": false, "error": e.to_string() })),
+    )
+        .into_response()
 }
 
 async fn state(State(o): State<Orch>) -> impl IntoResponse {
@@ -111,14 +138,22 @@ async fn state(State(o): State<Orch>) -> impl IntoResponse {
 }
 
 fn state_event(o: &Orchestrator) -> Event {
-    Event::default().event("state").json_data(o.snapshot()).unwrap_or_else(|_| Event::default().comment("encode"))
+    Event::default()
+        .event("state")
+        .json_data(o.snapshot())
+        .unwrap_or_else(|_| Event::default().comment("encode"))
 }
 
 fn log_event(l: &LogLine) -> Event {
-    Event::default().event("log").json_data(l).unwrap_or_else(|_| Event::default().comment("encode"))
+    Event::default()
+        .event("log")
+        .json_data(l)
+        .unwrap_or_else(|_| Event::default().comment("encode"))
 }
 
-async fn events(State(o): State<Orch>) -> Sse<impl tokio_stream::Stream<Item = Result<Event, Infallible>>> {
+async fn events(
+    State(o): State<Orch>,
+) -> Sse<impl tokio_stream::Stream<Item = Result<Event, Infallible>>> {
     let history: Vec<Event> = o.log_history().iter().map(log_event).collect();
     let logs = BroadcastStream::new(o.log_sender().subscribe())
         .filter_map(|r| r.ok())
@@ -127,7 +162,9 @@ async fn events(State(o): State<Orch>) -> Sse<impl tokio_stream::Stream<Item = R
     let mut tick = tokio::time::interval(STATE_PERIOD);
     tick.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
     let states = IntervalStream::new(tick).map(move |_| state_event(&o2));
-    let stream = tokio_stream::iter(history).chain(states.merge(logs)).map(Ok);
+    let stream = tokio_stream::iter(history)
+        .chain(states.merge(logs))
+        .map(Ok);
     Sse::new(stream).keep_alive(KeepAlive::default())
 }
 
@@ -185,7 +222,9 @@ struct RunReq {
 }
 
 async fn run_test(State(o): State<Orch>, body: Option<Json<RunReq>>) -> Response {
-    let name = body.and_then(|Json(r)| r.mission).unwrap_or_else(|| o.selected_mission());
+    let name = body
+        .and_then(|Json(r)| r.mission)
+        .unwrap_or_else(|| o.selected_mission());
     if !flight_core::Mission::BUILTIN.contains(&name.as_str()) {
         return bad(format!("unknown mission {name:?}"));
     }

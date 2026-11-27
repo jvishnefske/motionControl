@@ -6,9 +6,9 @@ use std::time::Instant;
 
 use anyhow::{anyhow, bail};
 use flight_core::{
-    Airframe, Backend, Check, CheckState, GeoPoint, LogLevel, LogLine, MavPorts, Mission, MissionItem,
-    MissionTest, Module, ModuleFactory, ModuleKind, ModuleStatus, SimContext, Telemetry, TestReport,
-    TestVerdict, VehicleControl,
+    Airframe, Backend, Check, CheckState, GeoPoint, LogLevel, LogLine, MavPorts, Mission,
+    MissionItem, MissionTest, Module, ModuleFactory, ModuleKind, ModuleStatus, SimContext,
+    Telemetry, TestReport, TestVerdict, VehicleControl,
 };
 use serde::Serialize;
 use tokio::sync::{broadcast, oneshot, watch};
@@ -32,7 +32,11 @@ pub trait MissionRunnerFn: Send + Sync {
 
 impl<F> MissionRunnerFn for F
 where
-    F: Fn(Arc<dyn VehicleControl>, Mission, watch::Sender<Option<TestReport>>) -> BoxFuture<TestReport>
+    F: Fn(
+            Arc<dyn VehicleControl>,
+            Mission,
+            watch::Sender<Option<TestReport>>,
+        ) -> BoxFuture<TestReport>
         + Send
         + Sync,
 {
@@ -58,13 +62,18 @@ pub type Runner = Arc<dyn MissionRunnerFn>;
 /// ```
 pub fn runner_fn<F, Fut>(f: F) -> Runner
 where
-    F: Fn(Arc<dyn VehicleControl>, Mission, watch::Sender<Option<TestReport>>) -> Fut + Send + Sync + 'static,
+    F: Fn(Arc<dyn VehicleControl>, Mission, watch::Sender<Option<TestReport>>) -> Fut
+        + Send
+        + Sync
+        + 'static,
     Fut: Future<Output = TestReport> + Send + 'static,
 {
     struct Wrap<F>(F);
     impl<F, Fut> MissionRunnerFn for Wrap<F>
     where
-        F: Fn(Arc<dyn VehicleControl>, Mission, watch::Sender<Option<TestReport>>) -> Fut + Send + Sync,
+        F: Fn(Arc<dyn VehicleControl>, Mission, watch::Sender<Option<TestReport>>) -> Fut
+            + Send
+            + Sync,
         Fut: Future<Output = TestReport> + Send + 'static,
     {
         fn run(
@@ -97,7 +106,12 @@ pub fn preset_backends(name: &str) -> Option<[(ModuleKind, Backend); 4]> {
         "sim+qgc" => (Sim, Sim, Sim, Real),
         _ => return None,
     };
-    Some([(Middleware, mw), (Physics, ph), (Autopilot, ap), (GroundStation, gs)])
+    Some([
+        (Middleware, mw),
+        (Physics, ph),
+        (Autopilot, ap),
+        (GroundStation, gs),
+    ])
 }
 
 const LOG_HISTORY: usize = 300;
@@ -194,7 +208,11 @@ impl Orchestrator {
     /// Every backend starts `Off`, quadrotor at PX4's default home, mission
     /// "box", headless. Call inside a tokio runtime (a log collector task is
     /// spawned when one is present).
-    pub fn new(factory: Arc<dyn ModuleFactory>, vehicle: Arc<dyn VehicleControl>, runner: Runner) -> Self {
+    pub fn new(
+        factory: Arc<dyn ModuleFactory>,
+        vehicle: Arc<dyn VehicleControl>,
+        runner: Runner,
+    ) -> Self {
         let (log, _) = broadcast::channel(1024);
         let history = Arc::new(Mutex::new(VecDeque::with_capacity(LOG_HISTORY)));
         if let Ok(rt) = tokio::runtime::Handle::try_current() {
@@ -297,7 +315,11 @@ impl Orchestrator {
     }
 
     pub fn backend(&self, kind: ModuleKind) -> Backend {
-        lock(&self.config).backends.get(&kind).copied().unwrap_or(Backend::Off)
+        lock(&self.config)
+            .backends
+            .get(&kind)
+            .copied()
+            .unwrap_or(Backend::Off)
     }
 
     pub fn airframe(&self) -> Airframe {
@@ -323,7 +345,11 @@ impl Orchestrator {
             airframe: c.airframe,
             home: c.home,
             ports: c.ports,
-            physics_backend: c.backends.get(&ModuleKind::Physics).copied().unwrap_or(Backend::Off),
+            physics_backend: c
+                .backends
+                .get(&ModuleKind::Physics)
+                .copied()
+                .unwrap_or(Backend::Off),
             gui: c.gui,
             telemetry: self.vehicle.telemetry(),
             log: self.log.clone(),
@@ -331,7 +357,11 @@ impl Orchestrator {
     }
 
     fn log_line(&self, level: LogLevel, text: impl Into<String>) {
-        let _ = self.log.send(LogLine { source: "orchestrator".into(), level, text: text.into() });
+        let _ = self.log.send(LogLine {
+            source: "orchestrator".into(),
+            level,
+            text: text.into(),
+        });
     }
 
     fn notify(&self, kind: ModuleKind, backend: Backend) {
@@ -345,7 +375,12 @@ impl Orchestrator {
         if backend == Backend::Off {
             return Ok(());
         }
-        match self.factory.available(kind).into_iter().find(|(b, _)| *b == backend) {
+        match self
+            .factory
+            .available(kind)
+            .into_iter()
+            .find(|(b, _)| *b == backend)
+        {
             Some((_, Ok(()))) => Ok(()),
             Some((_, Err(why))) => bail!("{} {:?} unavailable: {why}", kind.label(), backend),
             None => bail!("{} has no {:?} backend", kind.label(), backend),
@@ -357,7 +392,12 @@ impl Orchestrator {
         slots
             .get(&kind)
             .and_then(|s| s.module.as_ref())
-            .is_some_and(|m| matches!(m.status(), ModuleStatus::Running(_) | ModuleStatus::Starting))
+            .is_some_and(|m| {
+                matches!(
+                    m.status(),
+                    ModuleStatus::Running(_) | ModuleStatus::Starting
+                )
+            })
     }
 
     async fn stop_kind(&self, kind: ModuleKind) {
@@ -389,7 +429,11 @@ impl Orchestrator {
             return Ok(());
         }
         let Some(mut m) = self.factory.create(kind, backend) else {
-            let e = format!("{} {:?}: the factory cannot build it", kind.label(), backend);
+            let e = format!(
+                "{} {:?}: the factory cannot build it",
+                kind.label(),
+                backend
+            );
             lock(&self.slots).entry(kind).or_default().error = Some(e.clone());
             self.log_line(LogLevel::Error, e.clone());
             bail!(e);
@@ -402,7 +446,10 @@ impl Orchestrator {
             slot.name = Some(name.clone());
             slot.error = None;
         }
-        self.log_line(LogLevel::Info, format!("starting {name} ({})", kind.label()));
+        self.log_line(
+            LogLevel::Info,
+            format!("starting {name} ({})", kind.label()),
+        );
         let ctx = self.context();
         let r = m.start(&ctx).await;
         match &r {
@@ -437,7 +484,10 @@ impl Orchestrator {
     /// Starts every kind whose backend is not `Off` that is not running.
     pub async fn start_all(&self) -> anyhow::Result<()> {
         let _g = self.ops.lock().await;
-        let kinds: Vec<_> = ModuleKind::ALL.into_iter().filter(|k| !self.is_running(*k)).collect();
+        let kinds: Vec<_> = ModuleKind::ALL
+            .into_iter()
+            .filter(|k| !self.is_running(*k))
+            .collect();
         self.restart(&kinds).await
     }
 
@@ -470,8 +520,10 @@ impl Orchestrator {
     /// Sets several backends at once; see [`PRESETS`].
     pub async fn apply_preset(&self, name: &str) -> anyhow::Result<()> {
         let target = preset_backends(name).ok_or_else(|| anyhow!("unknown preset {name:?}"))?;
-        let unavailable: Vec<String> =
-            target.iter().filter_map(|(k, b)| self.check_available(*k, *b).err().map(|e| e.to_string())).collect();
+        let unavailable: Vec<String> = target
+            .iter()
+            .filter_map(|(k, b)| self.check_available(*k, *b).err().map(|e| e.to_string()))
+            .collect();
         if !unavailable.is_empty() {
             bail!("preset {name}: {}", unavailable.join("; "));
         }
@@ -509,7 +561,12 @@ impl Orchestrator {
         }
         lock(&self.track).clear();
         self.log_line(LogLevel::Info, format!("airframe -> {}", airframe.label()));
-        self.restart(&[ModuleKind::Middleware, ModuleKind::Physics, ModuleKind::Autopilot]).await
+        self.restart(&[
+            ModuleKind::Middleware,
+            ModuleKind::Physics,
+            ModuleKind::Autopilot,
+        ])
+        .await
     }
 
     /// GUI flag for modules started from now on.
@@ -548,26 +605,51 @@ impl Orchestrator {
             if let Some(r) = run.as_ref() {
                 bail!("mission test {:?} is already running", r.mission);
             }
-            *run = Some(RunState { mission: mission_name.to_string(), started: Instant::now(), cancel: Some(cancel_tx) });
+            *run = Some(RunState {
+                mission: mission_name.to_string(),
+                started: Instant::now(),
+                cancel: Some(cancel_tx),
+            });
         }
         lock(&self.config).mission = mission_name.to_string();
         let me = self.clone();
         tokio::spawn(async move {
             let report = me.test_task(mission, cancel_rx).await;
             me.publish_report(Some(report.clone()));
-            let level = if report.verdict == TestVerdict::Passed { LogLevel::Info } else { LogLevel::Error };
-            me.log_line(level, format!("mission test {}: {:?} in {:.1} s", report.mission, report.verdict, report.elapsed_s));
+            let level = if report.verdict == TestVerdict::Passed {
+                LogLevel::Info
+            } else {
+                LogLevel::Error
+            };
+            me.log_line(
+                level,
+                format!(
+                    "mission test {}: {:?} in {:.1} s",
+                    report.mission, report.verdict, report.elapsed_s
+                ),
+            );
             *lock(&me.run) = None;
         });
         Ok(())
     }
 
-    async fn test_task(self: &Arc<Self>, mission: Mission, mut cancel: oneshot::Receiver<()>) -> TestReport {
+    async fn test_task(
+        self: &Arc<Self>,
+        mission: Mission,
+        mut cancel: oneshot::Receiver<()>,
+    ) -> TestReport {
         let started = Instant::now();
         let initial = MissionTest::new(&mission).report().clone();
         self.publish_report(Some(initial.clone()));
         lock(&self.track).clear();
-        self.log_line(LogLevel::Info, format!("mission test {} ({}) starting", mission.name, mission.airframe.label()));
+        self.log_line(
+            LogLevel::Info,
+            format!(
+                "mission test {} ({}) starting",
+                mission.name,
+                mission.airframe.label()
+            ),
+        );
 
         // Bring up what the mission needs.
         let needed = {
@@ -582,10 +664,17 @@ impl Orchestrator {
                         Some(b) => {
                             lock(&self.config).backends.insert(kind, b);
                             self.notify(kind, b);
-                            self.log_line(LogLevel::Info, format!("{} was off, starting {:?}", kind.label(), b));
+                            self.log_line(
+                                LogLevel::Info,
+                                format!("{} was off, starting {:?}", kind.label(), b),
+                            );
                         }
                         None => {
-                            return failed(initial, started, format!("no usable backend for {}", kind.label()));
+                            return failed(
+                                initial,
+                                started,
+                                format!("no usable backend for {}", kind.label()),
+                            );
                         }
                     }
                 }
@@ -654,13 +743,21 @@ impl Orchestrator {
     pub fn snapshot(&self) -> Snapshot {
         let (airframe, home, gui, mission, backends) = {
             let c = lock(&self.config);
-            (c.airframe, c.home, c.gui, c.mission.clone(), c.backends.clone())
+            (
+                c.airframe,
+                c.home,
+                c.gui,
+                c.mission.clone(),
+                c.backends.clone(),
+            )
         };
         let telemetry = *self.vehicle.telemetry().borrow();
         if let Some(t) = &telemetry {
             let (n, e) = home.ne_to(&t.position);
             let mut track = lock(&self.track);
-            let moved = track.last().is_none_or(|p| (p[0] - n).hypot(p[1] - e) > 0.3);
+            let moved = track
+                .last()
+                .is_none_or(|p| (p[0] - n).hypot(p[1] - e) > 0.3);
             if moved {
                 if track.len() >= TRACK_MAX {
                     track.drain(..TRACK_MAX / 4);
@@ -676,15 +773,27 @@ impl Orchestrator {
                     let slot = slots.get(&kind);
                     let status = match slot {
                         Some(Slot { busy: Some(_), .. }) => ModuleStatus::Starting,
-                        Some(Slot { error: Some(e), module: None, .. }) => ModuleStatus::Failed(e.clone()),
-                        Some(Slot { module: Some(m), .. }) => m.status(),
+                        Some(Slot {
+                            error: Some(e),
+                            module: None,
+                            ..
+                        }) => ModuleStatus::Failed(e.clone()),
+                        Some(Slot {
+                            module: Some(m), ..
+                        }) => m.status(),
                         _ => ModuleStatus::Stopped,
                     };
-                    let mut options = vec![BackendOption { backend: Backend::Off, available: true, reason: None }];
-                    options.extend(self.factory.available(kind).into_iter().map(|(b, r)| BackendOption {
-                        backend: b,
-                        available: r.is_ok(),
-                        reason: r.err(),
+                    let mut options = vec![BackendOption {
+                        backend: Backend::Off,
+                        available: true,
+                        reason: None,
+                    }];
+                    options.extend(self.factory.available(kind).into_iter().map(|(b, r)| {
+                        BackendOption {
+                            backend: b,
+                            available: r.is_ok(),
+                            reason: r.err(),
+                        }
                     }));
                     ModuleView {
                         kind,
@@ -705,7 +814,11 @@ impl Orchestrator {
                     .map(|it| match (it, it.target()) {
                         (MissionItem::Takeoff { alt_m, .. }, _) => [0.0, 0.0, *alt_m],
                         (_, Some((lat, lon, alt))) => {
-                            let (n, e) = home.ne_to(&GeoPoint { lat, lon, alt_m: 0.0 });
+                            let (n, e) = home.ne_to(&GeoPoint {
+                                lat,
+                                lon,
+                                alt_m: 0.0,
+                            });
                             [n, e, alt]
                         }
                         (_, None) => [0.0, 0.0, 0.0],
@@ -741,6 +854,11 @@ fn failed(mut report: TestReport, started: Instant, why: String) -> TestReport {
     let at = started.elapsed().as_secs_f64();
     report.verdict = TestVerdict::Failed;
     report.elapsed_s = report.elapsed_s.max(at);
-    report.checks.push(Check { name: "run".into(), state: CheckState::Failed, at_s: Some(at), detail: why });
+    report.checks.push(Check {
+        name: "run".into(),
+        state: CheckState::Failed,
+        at_s: Some(at),
+        detail: why,
+    });
     report
 }

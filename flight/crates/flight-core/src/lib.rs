@@ -14,5 +14,8 @@ pub mod types;
 
 pub use eval::{Check, CheckState, MissionTest, TestReport, TestVerdict};
 pub use mission::{Mission, MissionItem};
-pub use module::{Backend, LogLevel, LogLine, Module, ModuleFactory, ModuleKind, ModuleStatus, SimContext, VehicleControl};
+pub use module::{
+    Backend, LogLevel, LogLine, Module, ModuleFactory, ModuleKind, ModuleStatus, SimContext,
+    VehicleControl,
+};
 pub use types::{Airframe, FlightMode, GeoPoint, MavPorts, Telemetry};

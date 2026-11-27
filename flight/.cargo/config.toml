@@ -1,0 +1,5 @@
+# The repo root's .cargo/config.toml builds for the board (thumbv7em) and
+# cargo applies it to every directory below. flight/ is a host workspace,
+# so set the target back to the machine cargo runs on.
+[build]
+target = "host-tuple"

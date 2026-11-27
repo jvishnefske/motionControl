@@ -24,7 +24,12 @@ fn report() -> TestReport {
         mission: "box".into(),
         verdict: TestVerdict::Running,
         elapsed_s: 1.5,
-        checks: vec![Check { name: "armed".into(), state: CheckState::Passed, at_s: Some(0.5), detail: String::new() }],
+        checks: vec![Check {
+            name: "armed".into(),
+            state: CheckState::Passed,
+            at_s: Some(0.5),
+            detail: String::new(),
+        }],
         max_alt_error_m: 0.0,
     }
 }
@@ -51,13 +56,22 @@ async fn wait_until(mut f: impl FnMut() -> bool) {
 
 #[test]
 fn keys_and_filter() {
-    assert_eq!(telemetry_key(Airframe::FixedWing).as_str(), "flight/fixed_wing/telemetry");
-    assert_eq!(report_key(Airframe::Quadrotor).as_str(), "flight/quadrotor/mission/report");
+    assert_eq!(
+        telemetry_key(Airframe::FixedWing).as_str(),
+        "flight/fixed_wing/telemetry"
+    );
+    assert_eq!(
+        report_key(Airframe::Quadrotor).as_str(),
+        "flight/quadrotor/mission/report"
+    );
     assert!(flight_filter().matches(cmd_key(Airframe::Quadrotor)));
     assert!(!flight_filter().matches(Key::from_static("flightx/a")));
     let f = Factory::new();
     assert!(f.create(ModuleKind::Middleware, Backend::Real).is_some());
-    assert!(f.create(ModuleKind::Middleware, Backend::Simulated).is_some());
+    assert!(
+        f.create(ModuleKind::Middleware, Backend::Simulated)
+            .is_some()
+    );
     assert!(f.create(ModuleKind::Autopilot, Backend::Real).is_none());
     assert_eq!(f.available(ModuleKind::Middleware).len(), 2);
 }
@@ -77,7 +91,10 @@ async fn memory_bus_round_trip_counts_and_answers_status() {
 
     // A report pushed through the factory shows up on the bus.
     factory.push_report(report());
-    wait_until(|| bus.stats().unwrap().last_key.as_deref() == Some("flight/quadrotor/mission/report")).await;
+    wait_until(|| {
+        bus.stats().unwrap().last_key.as_deref() == Some("flight/quadrotor/mission/report")
+    })
+    .await;
     tel_tx.send_replace(Some(telemetry(1.0)));
 
     // Request/response through the hub.
@@ -108,26 +125,42 @@ async fn zenoh_bus_publishes_to_a_second_session() {
     let endpoint = format!("tcp/127.0.0.1:{}", free_port().await);
     let (_tel_tx, tel_rx) = watch::channel(Some(telemetry(3.0)));
     let factory = Factory::new().with_zenoh_config(ZenohConfig::loopback(endpoint.clone()));
-    let mut bus = factory.create(ModuleKind::Middleware, Backend::Real).unwrap();
+    let mut bus = factory
+        .create(ModuleKind::Middleware, Backend::Real)
+        .unwrap();
     bus.start(&ctx(tel_rx)).await.unwrap();
 
     let peer = SessionConfig::new().connect(endpoint).build().unwrap();
-    let mut peer = ZenohTransport::open(peer).await.unwrap().with_timeout(Duration::from_secs(3));
-    let mut sub = peer.subscriber(telemetry_key(Airframe::Quadrotor)).await.unwrap();
+    let mut peer = ZenohTransport::open(peer)
+        .await
+        .unwrap()
+        .with_timeout(Duration::from_secs(3));
+    let mut sub = peer
+        .subscriber(telemetry_key(Airframe::Quadrotor))
+        .await
+        .unwrap();
     let mut buf = vec![0u8; 4096];
-    let sample = tokio::time::timeout(Duration::from_secs(10), sub.recv(&mut buf)).await.unwrap().unwrap();
+    let sample = tokio::time::timeout(Duration::from_secs(10), sub.recv(&mut buf))
+        .await
+        .unwrap()
+        .unwrap();
     let got: Telemetry = serde_json::from_slice(sample.payload).unwrap();
     assert_eq!(got, telemetry(3.0));
 
     // The peer publishes too; the bus counts it (local delivery also counts its own).
-    peer.publish(Key::from_static("flight/test/ping"), b"{}").await.unwrap();
+    peer.publish(Key::from_static("flight/test/ping"), b"{}")
+        .await
+        .unwrap();
     wait_until(|| matches!(bus.status(), ModuleStatus::Running(d) if d.contains("rx") && !d.contains("rx 0 "))).await;
 
     // Status over the cmd endpoint, retried while the queryable propagates.
     let mut out = vec![0u8; SCRATCH];
     let mut reply = None;
     for _ in 0..50 {
-        if let Ok(b) = peer.request(cmd_key(Airframe::Quadrotor), b"status", &mut out).await {
+        if let Ok(b) = peer
+            .request(cmd_key(Airframe::Quadrotor), b"status", &mut out)
+            .await
+        {
             reply = Some(b.to_vec());
             break;
         }

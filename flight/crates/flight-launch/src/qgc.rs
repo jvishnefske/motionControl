@@ -48,7 +48,10 @@ pub fn qgc_command(
     let (program, args) = match (gui, xvfb_run) {
         (false, Some(x)) => {
             software(&mut env);
-            (x.as_os_str().to_owned(), vec!["-a".into(), bin.to_string_lossy().into_owned()])
+            (
+                x.as_os_str().to_owned(),
+                vec!["-a".into(), bin.to_string_lossy().into_owned()],
+            )
         }
         _ => {
             if !gui {
@@ -117,7 +120,13 @@ impl Module for QGroundControl {
         }
         let xvfb = which_in("xvfb-run", std::env::var_os("PATH").as_ref());
         let (program, args, env) = qgc_command(&bin, ctx.gui, xvfb.as_deref());
-        let headless = if ctx.gui { "" } else if xvfb.is_some() { ", headless (xvfb)" } else { ", offscreen" };
+        let headless = if ctx.gui {
+            ""
+        } else if xvfb.is_some() {
+            ", headless (xvfb)"
+        } else {
+            ", offscreen"
+        };
         let mut spec = Spec::new(program, args);
         spec.env = env;
         let proc = match Proc::spawn(spec, "QGroundControl", log, self.status.clone()).await {
@@ -160,7 +169,9 @@ mod tests {
 
     #[test]
     fn command_for_nix_headless_and_appimage() {
-        let get = |env: &[(String, String)], k: &str| env.iter().find(|(x, _)| x == k).map(|(_, v)| v.clone());
+        let get = |env: &[(String, String)], k: &str| {
+            env.iter().find(|(x, _)| x == k).map(|(_, v)| v.clone())
+        };
         let nix = Path::new("/nix/store/abc-qgroundcontrol/bin/QGroundControl");
         // Nix build with a GUI: software rendering, no xvfb.
         let (p, a, e) = qgc_command(nix, true, None);
@@ -176,8 +187,16 @@ mod tests {
         let (_, _, e) = qgc_command(Path::new("/opt/QGroundControl"), false, None);
         assert_eq!(get(&e, "QT_QPA_PLATFORM").as_deref(), Some("offscreen"));
         // Native GUI build: untouched; AppImage extracts.
-        assert!(qgc_command(Path::new("/opt/QGroundControl"), true, None).2.is_empty());
-        let (_, _, e) = qgc_command(Path::new("/home/u/Applications/QGroundControl.AppImage"), true, None);
+        assert!(
+            qgc_command(Path::new("/opt/QGroundControl"), true, None)
+                .2
+                .is_empty()
+        );
+        let (_, _, e) = qgc_command(
+            Path::new("/home/u/Applications/QGroundControl.AppImage"),
+            true,
+            None,
+        );
         assert_eq!(get(&e, "APPIMAGE_EXTRACT_AND_RUN").as_deref(), Some("1"));
     }
 }

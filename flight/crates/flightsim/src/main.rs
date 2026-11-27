@@ -5,7 +5,7 @@
 use std::net::SocketAddr;
 use std::sync::Arc;
 
-use flight_core::{Airframe, Backend, ModuleFactory, ModuleKind, Module, MavPorts};
+use flight_core::{Airframe, Backend, MavPorts, Module, ModuleFactory, ModuleKind};
 use flight_ui::{Orchestrator, runner_fn};
 
 /// Merges the per-crate factories: for each kind, every backend any of
@@ -55,7 +55,10 @@ async fn main() -> anyhow::Result<()> {
         let mut val = || args.next().unwrap_or_else(|| usage());
         match a.as_str() {
             "--listen" => listen = val().parse()?,
-            "--airframe" => airframe = serde_json::from_value(serde_json::Value::String(val())).unwrap_or_else(|_| usage()),
+            "--airframe" => {
+                airframe = serde_json::from_value(serde_json::Value::String(val()))
+                    .unwrap_or_else(|_| usage())
+            }
             "--preset" => preset = Some(val()),
             "--run" => run = Some(val()),
             "--gui" => gui = true,
@@ -64,7 +67,8 @@ async fn main() -> anyhow::Result<()> {
     }
 
     let launch = flight_launch::Factory::from_env();
-    let bus = Arc::new(flight_bus::Factory::new().with_zenoh_config(flight_bus::ZenohConfig::from_env()));
+    let bus =
+        Arc::new(flight_bus::Factory::new().with_zenoh_config(flight_bus::ZenohConfig::from_env()));
     let factory = Arc::new(Composite(vec![
         Arc::new(flight_sim::Factory),
         Arc::new(launch.clone()),
@@ -73,7 +77,8 @@ async fn main() -> anyhow::Result<()> {
 
     let ports = MavPorts::default();
     let vehicle = flight_mav::VehicleLink::connect(ports).await?;
-    let runner = runner_fn(|v, m, tx| async move { flight_mav::run_mission_test(&*v, &m, &tx).await });
+    let runner =
+        runner_fn(|v, m, tx| async move { flight_mav::run_mission_test(&*v, &m, &tx).await });
     let hook_launch = launch.clone();
     let orch = Arc::new(
         Orchestrator::new(factory, vehicle, runner)
