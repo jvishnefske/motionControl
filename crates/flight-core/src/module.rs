@@ -120,3 +120,22 @@ pub trait ModuleFactory: Send + Sync {
     fn available(&self, kind: ModuleKind) -> Vec<(Backend, Result<(), String>)>;
     fn create(&self, kind: ModuleKind, backend: Backend) -> Option<Box<dyn Module>>;
 }
+
+/// Command and telemetry access to whatever vehicle is on the MAVLink API
+/// port (PX4 SITL or the Rust autopilot; the caller cannot tell). Lives
+/// across module switches: it keeps listening and picks up the new vehicle.
+#[async_trait]
+pub trait VehicleControl: Send + Sync {
+    /// Latest telemetry; `None` until a vehicle has been heard.
+    fn telemetry(&self) -> watch::Receiver<Option<Telemetry>>;
+    /// Wait until a vehicle sends heartbeats, has a home position and a
+    /// position estimate good enough to arm.
+    async fn wait_ready(&self, timeout: std::time::Duration) -> anyhow::Result<()>;
+    /// Clear, then upload the mission with the MAVLink mission protocol.
+    async fn upload_mission(&self, mission: &crate::mission::Mission) -> anyhow::Result<()>;
+    async fn arm(&self) -> anyhow::Result<()>;
+    /// Switch to mission mode and start from item 0.
+    async fn start_mission(&self) -> anyhow::Result<()>;
+    async fn return_to_launch(&self) -> anyhow::Result<()>;
+    async fn land(&self) -> anyhow::Result<()>;
+}
