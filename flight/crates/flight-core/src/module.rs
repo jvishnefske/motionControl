@@ -29,8 +29,12 @@ pub enum ModuleKind {
 
 impl ModuleKind {
     /// Start order; stop runs in reverse.
-    pub const ALL: [ModuleKind; 4] =
-        [ModuleKind::Middleware, ModuleKind::Physics, ModuleKind::Autopilot, ModuleKind::GroundStation];
+    pub const ALL: [ModuleKind; 4] = [
+        ModuleKind::Middleware,
+        ModuleKind::Physics,
+        ModuleKind::Autopilot,
+        ModuleKind::GroundStation,
+    ];
 
     pub fn label(self) -> &'static str {
         match self {
@@ -96,7 +100,11 @@ pub struct SimContext {
 
 impl SimContext {
     pub fn log(&self, source: &str, level: LogLevel, text: impl Into<String>) {
-        let _ = self.log.send(LogLine { source: source.to_string(), level, text: text.into() });
+        let _ = self.log.send(LogLine {
+            source: source.to_string(),
+            level,
+            text: text.into(),
+        });
     }
 }
 
