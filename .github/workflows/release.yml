@@ -4,6 +4,11 @@ on:
   push:
     tags: ["v*"]
 
+# Least privilege by default; jobs that need more (fmt's auto-commit,
+# coverage upload, release publishing) grant it themselves.
+permissions:
+  contents: read
+
 env:
   CARGO_TERM_COLOR: always
 
