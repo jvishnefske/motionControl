@@ -80,6 +80,9 @@ jobs:
     needs: fmt
     if: always() && !failure()
     runs-on: ubuntu-latest
+    env:
+      # rust-toolchain.toml says `stable`; this overrides it for the pin below.
+      RUSTUP_TOOLCHAIN: 1.99.1
     permissions:
       contents: read
       # Upload to GitHub Code Quality's code coverage (actions/upload-code-coverage).
@@ -87,9 +90,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       # Pinned: the 74% floor was measured with rustc 1.99.1 + cargo-llvm-cov
-      # 0.9.1. With stable 1.100.1 + 0.9.2 (2026-11) the run exits 1 after
-      # writing the report and prints no total; bump both together and
-      # re-measure the floor.
+      # 0.9.1. On stable 1.100.1 (2026-11) the run exits 1 right after
+      # writing the report and prints no total (0.9.2 passes on 1.91), so
+      # bump the toolchain only together with re-measuring the floor.
       - uses: dtolnay/rust-toolchain@1.99.1
         with:
           components: llvm-tools-preview
@@ -137,6 +140,8 @@ jobs:
   flight:
     name: Flight sim
     runs-on: ubuntu-latest
+    env:
+      RUSTUP_TOOLCHAIN: 1.99.1
     permissions:
       contents: read
       code-quality: write
@@ -168,10 +173,10 @@ jobs:
       - run: cargo fmt --check
       - run: cargo clippy --workspace --all-targets -- -D warnings
       - name: Tests with coverage
-        run: cargo llvm-cov --workspace --cobertura --output-path coverage.xml
+        run: cargo llvm-cov --workspace --target x86_64-unknown-linux-gnu --cobertura --output-path coverage.xml
       - name: Coverage summary
         if: always()
-        run: cargo llvm-cov report --summary-only
+        run: cargo llvm-cov report --target x86_64-unknown-linux-gnu --summary-only
       - name: Upload coverage to Code Quality
         if: always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
         continue-on-error: true
