@@ -1,0 +1,22 @@
+[package]
+name = "flightsim"
+description = "Web menu for one-click real-time mission tests over PX4, Gazebo, QGroundControl and the middleware"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "flightsim"
+path = "src/main.rs"
+
+[dependencies]
+flight-core.workspace = true
+flight-ui = { path = "../flight-ui" }
+flight-mav = { path = "../flight-mav" }
+flight-sim = { path = "../flight-sim" }
+flight-launch = { path = "../flight-launch" }
+flight-bus = { path = "../flight-bus" }
+anyhow.workspace = true
+serde_json.workspace = true
+tokio.workspace = true

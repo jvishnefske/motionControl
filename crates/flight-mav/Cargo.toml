@@ -1,0 +1,18 @@
+[package]
+name = "flight-mav"
+description = "MAVLink vehicle link (VehicleControl over UDP) and the mission test runner"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+flight-core.workspace = true
+anyhow.workspace = true
+async-trait.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+mavlink.workspace = true
+# mavlink-core 0.17.1 with `tokio-1` uses `futures::lock`, which needs
+# futures' `std` feature, which it does not enable itself.
+futures = { version = "0.3", default-features = false, features = ["std"] }

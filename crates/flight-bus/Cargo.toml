@@ -1,0 +1,17 @@
+[package]
+name = "flight-bus"
+description = "Middleware modules: telemetry and mission reports over ~/src/middleware (Zenoh or in-memory)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+flight-core.workspace = true
+anyhow.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+middleware = { workspace = true, features = ["zenoh", "memory"] }

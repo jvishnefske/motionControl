@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flight Sim Console</title>
+<style>
+:root {
+  --bg: #0b0e11; --panel: #12161b; --panel2: #171c22; --line: #232a33; --line2: #2e3743;
+  --text: #c9d3dd; --dim: #6c7a89; --faint: #46515d;
+  --accent: #4fb3ff; --ok: #3ddc84; --warn: #f5b942; --bad: #ff5d5d; --pend: #8a96a3;
+  --mono: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+  font: 12px/1.35 var(--mono); }
+button, select { font: inherit; color: inherit; }
+header { display: flex; align-items: center; gap: 14px; padding: 6px 12px; border-bottom: 1px solid var(--line);
+  background: var(--panel); }
+header h1 { font-size: 12px; letter-spacing: .18em; margin: 0; color: var(--accent); font-weight: 600; }
+header .sp { flex: 1; }
+header label { color: var(--dim); display: flex; align-items: center; gap: 6px; }
+#conn { width: 8px; height: 8px; border-radius: 50%; background: var(--bad); display: inline-block; }
+#conn.on { background: var(--ok); box-shadow: 0 0 6px var(--ok); }
+main { display: grid; grid-template-columns: 360px 1fr 300px; grid-template-rows: 1fr 170px;
+  gap: 1px; background: var(--line); height: calc(100% - 33px); }
+section { background: var(--panel); min-height: 0; display: flex; flex-direction: column; }
+section > h2 { margin: 0; padding: 5px 10px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--dim); border-bottom: 1px solid var(--line); background: var(--panel2); font-weight: 600;
+  display: flex; justify-content: space-between; }
+.col { display: flex; flex-direction: column; gap: 1px; background: var(--line); min-height: 0; overflow: auto; }
+.col > section { flex: 0 0 auto; }
+select { background: var(--bg); border: 1px solid var(--line2); padding: 3px 6px; border-radius: 2px; }
+.mod { padding: 7px 10px; border-bottom: 1px solid var(--line); }
+.mod:last-child { border-bottom: 0; }
+.mod .top { display: flex; align-items: center; gap: 8px; }
+.mod .lbl { flex: 1; font-weight: 600; }
+.seg { display: inline-flex; border: 1px solid var(--line2); border-radius: 2px; overflow: hidden; }
+.seg button { background: var(--bg); border: 0; border-left: 1px solid var(--line2); padding: 3px 9px; cursor: pointer;
+  color: var(--dim); }
+.seg button:first-child { border-left: 0; }
+.seg button:hover:not(:disabled) { color: var(--text); background: var(--panel2); }
+.seg button.on { background: #173149; color: var(--accent); }
+.seg button.on.off { background: #222; color: var(--text); }
+.seg button:disabled { color: var(--faint); cursor: not-allowed; text-decoration: line-through; }
+.mod .st { margin-top: 4px; display: flex; gap: 6px; align-items: baseline; color: var(--dim); font-size: 11px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); flex: 0 0 auto; display: inline-block; }
+.dot.running { background: var(--ok); } .dot.starting { background: var(--warn); }
+.dot.failed { background: var(--bad); }
+.mod .why { color: var(--faint); font-size: 10px; margin-top: 2px; }
+.presets { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px 10px; }
+.btn { background: var(--panel2); border: 1px solid var(--line2); padding: 5px 8px; border-radius: 2px; cursor: pointer; }
+.btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.mission { padding: 8px 10px; display: flex; flex-direction: column; gap: 8px; }
+.mission .row { display: flex; gap: 8px; align-items: center; }
+.mission .row select { flex: 1; }
+#run { font-size: 15px; letter-spacing: .12em; padding: 14px; font-weight: 700; background: #0f2a1b; color: var(--ok);
+  border: 1px solid #1f6b40; border-radius: 3px; cursor: pointer; text-transform: uppercase; }
+#run:hover:not(:disabled) { background: #13361f; box-shadow: 0 0 10px #1f6b4055; }
+#run:disabled { color: var(--dim); background: var(--panel2); border-color: var(--line2); cursor: progress; }
+#abort { background: #2a1212; color: var(--bad); border-color: #6b1f1f; }
+#mapwrap { flex: 1; position: relative; min-height: 0; }
+#map { position: absolute; inset: 0; width: 100%; height: 100%; }
+#scale { position: absolute; left: 10px; bottom: 8px; color: var(--dim); font-size: 10px; }
+.tele { display: grid; grid-template-columns: repeat(6, 1fr); border-top: 1px solid var(--line); }
+.tele div { padding: 6px 10px; border-left: 1px solid var(--line); }
+.tele div:first-child { border-left: 0; }
+.tele b { display: block; font-size: 9px; letter-spacing: .14em; color: var(--dim); font-weight: 500; }
+.tele span { font-size: 17px; color: #e7eef5; font-variant-numeric: tabular-nums; }
+.tele .armed { color: var(--bad); } .tele .disarmed { color: var(--ok); }
+#verdict { padding: 10px; display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 1px solid var(--line); }
+#verdict .v { font-size: 16px; font-weight: 700; letter-spacing: .12em; }
+.v.passed { color: var(--ok); } .v.failed { color: var(--bad); } .v.running { color: var(--warn); } .v.idle { color: var(--dim); }
+#checks { list-style: none; margin: 0; padding: 0; overflow: auto; flex: 1; }
+#checks li { display: grid; grid-template-columns: 16px 1fr auto; gap: 6px; padding: 5px 10px;
+  border-bottom: 1px solid var(--line); align-items: baseline; }
+#checks li .d { grid-column: 2 / 4; color: var(--dim); font-size: 10px; }
+#checks .ic { font-weight: 700; }
+.passed .ic { color: var(--ok); } .failed .ic { color: var(--bad); } .pending .ic { color: var(--pend); }
+#checks .t { color: var(--dim); font-variant-numeric: tabular-nums; }
+#log { grid-column: 1 / 4; }
+#logs { flex: 1; overflow: auto; padding: 4px 10px; font-size: 11px; }
+#logs div { white-space: pre-wrap; }
+#logs .src { color: var(--accent); }
+#logs .warn { color: var(--warn); } #logs .error { color: var(--bad); }
+#logs .ts { color: var(--faint); }
+#err { color: var(--bad); }
+@media (max-width: 1000px) {
+  main { grid-template-columns: 1fr; grid-template-rows: auto 420px auto 200px; height: auto; }
+  #log { grid-column: 1; }
+  .tele { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>FLIGHT&nbsp;SIM&nbsp;//&nbsp;CONSOLE</h1>
+  <label>airframe <select id="airframe"></select></label>
+  <label><input type="checkbox" id="gui"> gui</label>
+  <span id="err"></span>
+  <span class="sp"></span>
+  <span id="clock" style="color:var(--dim)"></span>
+  <span id="conn" title="event stream"></span>
+</header>
+<main>
+  <div class="col">
+    <section><h2>Modules</h2><div id="modules"></div></section>
+    <section><h2>Presets</h2><div class="presets" id="presets"></div></section>
+    <section><h2>Mission test</h2>
+      <div class="mission">
+        <div class="row"><select id="mission"></select></div>
+        <button id="run">Run mission test</button>
+        <button id="abort" class="btn">Abort / RTL</button>
+      </div>
+    </section>
+  </div>
+  <section>
+    <h2><span>Map · local NE metres</span><span id="mapinfo"></span></h2>
+    <div id="mapwrap"><canvas id="map"></canvas><div id="scale"></div></div>
+    <div class="tele">
+      <div><b>MODE</b><span id="t-mode">—</span></div>
+      <div><b>ARMED</b><span id="t-armed">—</span></div>
+      <div><b>ALT REL</b><span id="t-alt">—</span></div>
+      <div><b>GND SPD</b><span id="t-spd">—</span></div>
+      <div><b>BATTERY</b><span id="t-bat">—</span></div>
+      <div><b>WP / T</b><span id="t-seq">—</span></div>
+    </div>
+  </section>
+  <section>
+    <h2><span>Checks</span><span id="mname"></span></h2>
+    <div id="verdict"><span class="v idle" id="vtext">IDLE</span><span id="velapsed" style="color:var(--dim)"></span></div>
+    <ul id="checks"></ul>
+  </section>
+  <section id="log"><h2><span>Log</span><span><label><input type="checkbox" id="follow" checked> follow</label></span></h2>
+    <div id="logs"></div></section>
+</main>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const BK = [["real", "Real"], ["simulated", "Sim"], ["off", "Off"]];
+let S = null;            // latest snapshot
+let busy = false;        // a POST is in flight
+
+async function post(path, body) {
+  busy = true; $("err").textContent = "";
+  try {
+    const r = await fetch(path, { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify(body || {}) });
+    const j = await r.json().catch(() => ({ ok: r.ok }));
+    if (!j.ok) { $("err").textContent = j.error || ("HTTP " + r.status); addLog({ source: "ui", level: "error", text: j.error || "request failed" }); }
+  } catch (e) { $("err").textContent = String(e); }
+  finally { busy = false; if (S) render(S); }
+}
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+function renderModules(s) {
+  const root = $("modules");
+  if (root.children.length !== s.modules.length) {
+    root.innerHTML = s.modules.map(m => `<div class="mod" data-kind="${m.kind}">
+      <div class="top"><span class="lbl">${esc(m.label)}</span><span class="seg">${BK.map(([b, t]) =>
+        `<button data-b="${b}">${t}</button>`).join("")}</span></div>
+      <div class="st"><span class="dot"></span><span class="sttext"></span></div><div class="why"></div></div>`).join("");
+    root.querySelectorAll(".mod").forEach(el => el.querySelectorAll("button").forEach(btn =>
+      btn.onclick = () => post("/api/backend", { kind: el.dataset.kind, backend: btn.dataset.b })));
+  }
+  s.modules.forEach((m, i) => {
+    const el = root.children[i];
+    const why = [];
+    el.querySelectorAll("button").forEach(btn => {
+      const b = btn.dataset.b;
+      const opt = m.options.find(o => o.backend === b);
+      btn.classList.toggle("on", m.backend === b);
+      btn.classList.toggle("off", b === "off");
+      btn.disabled = busy || !opt || !opt.available;
+      btn.title = !opt ? "not offered" : (opt.reason || "");
+      if (opt && !opt.available && opt.reason) why.push(`${b}: ${opt.reason}`);
+      if (!opt && b !== "off") why.push(`${b}: not offered`);
+    });
+    const st = m.busy ? "starting" : m.status.state;
+    el.querySelector(".dot").className = "dot " + st;
+    const detail = m.busy ? m.busy + "…" : (m.status.detail || st);
+    el.querySelector(".sttext").textContent = (m.name ? m.name + " · " : "") + detail;
+    el.querySelector(".sttext").title = detail;
+    el.querySelector(".why").textContent = why.join(" · ");
+  });
+}
+
+function fillSelect(sel, items, value) {
+  const key = JSON.stringify(items);
+  if (sel.dataset.k !== key) {
+    sel.innerHTML = items.map(([v, t]) => `<option value="${esc(v)}">${esc(t)}</option>`).join("");
+    sel.dataset.k = key;
+  }
+  if (document.activeElement !== sel) sel.value = value;
+}
+
+function renderControls(s) {
+  fillSelect($("airframe"), s.airframes, s.airframe);
+  fillSelect($("mission"), s.missions.map(m => [m, m]), s.mission);
+  $("airframe").disabled = busy || s.test_running;
+  $("gui").checked = s.gui;
+  const p = $("presets");
+  if (p.children.length !== s.presets.length) {
+    p.innerHTML = s.presets.map(n => `<button class="btn" data-p="${esc(n)}">${esc(n)}</button>`).join("");
+    p.querySelectorAll("button").forEach(b => b.onclick = () => post("/api/preset", { name: b.dataset.p }));
+  }
+  p.querySelectorAll("button").forEach(b => b.disabled = busy);
+  $("run").disabled = busy || s.test_running;
+  $("run").textContent = s.test_running ? "Test running…" : "Run mission test";
+}
+
+function fmt(x, d, u) { return x == null || isNaN(x) ? "—" : x.toFixed(d) + (u || ""); }
+
+function renderTelemetry(s) {
+  const t = s.telemetry;
+  if (!t) { ["mode", "armed", "alt", "spd", "bat", "seq"].forEach(k => $("t-" + k).textContent = "—"); return; }
+  $("t-mode").textContent = t.mode.toUpperCase();
+  $("t-armed").textContent = t.armed ? "ARMED" : (t.landed ? "SAFE" : "DISARMED");
+  $("t-armed").className = t.armed ? "armed" : "disarmed";
+  $("t-alt").textContent = fmt(t.rel_alt_m, 1, " m");
+  $("t-spd").textContent = fmt(Math.hypot(t.vel_ned[0], t.vel_ned[1]), 1, " m/s");
+  $("t-bat").textContent = fmt(t.battery_pct, 0, " %");
+  $("t-seq").textContent = t.mission_seq + " / " + fmt(t.time_s, 0, "s");
+}
+
+function renderReport(s) {
+  const r = s.report;
+  const v = $("vtext");
+  if (!r) { v.textContent = "IDLE"; v.className = "v idle"; $("checks").innerHTML = ""; $("velapsed").textContent = ""; $("mname").textContent = ""; return; }
+  v.textContent = r.verdict.toUpperCase(); v.className = "v " + r.verdict;
+  const el = s.test_running && s.test_elapsed_s != null ? Math.max(s.test_elapsed_s, r.elapsed_s) : r.elapsed_s;
+  $("velapsed").textContent = fmt(el, 1, " s") + (r.max_alt_error_m ? " · Δalt " + fmt(r.max_alt_error_m, 1, " m") : "");
+  $("mname").textContent = r.mission;
+  const icon = { passed: "✓", failed: "✗", pending: "·" };
+  $("checks").innerHTML = r.checks.map(c => `<li class="${c.state}"><span class="ic">${icon[c.state] || "?"}</span>
+    <span>${esc(c.name)}</span><span class="t">${c.at_s != null ? fmt(c.at_s, 1, " s") : c.state}</span>
+    ${c.detail ? `<span class="d">${esc(c.detail)}</span>` : ""}</li>`).join("");
+}
+
+function niceStep(span) {
+  const raw = span / 6, p = Math.pow(10, Math.floor(Math.log10(raw)));
+  for (const m of [1, 2, 5, 10]) if (raw <= m * p) return m * p;
+  return 10 * p;
+}
+
+function drawMap(s) {
+  const cv = $("map"), wrap = $("mapwrap");
+  const dpr = window.devicePixelRatio || 1;
+  const W = wrap.clientWidth, H = wrap.clientHeight;
+  if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; }
+  const g = cv.getContext("2d");
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.fillStyle = "#0b0e11"; g.fillRect(0, 0, W, H);
+  const pts = [[0, 0]].concat(s.waypoints.map(w => [w[0], w[1]]), s.track);
+  const t = s.telemetry;
+  let veh = null;
+  if (t && s.track.length) veh = s.track[s.track.length - 1];
+  if (veh) pts.push(veh);
+  let minN = Infinity, maxN = -Infinity, minE = Infinity, maxE = -Infinity;
+  for (const [n, e] of pts) { minN = Math.min(minN, n); maxN = Math.max(maxN, n); minE = Math.min(minE, e); maxE = Math.max(maxE, e); }
+  const spanN = Math.max(maxN - minN, 20), spanE = Math.max(maxE - minE, 20);
+  const pad = 36;
+  const k = Math.min((W - 2 * pad) / spanE, (H - 2 * pad) / spanN);
+  const cN = (minN + maxN) / 2, cE = (minE + maxE) / 2;
+  const X = e => W / 2 + (e - cE) * k, Y = n => H / 2 - (n - cN) * k;
+  // grid
+  const step = niceStep(Math.max(W, H) / k);
+  g.strokeStyle = "#161c23"; g.lineWidth = 1; g.font = "10px " + getComputedStyle(document.body).fontFamily;
+  g.fillStyle = "#3a4550";
+  const e0 = Math.floor((cE - W / 2 / k) / step) * step, n0 = Math.floor((cN - H / 2 / k) / step) * step;
+  for (let e = e0; X(e) < W; e += step) { g.beginPath(); g.moveTo(X(e) + .5, 0); g.lineTo(X(e) + .5, H); g.stroke(); g.fillText(e.toFixed(0), X(e) + 3, H - 4); }
+  for (let n = n0; Y(n) > 0; n += step) { g.beginPath(); g.moveTo(0, Y(n) + .5); g.lineTo(W, Y(n) + .5); g.stroke(); g.fillText(n.toFixed(0), 3, Y(n) - 3); }
+  $("scale").textContent = "grid " + step + " m · N up";
+  // planned path
+  if (s.waypoints.length) {
+    g.setLineDash([5, 4]); g.strokeStyle = "#4fb3ff88"; g.lineWidth = 1.2; g.beginPath();
+    g.moveTo(X(0), Y(0));
+    for (const w of s.waypoints) g.lineTo(X(w[1]), Y(w[0]));
+    g.stroke(); g.setLineDash([]);
+    const done = s.report ? s.report.checks.filter(c => c.state === "passed").length : 0;
+    s.waypoints.forEach((w, i) => {
+      g.beginPath(); g.arc(X(w[1]), Y(w[0]), 5, 0, 7);
+      g.fillStyle = i + 2 <= done ? "#3ddc84" : "#12161b"; g.fill();
+      g.strokeStyle = "#4fb3ff"; g.stroke();
+      g.fillStyle = "#9fb6c9"; g.fillText(String(i), X(w[1]) + 7, Y(w[0]) - 6);
+    });
+  }
+  // home
+  g.strokeStyle = "#f5b942"; g.lineWidth = 1.5; g.strokeRect(X(0) - 5, Y(0) - 5, 10, 10);
+  g.fillStyle = "#f5b942"; g.fillText("H", X(0) + 8, Y(0) + 12);
+  // track
+  if (s.track.length > 1) {
+    g.strokeStyle = "#3ddc84"; g.lineWidth = 2; g.beginPath();
+    s.track.forEach(([n, e], i) => i ? g.lineTo(X(e), Y(n)) : g.moveTo(X(e), Y(n)));
+    g.stroke();
+  }
+  // vehicle
+  if (veh && t) {
+    const yaw = t.attitude[2];
+    g.save(); g.translate(X(veh[1]), Y(veh[0])); g.rotate(yaw);
+    g.beginPath(); g.moveTo(0, -10); g.lineTo(6, 7); g.lineTo(0, 3); g.lineTo(-6, 7); g.closePath();
+    g.fillStyle = t.armed ? "#ff5d5d" : "#c9d3dd"; g.fill(); g.restore();
+    $("mapinfo").textContent = `N ${veh[0].toFixed(1)}  E ${veh[1].toFixed(1)}  ·  track ${s.track.length}`;
+  } else {
+    $("mapinfo").textContent = "no vehicle";
+  }
+}
+
+function render(s) {
+  renderModules(s); renderControls(s); renderTelemetry(s); renderReport(s); drawMap(s);
+}
+
+function addLog(l) {
+  const box = $("logs");
+  const d = document.createElement("div");
+  d.className = l.level;
+  const ts = new Date().toTimeString().slice(0, 8);
+  d.innerHTML = `<span class="ts">${ts}</span> <span class="src">[${esc(l.source)}]</span> ${esc(l.text)}`;
+  box.appendChild(d);
+  while (box.children.length > 600) box.removeChild(box.firstChild);
+  if ($("follow").checked) box.scrollTop = box.scrollHeight;
+}
+
+$("airframe").onchange = e => post("/api/airframe", { airframe: e.target.value });
+$("mission").onchange = e => post("/api/mission", { name: e.target.value });
+$("gui").onchange = e => post("/api/gui", { gui: e.target.checked });
+$("run").onclick = () => post("/api/test/run", { mission: $("mission").value });
+$("abort").onclick = () => post("/api/test/abort", {});
+window.addEventListener("resize", () => S && drawMap(S));
+setInterval(() => { $("clock").textContent = new Date().toTimeString().slice(0, 8); }, 1000);
+
+function connect() {
+  const es = new EventSource("/api/events");
+  es.onopen = () => $("conn").classList.add("on");
+  es.onerror = () => $("conn").classList.remove("on");
+  es.addEventListener("state", ev => { S = JSON.parse(ev.data); render(S); });
+  es.addEventListener("log", ev => addLog(JSON.parse(ev.data)));
+}
+connect();
+</script>
+</body>
+</html>
