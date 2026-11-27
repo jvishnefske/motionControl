@@ -48,6 +48,19 @@ PX4 and gz Harmonic are not in nixpkgs, so there are two ways to run them:
 - `FLIGHT_PX4_DIR=/path/to/PX4-Autopilot`, a native checkout built with `make px4_sitl`.
 
 Other environment variables: `FLIGHT_PX4_IMAGE`, `FLIGHT_GZ_WORLD`, `FLIGHT_QGC`.
+
+QGroundControl from nixpkgs can't load the host's GL drivers on a non-NixOS system,
+so it runs with Qt's software renderer. Headless runs (no `--gui`) go under `xvfb-run`;
+the Nix package and the dev shell both put QGC and `xvfb-run` on PATH.
+
+## Network exposure
+
+Everything is local unless you opt in:
+- The web menu accepts only loopback `Host` headers. A POST has to be JSON, and its
+  `Origin` has to match the page's own.
+- The MAVLink API socket binds `127.0.0.1` (`FLIGHT_MAV_BIND=0.0.0.0` opens it to the network).
+- Zenoh listens on `tcp/127.0.0.1:7447` with scouting off. `FLIGHT_ZENOH_LISTEN`,
+  `FLIGHT_ZENOH_CONNECT` and `FLIGHT_ZENOH_SCOUT=1` change that.
 The menu greys out a Real backend that can't run on this machine and gives the reason.
 
 ## Crates

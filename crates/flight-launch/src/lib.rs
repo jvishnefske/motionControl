@@ -34,7 +34,7 @@ pub use env::{
 };
 pub use gazebo::{AutopilotBackend, GazeboSim};
 pub use px4::Px4Sitl;
-pub use qgc::{QGroundControl, locate_qgc, qgc_env};
+pub use qgc::{QGroundControl, locate_qgc, qgc_command};
 
 use flight_core::{Backend, Module, ModuleFactory, ModuleKind};
 

@@ -460,3 +460,30 @@ async fn futures_next(s: &mut axum::body::BodyDataStream) -> Option<axum::body::
     use tokio_stream::StreamExt;
     s.next().await.map(|r| r.unwrap())
 }
+
+#[tokio::test]
+async fn cross_site_requests_are_refused() {
+    let r = rig();
+    let send = |req: Request<Body>| {
+        let o = r.orch.clone();
+        async move { router(o).oneshot(req).await.unwrap().status() }
+    };
+    let post = |host: &str, origin: Option<&str>, json: bool| {
+        let mut b = Request::post("/api/test/abort").header(header::HOST, host);
+        if let Some(o) = origin {
+            b = b.header(header::ORIGIN, o);
+        }
+        if json {
+            b = b.header(header::CONTENT_TYPE, "application/json");
+        }
+        b.body(Body::from("{}")).unwrap()
+    };
+    // DNS rebinding: a foreign Host name.
+    assert_eq!(send(Request::get("/api/state").header(header::HOST, "evil.example:8080").body(Body::empty()).unwrap()).await, StatusCode::FORBIDDEN);
+    // CSRF: another page's Origin, or a form post without JSON.
+    assert_eq!(send(post("127.0.0.1:8080", Some("http://evil.example"), true)).await, StatusCode::FORBIDDEN);
+    assert_eq!(send(post("127.0.0.1:8080", None, false)).await, StatusCode::UNSUPPORTED_MEDIA_TYPE);
+    // The page itself.
+    assert_ne!(send(post("127.0.0.1:8080", Some("http://127.0.0.1:8080"), true)).await, StatusCode::FORBIDDEN);
+    assert_eq!(send(Request::get("/api/state").header(header::HOST, "localhost:8080").body(Body::empty()).unwrap()).await, StatusCode::OK);
+}

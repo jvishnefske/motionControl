@@ -43,7 +43,7 @@ pub const PUBLISH_PERIOD: Duration = Duration::from_millis(100);
 /// listens on `flight/**`.
 pub const KEY_ROOT: Key<'static> = Key::from_static("flight");
 /// Default listen endpoint of the Zenoh peer.
-pub const DEFAULT_ZENOH_LISTEN: &str = "tcp/0.0.0.0:7447";
+pub const DEFAULT_ZENOH_LISTEN: &str = "tcp/127.0.0.1:7447";
 
 const RX_BUF: usize = 64 * 1024;
 const SCRATCH: usize = 16 * 1024;
@@ -465,13 +465,31 @@ impl Default for ZenohConfig {
         ZenohConfig {
             listen: vec![DEFAULT_ZENOH_LISTEN.to_string()],
             connect: Vec::new(),
-            answer_scouts: true,
+            // Loopback and no scouting unless asked (FLIGHT_ZENOH_LISTEN /
+            // FLIGHT_ZENOH_SCOUT=1 via `ZenohConfig::from_env`): the bus
+            // carries telemetry and answers `cmd` without authentication.
+            answer_scouts: false,
             local_delivery: true,
         }
     }
 }
 
 impl ZenohConfig {
+    /// Default, overridden by `FLIGHT_ZENOH_LISTEN` (comma-separated
+    /// endpoints), `FLIGHT_ZENOH_CONNECT` and `FLIGHT_ZENOH_SCOUT=1`.
+    pub fn from_env() -> Self {
+        let list = |v: &str| std::env::var(v).ok().map(|s| s.split(',').map(str::trim).filter(|s| !s.is_empty()).map(String::from).collect::<Vec<_>>());
+        let mut c = ZenohConfig::default();
+        if let Some(l) = list("FLIGHT_ZENOH_LISTEN") {
+            c.listen = l;
+        }
+        if let Some(l) = list("FLIGHT_ZENOH_CONNECT") {
+            c.connect = l;
+        }
+        c.answer_scouts = std::env::var("FLIGHT_ZENOH_SCOUT").is_ok_and(|v| v == "1");
+        c
+    }
+
     /// Loopback only, no scouting: for tests and local runs.
     pub fn loopback(listen: impl Into<String>) -> Self {
         ZenohConfig { listen: vec![listen.into()], connect: Vec::new(), answer_scouts: false, local_delivery: true }

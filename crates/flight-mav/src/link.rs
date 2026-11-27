@@ -129,12 +129,16 @@ impl Drop for VehicleLink {
 }
 
 impl VehicleLink {
-    /// Bind `0.0.0.0:{ports.api}` and start listening. Returns at once; use
+    /// Bind `127.0.0.1:{ports.api}` (env `FLIGHT_MAV_BIND` overrides) and start listening. Returns at once; use
     /// [`VehicleControl::wait_ready`] to wait for a vehicle.
     pub async fn connect(ports: MavPorts) -> anyhow::Result<Arc<VehicleLink>> {
-        let sock = UdpSocket::bind(("0.0.0.0", ports.api))
+        // Loopback by default: PX4 SITL (native or `--network host`) and the
+        // sim autopilot are local, and anyone who can reach this port can
+        // pose as the vehicle. FLIGHT_MAV_BIND=0.0.0.0 opts into the network.
+        let bind = std::env::var("FLIGHT_MAV_BIND").unwrap_or_else(|_| "127.0.0.1".into());
+        let sock = UdpSocket::bind((bind.as_str(), ports.api))
             .await
-            .with_context(|| format!("bind udp 0.0.0.0:{}", ports.api))?;
+            .with_context(|| format!("bind udp {bind}:{}", ports.api))?;
         let (tel_tx, _) = watch::channel(None);
         let (msgs, _) = broadcast::channel(4096);
         let inner = Arc::new(Inner {
@@ -400,7 +404,7 @@ impl Inner {
                 };
             }
             MavMessage::GLOBAL_POSITION_INT(p) => {
-                if s.have_position && p.time_boot_ms + 1000 < s.last_boot_ms {
+                if s.have_position && p.time_boot_ms.saturating_add(1000) < s.last_boot_ms {
                     // The autopilot rebooted or was replaced on the same port.
                     tracing::info!("vehicle time went backwards; new session");
                     let fresh = Session::new(from, &h, s.mavtype);

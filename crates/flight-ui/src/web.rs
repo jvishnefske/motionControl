@@ -54,7 +54,37 @@ pub fn router(orch: Orch) -> Router {
         .route("/api/gui", post(gui))
         .route("/api/test/run", post(run_test))
         .route("/api/test/abort", post(abort_test))
+        .layer(axum::middleware::from_fn(same_origin_only))
         .with_state(orch)
+}
+
+/// The API has no authentication, so keep other web pages out: reject a
+/// request whose `Host` is not a loopback name (DNS rebinding), a POST whose
+/// `Origin` is present and not that host (CSRF), and a POST that is not JSON
+/// (which a cross-site form cannot send without a preflight).
+async fn same_origin_only(req: axum::extract::Request, next: axum::middleware::Next) -> Response {
+    let h = req.headers();
+    let host = h.get(axum::http::header::HOST).and_then(|v| v.to_str().ok()).unwrap_or("");
+    let host_name = host.rsplit_once(':').map_or(host, |(n, p)| if p.chars().all(|c| c.is_ascii_digit()) { n } else { host });
+    if !host.is_empty() && !matches!(host_name, "localhost" | "127.0.0.1" | "[::1]") {
+        return (StatusCode::FORBIDDEN, "host not allowed").into_response();
+    }
+    if req.method() == axum::http::Method::POST {
+        if let Some(origin) = h.get(axum::http::header::ORIGIN).and_then(|v| v.to_str().ok()) {
+            let ok = origin.strip_prefix("http://").or_else(|| origin.strip_prefix("https://")) == Some(host);
+            if !ok {
+                return (StatusCode::FORBIDDEN, "cross-origin request").into_response();
+            }
+        }
+        let json = h
+            .get(axum::http::header::CONTENT_TYPE)
+            .and_then(|v| v.to_str().ok())
+            .is_some_and(|v| v.starts_with("application/json"));
+        if !json {
+            return (StatusCode::UNSUPPORTED_MEDIA_TYPE, "POST needs Content-Type: application/json").into_response();
+        }
+    }
+    next.run(req).await
 }
 
 /// Serves [`router`] on `addr` until the process ends.

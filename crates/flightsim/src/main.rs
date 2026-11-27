@@ -64,7 +64,7 @@ async fn main() -> anyhow::Result<()> {
     }
 
     let launch = flight_launch::Factory::from_env();
-    let bus = Arc::new(flight_bus::Factory::new());
+    let bus = Arc::new(flight_bus::Factory::new().with_zenoh_config(flight_bus::ZenohConfig::from_env()));
     let factory = Arc::new(Composite(vec![
         Arc::new(flight_sim::Factory),
         Arc::new(launch.clone()),
@@ -97,9 +97,12 @@ async fn main() -> anyhow::Result<()> {
 
     println!("flightsim menu: http://{listen}/");
     let server = flight_ui::serve(listen, orch.clone());
+    // SIGINT or SIGTERM: stop every module so no PX4/gz/QGC/Xvfb is orphaned.
+    let mut term = tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())?;
     tokio::select! {
         r = server => r?,
         _ = tokio::signal::ctrl_c() => {}
+        _ = term.recv() => {}
     }
     orch.shutdown().await;
     Ok(())

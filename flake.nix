@@ -86,9 +86,16 @@
         sourceRoot = "flight-src/katas/flight";
         cargoLock.lockFile = ./Cargo.lock;
         cargoBuildFlags = [ "-p" "flightsim" "--bin" "flightsim" ];
-        nativeBuildInputs = [ pkgs.pkg-config ];
+        # mavlink's build script shells out to git (no-op on the crates.io tarball).
+        nativeBuildInputs = [ pkgs.pkg-config pkgs.git pkgs.makeWrapper ];
         # The tests want UDP ports and, for the ignored ones, PX4.
         doCheck = false;
+        # `nix run` gets a working Real ground station: QGroundControl, and
+        # xvfb-run for headless runs (flight-launch picks both up from PATH).
+        postInstall = ''
+          wrapProgram $out/bin/flightsim \
+            --suffix PATH : ${lib.makeBinPath [ pkgs.qgroundcontrol pkgs.xvfb-run ]}
+        '';
         meta = {
           description = "Flight-control sim: PX4/Gazebo/QGC or their Rust stand-ins, switched from a web menu";
           mainProgram = "flightsim";
@@ -142,6 +149,7 @@
           toolchain
           pkgs.pkg-config
           pkgs.qgroundcontrol
+          pkgs.xvfb-run
           pkgs.docker-client
           pkgs.just
         ];
